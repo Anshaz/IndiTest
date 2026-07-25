@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confluence buy-signal monitor</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0e11">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  :root{
+    --bg:#0b0e11; --panel:#12161b; --panel2:#161b21; --border:#242a31;
+    --text:#e6e9ec; --muted:#8b95a1; --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", Roboto, sans-serif;
+    --green:#1fae6b; --green-dim:#123528; --red:#e0524f; --red-dim:#3a1c1b;
+    --amber:#e0a83f; --amber-dim:#3a2f14; --accent:#3f8ce0;
+  }
+  *{box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:var(--sans); margin:0; padding:24px 16px 80px; max-width:900px; margin-inline:auto;}
+  h1{font-size:19px; font-weight:600; margin:0 0 4px;}
+  .sub{color:var(--muted); font-size:13px; margin:0 0 20px;}
+  .card{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:16px;}
+  label{display:block; font-size:12px; color:var(--muted); margin-bottom:5px;}
+  input, select{width:100%; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:9px 10px; font-size:14px; font-family:var(--mono);}
+  .row{display:flex; gap:12px; flex-wrap:wrap;}
+  .row > div{flex:1; min-width:140px;}
+  button{background:var(--accent); color:#fff; border:none; border-radius:6px; padding:10px 18px; font-size:14px; font-weight:600; cursor:pointer;}
+  button.stop{background:var(--red);}
+  button:disabled{opacity:0.5; cursor:not-allowed;}
+  .toolbar{display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap;}
+  .toggle{display:flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); cursor:pointer;}
+  .status-line{font-size:12px; color:var(--muted); margin-top:8px;}
+  .ticker-card{border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:12px; background:var(--panel);}
+  .ticker-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
+  .ticker-head .sym{font-size:16px; font-weight:600; font-family:var(--mono);}
+  .ticker-head .px{font-size:14px; font-family:var(--mono); color:var(--muted);}
+  .checks{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;}
+  .check{display:flex; align-items:center; gap:8px; font-size:12px; padding:8px 10px; border-radius:6px; background:var(--panel2); border:1px solid var(--border);}
+  .dot{width:9px; height:9px; border-radius:50%; flex-shrink:0; background:var(--muted);}
+  .check.pass .dot{background:var(--green);}
+  .check.pass{border-color:var(--green-dim);}
+  .check .label{color:var(--text); font-weight:500;}
+  .check .val{color:var(--muted); font-family:var(--mono); margin-left:auto;}
+  .confluence-banner{margin-top:10px; padding:9px 12px; border-radius:6px; font-size:12px; font-weight:600; text-align:center;}
+  .confluence-banner.ready{background:var(--green-dim); color:var(--green);}
+  .confluence-banner.wait{background:var(--panel2); color:var(--muted);}
+  #alarmOverlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:50;}
+  #alarmBox{background:var(--panel); border:2px solid var(--green); border-radius:12px; padding:28px 32px; text-align:center; max-width:320px;}
+  #alarmBox h2{color:var(--green); margin:0 0 6px; font-size:18px;}
+  #alarmBox p{color:var(--muted); font-size:13px; margin:0 0 18px;}
+  #alarmBox button{width:100%;}
+  .log{max-height:220px; overflow-y:auto; font-family:var(--mono); font-size:12px;}
+  .log-entry{padding:7px 0; border-bottom:1px solid var(--border); color:var(--muted); display:flex; justify-content:space-between;}
+  .log-entry .tag{color:var(--green);}
+  .disclaimer{font-size:11px; color:var(--muted); line-height:1.6; border-top:1px solid var(--border); padding-top:14px; margin-top:24px;}
+  .empty{color:var(--muted); font-size:13px; text-align:center; padding:20px 0;}
+</style>
+</head>
+<body>
+
+<h1>Confluence buy-signal monitor</h1>
+<p class="sub">Watches VWAP, RSI, MACD, volume and CMF together and alarms when they all line up bullish on the same closed bar.</p>
+
+<div class="card">
+  <div class="row">
+    <div>
+      <label for="apiKey">Twelve Data API key</label>
+      <input id="apiKey" type="password" placeholder="Paste your free API key">
+    </div>
+    <div>
+      <label for="symbols">Tickers (comma separated, max 3)</label>
+      <input id="symbols" type="text" placeholder="e.g. BBAI, NVO" value="BBAI">
+    </div>
+  </div>
+  <div class="row" style="margin-top:12px;">
+    <div>
+      <label for="interval">Candle interval</label>
+      <select id="interval">
+        <option value="1min">1 minute</option>
+        <option value="5min" selected>5 minutes</option>
+        <option value="15min">15 minutes</option>
+        <option value="1h">1 hour</option>
+        <option value="1day">1 day</option>
+      </select>
+    </div>
+    <div>
+      <label for="poll">Check every</label>
+      <select id="poll">
+        <option value="60">60 seconds</option>
+        <option value="120" selected>2 minutes</option>
+        <option value="300">5 minutes</option>
+      </select>
+    </div>
+  </div>
+  <div class="toolbar">
+    <button id="startBtn">Start monitoring</button>
+    <label class="toggle"><input type="checkbox" id="soundToggle" checked> Sound on alarm</label>
+  </div>
+  <div class="status-line" id="statusLine">Idle. Enter a key and tickers, then start.</div>
+</div>
+
+<div id="tickerContainer"></div>
+
+<div class="card">
+  <label style="margin-bottom:8px;">Signal log</label>
+  <div class="log" id="logList"><div class="empty">No signals yet.</div></div>
+</div>
+
+<div class="disclaimer">
+  This tool flags when several technical indicators align — it is not financial advice and does not guarantee outcomes. Data is delayed on the free tier and rate-limited (800 calls/day, 8/min). Runs only while this tab is open. Verify signals yourself before trading.
+</div>
+
+<div id="alarmOverlay">
+  <div id="alarmBox">
+    <h2>Confluence buy signal</h2>
+    <p id="alarmText"></p>
+    <button onclick="dismissAlarm()">Dismiss</button>
+  </div>
+</div>
+
+<script>
+const state = { running:false, timer:null, tickers:{}, lastAlarmBar:{} };
+
+function ema(values, period){
+  const k = 2/(period+1);
+  const out = [values[0]];
+  for(let i=1;i<values.length;i++) out.push(values[i]*k + out[i-1]*(1-k));
+  return out;
+}
+function sma(values, period){
+  return values.map((_,i)=> i<period-1 ? null : values.slice(i-period+1,i+1).reduce((a,b)=>a+b,0)/period);
+}
+function rsi(closes, period=14){
+  const out = new Array(closes.length).fill(null);
+  let gains=0, losses=0;
+  for(let i=1;i<=period;i++){
+    const d = closes[i]-closes[i-1];
+    if(d>=0) gains+=d; else losses-=d;
+  }
+  let avgG=gains/period, avgL=losses/period;
+  out[period] = 100 - (100/(1+ (avgL===0?100:avgG/avgL)));
+  for(let i=period+1;i<closes.length;i++){
+    const d = closes[i]-closes[i-1];
+    const g = d>0?d:0, l = d<0?-d:0;
+    avgG = (avgG*(period-1)+g)/period;
+    avgL = (avgL*(period-1)+l)/period;
+    out[i] = 100 - (100/(1+ (avgL===0?100:avgG/avgL)));
+  }
+  return out;
+}
+function macd(closes){
+  const emaFast = ema(closes,12), emaSlow = ema(closes,26);
+  const line = closes.map((_,i)=> emaFast[i]-emaSlow[i]);
+  const signal = ema(line,9);
+  const hist = line.map((v,i)=> v-signal[i]);
+  return {line, signal, hist};
+}
+function sessionVWAP(bars){
+  let cumPV=0, cumV=0; const out=[];
+  let curDay=null;
+  bars.forEach(b=>{
+    const day = b.datetime.slice(0,10);
+    if(day!==curDay){ curDay=day; cumPV=0; cumV=0; }
+    const tp = (b.high+b.low+b.close)/3;
+    cumPV += tp*b.volume; cumV += b.volume;
+    out.push(cumV? cumPV/cumV : b.close);
+  });
+  return out;
+}
+function cmf(bars, period=20){
+  const out = new Array(bars.length).fill(null);
+  for(let i=period-1;i<bars.length;i++){
+    let mfvSum=0, volSum=0;
+    for(let j=i-period+1;j<=i;j++){
+      const b=bars[j];
+      const range = b.high-b.low;
+      const mfm = range===0 ? 0 : ((b.close-b.low)-(b.high-b.close))/range;
+      mfvSum += mfm*b.volume; volSum += b.volume;
+    }
+    out[i] = volSum? mfvSum/volSum : 0;
+  }
+  return out;
+}
+
+async function fetchBars(symbol, interval, apiKey){
+  const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=${interval}&outputsize=120&apikey=${apiKey}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if(data.status === 'error' || !data.values) throw new Error(data.message || 'API error');
+  return data.values.slice().reverse().map(v=>({
+    datetime:v.datetime, open:+v.open, high:+v.high, low:+v.low, close:+v.close, volume:+v.volume
+  }));
+}
+
+function computeAll(bars){
+  const closes = bars.map(b=>b.close);
+  const volumes = bars.map(b=>b.volume);
+  const rsiSeries = rsi(closes,14);
+  const rsiSmaSeries = sma(rsiSeries.map(v=>v===null?0:v),14);
+  const macdRes = macd(closes);
+  const vwapSeries = sessionVWAP(bars);
+  const volSmaSeries = sma(volumes,9);
+  const cmfSeries = cmf(bars,20);
+  const n = bars.length-1;
+  return {
+    price: closes[n],
+    vwap: vwapSeries[n],
+    rsi: rsiSeries[n], rsiPrev: rsiSeries[n-1],
+    rsiSma: rsiSmaSeries[n], rsiSmaPrev: rsiSmaSeries[n-1],
+    macdHist: macdRes.hist[n], macdHistPrev: macdRes.hist[n-1],
+    volume: volumes[n], volSma: volSmaSeries[n],
+    cmf: cmfSeries[n], cmfPrev: cmfSeries[n-1],
+    lastBarTime: bars[n].datetime
+  };
+}
+
+function evaluateConfluence(m){
+  const checks = {
+    trend:   { pass: m.price > m.vwap, label:'Price above VWAP', val: `${m.price.toFixed(2)} / ${m.vwap.toFixed(2)}` },
+    rsiTurn: { pass: m.rsiPrev<=m.rsiSmaPrev && m.rsi>m.rsiSma && m.rsi<65, label:'RSI crossing above its SMA', val: `${m.rsi.toFixed(1)}` },
+    macdTurn:{ pass: m.macdHistPrev<0 && m.macdHist>=m.macdHistPrev, label:'MACD histogram turning up', val: m.macdHist.toFixed(3) },
+    volume:  { pass: m.volume > m.volSma, label:'Volume above 9-avg', val: `${(m.volume/1000).toFixed(1)}K` },
+    cmf:     { pass: m.cmf > m.cmfPrev, label:'CMF rising', val: m.cmf.toFixed(2) }
+  };
+  const allPass = Object.values(checks).every(c=>c.pass);
+  return { checks, allPass };
+}
+
+function renderTicker(symbol, m, evalRes, error){
+  let el = document.getElementById('tk-'+symbol);
+  if(!el){
+    el = document.createElement('div');
+    el.className = 'ticker-card';
+    el.id = 'tk-'+symbol;
+    document.getElementById('tickerContainer').appendChild(el);
+  }
+  if(error){
+    el.innerHTML = `<div class="ticker-head"><span class="sym">${symbol}</span></div><div class="empty">${error}</div>`;
+    return;
+  }
+  const rows = Object.values(evalRes.checks).map(c=>
+    `<div class="check ${c.pass?'pass':''}"><span class="dot"></span><span class="label">${c.label}</span><span class="val">${c.val}</span></div>`
+  ).join('');
+  el.innerHTML = `
+    <div class="ticker-head"><span class="sym">${symbol}</span><span class="px">$${m.price.toFixed(2)}</span></div>
+    <div class="checks">${rows}</div>
+    <div class="confluence-banner ${evalRes.allPass?'ready':'wait'}">${evalRes.allPass?'All signals aligned':'Waiting for alignment'}</div>
+  `;
+}
+
+function addLog(symbol, price){
+  const list = document.getElementById('logList');
+  if(list.querySelector('.empty')) list.innerHTML = '';
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  const t = new Date().toLocaleTimeString();
+  entry.innerHTML = `<span><span class="tag">BUY</span> ${symbol} @ $${price.toFixed(2)}</span><span>${t}</span>`;
+  list.prepend(entry);
+}
+
+function beep(){
+  if(!document.getElementById('soundToggle').checked) return;
+  try{
+    const ctx = new (window.AudioContext||window.webkitAudioContext)();
+    [0,0.18,0.36].forEach(delay=>{
+      const o = ctx.createOscillator(), g = ctx.createGain();
+      o.type='sine'; o.frequency.value=880;
+      o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.15, ctx.currentTime+delay);
+      o.start(ctx.currentTime+delay); o.stop(ctx.currentTime+delay+0.15);
+    });
+  }catch(e){}
+}
+
+function triggerAlarm(symbol, price){
+  document.getElementById('alarmText').textContent = `${symbol} at $${price.toFixed(2)} — VWAP, RSI, MACD, volume and CMF all confirmed bullish.`;
+  document.getElementById('alarmOverlay').style.display='flex';
+  beep();
+  addLog(symbol, price);
+}
+function dismissAlarm(){ document.getElementById('alarmOverlay').style.display='none'; }
+
+async function pollOnce(){
+  const apiKey = document.getElementById('apiKey').value.trim();
+  const interval = document.getElementById('interval').value;
+  const symbols = document.getElementById('symbols').value.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean).slice(0,3);
+  const statusLine = document.getElementById('statusLine');
+  for(const symbol of symbols){
+    try{
+      const bars = await fetchBars(symbol, interval, apiKey);
+      if(bars.length < 40) throw new Error('Not enough bars returned yet');
+      const m = computeAll(bars);
+      const evalRes = evaluateConfluence(m);
+      renderTicker(symbol, m, evalRes, null);
+      if(evalRes.allPass && state.lastAlarmBar[symbol] !== m.lastBarTime){
+        state.lastAlarmBar[symbol] = m.lastBarTime;
+        triggerAlarm(symbol, m.price);
+      }
+    }catch(e){
+      renderTicker(symbol, null, null, e.message);
+    }
+  }
+  statusLine.textContent = `Last checked ${new Date().toLocaleTimeString()}. Next check in ${document.getElementById('poll').value}s.`;
+}
+
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  const btn = document.getElementById('startBtn');
+  if(!state.running){
+    const apiKey = document.getElementById('apiKey').value.trim();
+    if(!apiKey){ alert('Enter your Twelve Data API key first.'); return; }
+    localStorage.setItem('td_key', apiKey);
+    state.running = true;
+    btn.textContent = 'Stop monitoring';
+    btn.classList.add('stop');
+    pollOnce();
+    const secs = +document.getElementById('poll').value * 1000;
+    state.timer = setInterval(pollOnce, secs);
+  } else {
+    state.running = false;
+    clearInterval(state.timer);
+    btn.textContent = 'Start monitoring';
+    btn.classList.remove('stop');
+    document.getElementById('statusLine').textContent = 'Stopped.';
+  }
+});
+
+window.addEventListener('load', ()=>{
+  const saved = localStorage.getItem('td_key');
+  if(saved) document.getElementById('apiKey').value = saved;
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+  }
+});
+</script>
+</body>
+</html>
