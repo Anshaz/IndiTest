@@ -3,335 +3,588 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Confluence buy-signal monitor</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b0e11">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="icon" href="icon-192.png">
+<title>Confluence Scorer — Trading Alarm</title>
 <style>
-  :root{
-    --bg:#0b0e11; --panel:#12161b; --panel2:#161b21; --border:#242a31;
-    --text:#e6e9ec; --muted:#8b95a1; --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-    --sans: -apple-system, "Segoe UI", Roboto, sans-serif;
-    --green:#1fae6b; --green-dim:#123528; --red:#e0524f; --red-dim:#3a1c1b;
-    --amber:#e0a83f; --amber-dim:#3a2f14; --accent:#3f8ce0;
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-raised: #1c2128;
+    --border: #30363d;
+    --text-primary: #c9d1d9;
+    --text-secondary: #8b949e;
+    --text-tertiary: #6e7681;
+    --accent: #58a6ff;
+    --positive: #3fb950;
+    --warning: #d29922;
+    --danger: #f85149;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
-  *{box-sizing:border-box;}
-  body{background:var(--bg); color:var(--text); font-family:var(--sans); margin:0; padding:24px 16px 80px; max-width:900px; margin-inline:auto;}
-  h1{font-size:19px; font-weight:600; margin:0 0 4px;}
-  .sub{color:var(--muted); font-size:13px; margin:0 0 20px;}
-  .card{background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:16px; margin-bottom:16px;}
-  label{display:block; font-size:12px; color:var(--muted); margin-bottom:5px;}
-  input, select{width:100%; background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:6px; padding:9px 10px; font-size:14px; font-family:var(--mono);}
-  .row{display:flex; gap:12px; flex-wrap:wrap;}
-  .row > div{flex:1; min-width:140px;}
-  button{background:var(--accent); color:#fff; border:none; border-radius:6px; padding:10px 18px; font-size:14px; font-weight:600; cursor:pointer;}
-  button.stop{background:var(--red);}
-  button:disabled{opacity:0.5; cursor:not-allowed;}
-  .toolbar{display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap;}
-  .toggle{display:flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); cursor:pointer;}
-  .status-line{font-size:12px; color:var(--muted); margin-top:8px;}
-  .ticker-card{border:1px solid var(--border); border-radius:10px; padding:14px; margin-bottom:12px; background:var(--panel);}
-  .ticker-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
-  .ticker-head .sym{font-size:16px; font-weight:600; font-family:var(--mono);}
-  .ticker-head .px{font-size:14px; font-family:var(--mono); color:var(--muted);}
-  .checks{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;}
-  .check{display:flex; align-items:center; gap:8px; font-size:12px; padding:8px 10px; border-radius:6px; background:var(--panel2); border:1px solid var(--border);}
-  .dot{width:9px; height:9px; border-radius:50%; flex-shrink:0; background:var(--muted);}
-  .check.pass .dot{background:var(--green);}
-  .check.pass{border-color:var(--green-dim);}
-  .check .label{color:var(--text); font-weight:500;}
-  .check .val{color:var(--muted); font-family:var(--mono); margin-left:auto;}
-  .confluence-banner{margin-top:10px; padding:9px 12px; border-radius:6px; font-size:12px; font-weight:600; text-align:center;}
-  .confluence-banner.ready{background:var(--green-dim); color:var(--green);}
-  .confluence-banner.wait{background:var(--panel2); color:var(--muted);}
-  #alarmOverlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); display:none; align-items:center; justify-content:center; z-index:50;}
-  #alarmBox{background:var(--panel); border:2px solid var(--green); border-radius:12px; padding:28px 32px; text-align:center; max-width:320px;}
-  #alarmBox h2{color:var(--green); margin:0 0 6px; font-size:18px;}
-  #alarmBox p{color:var(--muted); font-size:13px; margin:0 0 18px;}
-  #alarmBox button{width:100%;}
-  .log{max-height:220px; overflow-y:auto; font-family:var(--mono); font-size:12px;}
-  .log-entry{padding:7px 0; border-bottom:1px solid var(--border); color:var(--muted); display:flex; justify-content:space-between;}
-  .log-entry .tag{color:var(--green);}
-  .disclaimer{font-size:11px; color:var(--muted); line-height:1.6; border-top:1px solid var(--border); padding-top:14px; margin-top:24px;}
-  .empty{color:var(--muted); font-size:13px; text-align:center; padding:20px 0;}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding: 24px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card h2 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text-secondary); }
+
+  .form-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .form-row label { display: block; font-size: 12px; color: var(--text-tertiary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .form-row input, .form-row select {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+    min-width: 200px;
+  }
+  .form-row input:focus, .form-row select:focus { outline: none; border-color: var(--accent); }
+  .form-group { flex: 1; min-width: 200px; }
+
+  .btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-secondary { background: var(--surface-raised); color: var(--text-primary); border: 1px solid var(--border); }
+  .btn-danger { background: var(--danger); }
+
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-tertiary); }
+  .dot.active { background: var(--positive); box-shadow: 0 0 6px var(--positive); }
+  .dot.error { background: var(--danger); }
+
+  .ticker-grid { display: grid; gap: 12px; }
+  .ticker-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+  }
+  .ticker-name { font-size: 18px; font-weight: 600; }
+  .ticker-price { font-size: 14px; color: var(--text-secondary); }
+  .score-pill {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 600;
+    border: 3px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+  .score-pill.go { border-color: var(--positive); color: var(--positive); }
+  .score-pill.watch { border-color: var(--warning); color: var(--warning); }
+  .score-pill.wait { border-color: var(--text-tertiary); color: var(--text-tertiary); }
+  .score-pill.hold { border-color: var(--danger); color: var(--danger); }
+
+  .conditions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .condition {
+    font-size: 11px; padding: 3px 8px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-tertiary);
+  }
+  .condition.on { background: color-mix(in srgb, var(--positive) 15%, transparent); border-color: var(--positive); color: var(--positive); }
+  .condition.off { background: color-mix(in srgb, var(--danger) 10%, transparent); border-color: color-mix(in srgb, var(--danger) 40%, transparent); color: var(--danger); }
+
+  .action-text { font-size: 13px; margin-top: 8px; padding: 10px 12px; border-radius: 8px; background: var(--surface); border-left: 3px solid var(--border); }
+  .action-text.go { border-left-color: var(--positive); background: color-mix(in srgb, var(--positive) 8%, transparent); }
+  .action-text.watch { border-left-color: var(--warning); background: color-mix(in srgb, var(--warning) 8%, transparent); }
+  .action-text.wait { border-left-color: var(--text-tertiary); }
+
+  .log { max-height: 200px; overflow-y: auto; font-size: 12px; font-family: monospace; }
+  .log-entry { padding: 6px 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+  .log-entry:last-child { border-bottom: none; }
+  .log-time { color: var(--text-tertiary); margin-right: 8px; }
+  .log-bull { color: var(--positive); }
+  .log-bear { color: var(--danger); }
+
+  .hint { font-size: 12px; color: var(--text-tertiary); margin-top: 6px; line-height: 1.5; }
+  .hint a { color: var(--accent); text-decoration: none; }
+  .hint a:hover { text-decoration: underline; }
+
+  @media (max-width: 600px) {
+    body { padding: 16px; }
+    .ticker-card { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
 
-<h1>Confluence buy-signal monitor</h1>
-<p class="sub">Watches VWAP, RSI, MACD, volume and CMF together and alarms when they all line up bullish on the same closed bar.</p>
+<h1>Confluence Scorer</h1>
+<div class="subtitle">Daily timeframe · 5-layer confirmation · Client-side only</div>
 
 <div class="card">
-  <div class="row">
-    <div>
-      <label for="apiKey">Twelve Data API key</label>
-      <input id="apiKey" type="password" placeholder="Paste your free API key">
+  <h2>Configuration</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Twelve Data API Key</label>
+      <input type="password" id="apiKey" placeholder="Paste your free API key" autocomplete="off">
+      <div class="hint">Get a free key at <a href="https://twelvedata.com" target="_blank">twelvedata.com</a> (800 calls/day)</div>
     </div>
-    <div>
-      <label for="symbols">Tickers (comma separated, max 3)</label>
-      <input id="symbols" type="text" placeholder="e.g. BBAI, NVO" value="BBAI">
+    <div class="form-group">
+      <label>Tickers (comma-separated)</label>
+      <input type="text" id="tickers" placeholder="BBAI, AAPL, TSLA" value="BBAI">
     </div>
   </div>
-  <div class="row" style="margin-top:12px;">
-    <div>
-      <label for="interval">Candle interval</label>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Poll interval (minutes)</label>
       <select id="interval">
-        <option value="1min">1 minute</option>
-        <option value="5min" selected>5 minutes</option>
-        <option value="15min">15 minutes</option>
-        <option value="1h">1 hour</option>
-        <option value="1day">1 day</option>
+        <option value="2">2 min</option>
+        <option value="5" selected>5 min</option>
+        <option value="10">10 min</option>
+        <option value="15">15 min</option>
       </select>
     </div>
-    <div>
-      <label for="poll">Check every</label>
-      <select id="poll">
-        <option value="60">60 seconds</option>
-        <option value="120" selected>2 minutes</option>
-        <option value="300">5 minutes</option>
-      </select>
+    <div class="form-group">
+      <label>Notification</label>
+      <button class="btn btn-secondary" id="notifBtn" onclick="requestNotif()">Enable browser alerts</button>
     </div>
   </div>
-  <div class="toolbar">
-    <button id="startBtn">Start monitoring</button>
-    <label class="toggle"><input type="checkbox" id="soundToggle" checked> Sound on alarm</label>
+  <div class="form-row" style="margin-top:8px;">
+    <button class="btn" id="startBtn" onclick="start()">Start monitoring</button>
+    <button class="btn btn-secondary" id="stopBtn" onclick="stop()" disabled>Stop</button>
+    <button class="btn btn-secondary" onclick="testSound()">Test sound</button>
   </div>
-  <div class="status-line" id="statusLine">Idle. Enter a key and tickers, then start.</div>
+  <div class="status-bar">
+    <span id="statusDot" class="dot"></span>
+    <span id="statusText">Idle</span>
+    <span id="nextCheck"></span>
+  </div>
 </div>
-
-<div id="tickerContainer"></div>
 
 <div class="card">
-  <label style="margin-bottom:8px;">Signal log</label>
-  <div class="log" id="logList"><div class="empty">No signals yet.</div></div>
+  <h2>Live scores</h2>
+  <div id="tickerGrid" class="ticker-grid">
+    <div style="color:var(--text-tertiary); font-size:14px; text-align:center; padding:20px;">Start monitoring to see scores</div>
+  </div>
 </div>
 
-<div class="disclaimer">
-  This tool flags when several technical indicators align — it is not financial advice and does not guarantee outcomes. Data is delayed on the free tier and rate-limited (800 calls/day, 8/min). Runs only while this tab is open. Verify signals yourself before trading.
+<div class="card">
+  <h2>Alert log</h2>
+  <div id="log" class="log">
+    <div class="log-entry"><span class="log-time">--:--</span> Waiting to start...</div>
+  </div>
 </div>
 
-<div id="alarmOverlay">
-  <div id="alarmBox">
-    <h2>Confluence buy signal</h2>
-    <p id="alarmText"></p>
-    <button onclick="dismissAlarm()">Dismiss</button>
+<div class="card">
+  <h2>How it works</h2>
+  <div class="hint">
+    <strong>5-layer scoring (0–5):</strong><br>
+    1. Price above VWAP — confirms right-side bias<br>
+    2. RSI crosses above SMA(14) and RSI &lt; 65 — momentum turning, not overbought<br>
+    3. MACD histogram turning up — downward momentum decelerating<br>
+    4. Volume above SMA(9) — conviction behind the move<br>
+    5. Price near Volume Profile HVN — entering at real liquidity support<br><br>
+    <strong>Alerts fire when:</strong> score jumps to 4 or 5, or drops from 5 to 3 or below.<br>
+    <strong>Rate limit:</strong> stays under 8 calls/min (free tier). 1 ticker × 5 min = 288 calls/day.<br>
+    <strong>Data:</strong> daily OHLCV from Twelve Data. Indicators computed client-side.
   </div>
 </div>
 
 <script>
-const state = { running:false, timer:null, tickers:{}, lastAlarmBar:{} };
+// ===================== STATE =====================
+let apiKey = localStorage.getItem('td_api_key') || '';
+let tickers = [];
+let intervalMin = 5;
+let timer = null;
+let isRunning = false;
+let scores = {};      // ticker -> current score
+let prevScores = {};  // ticker -> previous score
+let logs = [];
 
-function ema(values, period){
-  const k = 2/(period+1);
-  const out = [values[0]];
-  for(let i=1;i<values.length;i++) out.push(values[i]*k + out[i-1]*(1-k));
-  return out;
+if (apiKey) document.getElementById('apiKey').value = apiKey;
+
+// ===================== AUDIO =====================
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function beep(freq = 880, duration = 0.15, type = 'sine') {
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch(e) {}
 }
-function sma(values, period){
-  return values.map((_,i)=> i<period-1 ? null : values.slice(i-period+1,i+1).reduce((a,b)=>a+b,0)/period);
+function alertSound() {
+  beep(880, 0.12); setTimeout(() => beep(1100, 0.12), 150);
 }
-function rsi(closes, period=14){
-  const out = new Array(closes.length).fill(null);
-  let gains=0, losses=0;
-  for(let i=1;i<=period;i++){
-    const d = closes[i]-closes[i-1];
-    if(d>=0) gains+=d; else losses-=d;
-  }
-  let avgG=gains/period, avgL=losses/period;
-  out[period] = 100 - (100/(1+ (avgL===0?100:avgG/avgL)));
-  for(let i=period+1;i<closes.length;i++){
-    const d = closes[i]-closes[i-1];
-    const g = d>0?d:0, l = d<0?-d:0;
-    avgG = (avgG*(period-1)+g)/period;
-    avgL = (avgL*(period-1)+l)/period;
-    out[i] = 100 - (100/(1+ (avgL===0?100:avgG/avgL)));
-  }
-  return out;
+function testSound() {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  alertSound();
 }
-function macd(closes){
-  const emaFast = ema(closes,12), emaSlow = ema(closes,26);
-  const line = closes.map((_,i)=> emaFast[i]-emaSlow[i]);
-  const signal = ema(line,9);
-  const hist = line.map((v,i)=> v-signal[i]);
-  return {line, signal, hist};
-}
-function sessionVWAP(bars){
-  let cumPV=0, cumV=0; const out=[];
-  let curDay=null;
-  bars.forEach(b=>{
-    const day = b.datetime.slice(0,10);
-    if(day!==curDay){ curDay=day; cumPV=0; cumV=0; }
-    const tp = (b.high+b.low+b.close)/3;
-    cumPV += tp*b.volume; cumV += b.volume;
-    out.push(cumV? cumPV/cumV : b.close);
+
+// ===================== NOTIFICATIONS =====================
+function requestNotif() {
+  if (!('Notification' in window)) { log('Browser notifications not supported'); return; }
+  Notification.requestPermission().then(p => {
+    if (p === 'granted') { log('Browser alerts enabled'); document.getElementById('notifBtn').textContent = 'Alerts enabled'; }
+    else { log('Notification permission denied'); }
   });
-  return out;
 }
-function cmf(bars, period=20){
-  const out = new Array(bars.length).fill(null);
-  for(let i=period-1;i<bars.length;i++){
-    let mfvSum=0, volSum=0;
-    for(let j=i-period+1;j<=i;j++){
-      const b=bars[j];
-      const range = b.high-b.low;
-      const mfm = range===0 ? 0 : ((b.close-b.low)-(b.high-b.close))/range;
-      mfvSum += mfm*b.volume; volSum += b.volume;
-    }
-    out[i] = volSum? mfvSum/volSum : 0;
+function sendNotif(title, body) {
+  if (Notification.permission === 'granted') {
+    new Notification(title, { body, icon: '', requireInteraction: false });
+  }
+}
+
+// ===================== LOGGING =====================
+function log(msg, type = '') {
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  logs.unshift({ time, msg, type });
+  if (logs.length > 50) logs.pop();
+  renderLog();
+}
+function renderLog() {
+  const el = document.getElementById('log');
+  el.innerHTML = logs.map(l => {
+    const cls = l.type === 'bull' ? 'log-bull' : l.type === 'bear' ? 'log-bear' : '';
+    return `<div class="log-entry"><span class="log-time">${l.time}</span><span class="${cls}">${l.msg}</span></div>`;
+  }).join('');
+}
+
+// ===================== INDICATOR MATH =====================
+function ema(data, period) {
+  const k = 2 / (period + 1);
+  const out = [];
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    if (i < period - 1) { out.push(null); sum += data[i]; continue; }
+    if (i === period - 1) { sum += data[i]; out.push(sum / period); continue; }
+    out.push(data[i] * k + out[i - 1] * (1 - k));
   }
   return out;
 }
+function sma(data, period) {
+  const out = [];
+  for (let i = 0; i < data.length; i++) {
+    if (i < period - 1) { out.push(null); continue; }
+    let sum = 0;
+    for (let j = 0; j < period; j++) sum += data[i - j];
+    out.push(sum / period);
+  }
+  return out;
+}
+function rsi(closes, period = 14) {
+  const out = [];
+  let gains = 0, losses = 0;
+  for (let i = 0; i < closes.length; i++) {
+    if (i === 0) { out.push(null); continue; }
+    const change = closes[i] - closes[i - 1];
+    const gain = change > 0 ? change : 0;
+    const loss = change < 0 ? -change : 0;
+    if (i < period) {
+      gains += gain; losses += loss;
+      out.push(null); continue;
+    }
+    if (i === period) {
+      gains = (gains + gain) / period;
+      losses = (losses + loss) / period;
+    } else {
+      gains = (gains * (period - 1) + gain) / period;
+      losses = (losses * (period - 1) + loss) / period;
+    }
+    if (losses === 0) { out.push(100); continue; }
+    const rs = gains / losses;
+    out.push(100 - (100 / (1 + rs)));
+  }
+  return out;
+}
+function macd(closes, fast = 12, slow = 26, signal = 9) {
+  const emaFast = ema(closes, fast);
+  const emaSlow = ema(closes, slow);
+  const macdLine = emaFast.map((v, i) => v !== null && emaSlow[i] !== null ? v - emaSlow[i] : null);
+  const signalLine = ema(macdLine.filter(v => v !== null), signal);
+  // pad signalLine to match macdLine length
+  const paddedSignal = new Array(macdLine.length).fill(null);
+  let si = signalLine.length - 1;
+  for (let i = macdLine.length - 1; i >= 0 && si >= 0; i--) {
+    if (macdLine[i] !== null) { paddedSignal[i] = signalLine[si]; si--; }
+  }
+  const histogram = macdLine.map((v, i) => v !== null && paddedSignal[i] !== null ? v - paddedSignal[i] : null);
+  return { macdLine, signalLine: paddedSignal, histogram };
+}
+function vwap(ohlcv) {
+  // ohlcv: array of {o,h,l,c,v}
+  const out = [];
+  let cumTPV = 0, cumVol = 0;
+  for (let i = 0; i < ohlcv.length; i++) {
+    const tp = (ohlcv[i].h + ohlcv[i].l + ohlcv[i].c) / 3;
+    cumTPV += tp * ohlcv[i].v;
+    cumVol += ohlcv[i].v;
+    out.push(cumVol > 0 ? cumTPV / cumVol : tp);
+  }
+  return out;
+}
+function volumeProfileHVN(ohlcv, bins = 20) {
+  // Find the price level with highest volume in recent data
+  const minP = Math.min(...ohlcv.map(d => d.l));
+  const maxP = Math.max(...ohlcv.map(d => d.h));
+  const binSize = (maxP - minP) / bins || 1;
+  const volMap = new Array(bins).fill(0);
+  for (const d of ohlcv) {
+    const tp = (d.h + d.l + d.c) / 3;
+    const idx = Math.min(Math.floor((tp - minP) / binSize), bins - 1);
+    volMap[idx] += d.v;
+  }
+  let maxVol = 0, maxIdx = 0;
+  for (let i = 0; i < bins; i++) { if (volMap[i] > maxVol) { maxVol = volMap[i]; maxIdx = i; } }
+  const hvnCenter = minP + (maxIdx + 0.5) * binSize;
+  return hvnCenter;
+}
 
-async function fetchBars(symbol, interval, apiKey){
-  const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbol)}&interval=${interval}&outputsize=120&apikey=${apiKey}`;
+// ===================== SCORING =====================
+function evaluateTicker(ohlcv) {
+  // ohlcv: array of {o,h,l,c,v} oldest first
+  const closes = ohlcv.map(d => d.c);
+  const volumes = ohlcv.map(d => d.v);
+  const last = ohlcv[ohlcv.length - 1];
+  const prev = ohlcv[ohlcv.length - 2];
+
+  // Need enough data
+  if (ohlcv.length < 50) return { score: 0, conditions: [], action: 'Insufficient data (need 50+ bars)', details: {} };
+
+  // 1. VWAP
+  const vwapVals = vwap(ohlcv);
+  const vwapLast = vwapVals[vwapVals.length - 1];
+  const aboveVWAP = last.c > vwapLast;
+
+  // 2. RSI + SMA cross
+  const rsiVals = rsi(closes, 14);
+  const rsiSMA = sma(rsiVals.filter(v => v !== null), 14);
+  // pad rsiSMA
+  const rsiSMA_padded = new Array(rsiVals.length).fill(null);
+  let rsiSi = rsiSMA.length - 1;
+  for (let i = rsiVals.length - 1; i >= 0 && rsiSi >= 0; i--) {
+    if (rsiVals[i] !== null) { rsiSMA_padded[i] = rsiSMA[rsiSi]; rsiSi--; }
+  }
+  const rsiNow = rsiVals[rsiVals.length - 1];
+  const rsiPrev = rsiVals[rsiVals.length - 2];
+  const rsiSmaNow = rsiSMA_padded[rsiSMA_padded.length - 1];
+  const rsiSmaPrev = rsiSMA_padded[rsiSMA_padded.length - 2];
+  const rsiCross = rsiNow > rsiSmaNow && (rsiPrev === null || rsiPrev <= rsiSmaPrev);
+  const rsiNotOverbought = rsiNow < 65;
+  const rsiSignal = rsiCross && rsiNotOverbought;
+
+  // 3. MACD histogram turning up
+  const macdData = macd(closes);
+  const hist = macdData.histogram;
+  const histNow = hist[hist.length - 1];
+  const histPrev = hist[hist.length - 2];
+  const histPrev2 = hist[hist.length - 3];
+  const macdTurning = histNow !== null && histPrev !== null && histNow > histPrev && (histPrev2 === null || histPrev <= histPrev2);
+  // Also require histogram is improving from negative or near-zero
+  const macdImproving = histNow > histPrev;
+
+  // 4. Volume above SMA(9)
+  const volSMA = sma(volumes, 9);
+  const volNow = volumes[volumes.length - 1];
+  const volSmaNow = volSMA[volSMA.length - 1];
+  const volAbove = volNow > volSmaNow;
+
+  // 5. Near Volume Profile HVN
+  const hvn = volumeProfileHVN(ohlcv);
+  const range = Math.max(...closes) - Math.min(...closes);
+  const nearHVN = range > 0 && Math.abs(last.c - hvn) / range < 0.08; // within 8% of range
+
+  const conditions = [
+    { name: 'Above VWAP', on: aboveVWAP },
+    { name: 'RSI cross <65', on: rsiSignal },
+    { name: 'MACD hist up', on: macdImproving },
+    { name: 'Volume > SMA(9)', on: volAbove },
+    { name: 'Near HVN', on: nearHVN }
+  ];
+  const score = conditions.filter(c => c.on).length;
+
+  const actions = {
+    0: 'No setup. Wait for momentum and liquidity to align.',
+    1: 'Weak signal. One layer alone is not enough.',
+    2: 'Building — watchlist. Momentum returning but no volume or liquidity confirmation.',
+    3: 'Building — plan entry. Momentum aligning above VWAP. Watch for volume on next candle.',
+    4: 'Setup active. Strong momentum + volume. Enter only near a volume-profile support zone.',
+    5: 'High conviction — execute. All layers aligned. Stop below HVN or last higher low.'
+  };
+
+  return {
+    score,
+    conditions,
+    action: actions[score] || actions[0],
+    details: {
+      price: last.c,
+      vwap: vwapLast,
+      rsi: rsiNow ? rsiNow.toFixed(1) : '-',
+      macdHist: histNow ? histNow.toFixed(3) : '-',
+      volume: volNow,
+      volSMA: volSmaNow ? Math.round(volSmaNow) : '-',
+      hvn: hvn.toFixed(2)
+    }
+  };
+}
+
+// ===================== API =====================
+async function fetchDaily(ticker, key) {
+  const url = `https://api.twelvedata.com/time_series?symbol=${ticker}&interval=1day&outputsize=100&apikey=${key}`;
   const res = await fetch(url);
   const data = await res.json();
-  if(data.status === 'error' || !data.values) throw new Error(data.message || 'API error');
-  return data.values.slice().reverse().map(v=>({
-    datetime:v.datetime, open:+v.open, high:+v.high, low:+v.low, close:+v.close, volume:+v.volume
+  if (data.status === 'error') throw new Error(data.message);
+  if (!data.values) throw new Error('No data returned');
+  // values are newest first from API
+  const values = data.values.reverse(); // oldest first
+  return values.map(v => ({
+    o: parseFloat(v.open),
+    h: parseFloat(v.high),
+    l: parseFloat(v.low),
+    c: parseFloat(v.close),
+    v: parseFloat(v.volume)
   }));
 }
 
-function computeAll(bars){
-  const closes = bars.map(b=>b.close);
-  const volumes = bars.map(b=>b.volume);
-  const rsiSeries = rsi(closes,14);
-  const rsiSmaSeries = sma(rsiSeries.map(v=>v===null?0:v),14);
-  const macdRes = macd(closes);
-  const vwapSeries = sessionVWAP(bars);
-  const volSmaSeries = sma(volumes,9);
-  const cmfSeries = cmf(bars,20);
-  const n = bars.length-1;
-  return {
-    price: closes[n],
-    vwap: vwapSeries[n],
-    rsi: rsiSeries[n], rsiPrev: rsiSeries[n-1],
-    rsiSma: rsiSmaSeries[n], rsiSmaPrev: rsiSmaSeries[n-1],
-    macdHist: macdRes.hist[n], macdHistPrev: macdRes.hist[n-1],
-    volume: volumes[n], volSma: volSmaSeries[n],
-    cmf: cmfSeries[n], cmfPrev: cmfSeries[n-1],
-    lastBarTime: bars[n].datetime
-  };
-}
-
-function evaluateConfluence(m){
-  const checks = {
-    trend:   { pass: m.price > m.vwap, label:'Price above VWAP', val: `${m.price.toFixed(2)} / ${m.vwap.toFixed(2)}` },
-    rsiTurn: { pass: m.rsiPrev<=m.rsiSmaPrev && m.rsi>m.rsiSma && m.rsi<65, label:'RSI crossing above its SMA', val: `${m.rsi.toFixed(1)}` },
-    macdTurn:{ pass: m.macdHistPrev<0 && m.macdHist>=m.macdHistPrev, label:'MACD histogram turning up', val: m.macdHist.toFixed(3) },
-    volume:  { pass: m.volume > m.volSma, label:'Volume above 9-avg', val: `${(m.volume/1000).toFixed(1)}K` },
-    cmf:     { pass: m.cmf > m.cmfPrev, label:'CMF rising', val: m.cmf.toFixed(2) }
-  };
-  const allPass = Object.values(checks).every(c=>c.pass);
-  return { checks, allPass };
-}
-
-function renderTicker(symbol, m, evalRes, error){
-  let el = document.getElementById('tk-'+symbol);
-  if(!el){
-    el = document.createElement('div');
-    el.className = 'ticker-card';
-    el.id = 'tk-'+symbol;
-    document.getElementById('tickerContainer').appendChild(el);
-  }
-  if(error){
-    el.innerHTML = `<div class="ticker-head"><span class="sym">${symbol}</span></div><div class="empty">${error}</div>`;
+// ===================== UI RENDER =====================
+function renderGrid(results) {
+  const grid = document.getElementById('tickerGrid');
+  if (!results.length) {
+    grid.innerHTML = '<div style="color:var(--text-tertiary); font-size:14px; text-align:center; padding:20px;">No tickers configured</div>';
     return;
   }
-  const rows = Object.values(evalRes.checks).map(c=>
-    `<div class="check ${c.pass?'pass':''}"><span class="dot"></span><span class="label">${c.label}</span><span class="val">${c.val}</span></div>`
-  ).join('');
-  el.innerHTML = `
-    <div class="ticker-head"><span class="sym">${symbol}</span><span class="px">$${m.price.toFixed(2)}</span></div>
-    <div class="checks">${rows}</div>
-    <div class="confluence-banner ${evalRes.allPass?'ready':'wait'}">${evalRes.allPass?'All signals aligned':'Waiting for alignment'}</div>
-  `;
+  grid.innerHTML = results.map(r => {
+    const pillClass = r.score >= 4 ? 'go' : r.score >= 2 ? 'watch' : r.score >= 1 ? 'wait' : 'hold';
+    const actionClass = r.score >= 4 ? 'go' : r.score >= 2 ? 'watch' : 'wait';
+    const conds = r.conditions.map(c => `<span class="condition ${c.on ? 'on' : 'off'}">${c.on ? '✓' : '✗'} ${c.name}</span>`).join('');
+    return `
+      <div class="ticker-card">
+        <div>
+          <div class="ticker-name">${r.ticker}</div>
+          <div class="ticker-price">$${r.details.price.toFixed(2)} · VWAP $${r.details.vwap.toFixed(2)} · RSI ${r.details.rsi}</div>
+          <div class="conditions">${conds}</div>
+          <div class="action-text ${actionClass}">${r.action}</div>
+        </div>
+        <div class="score-pill ${pillClass}">${r.score}/5</div>
+      </div>
+    `;
+  }).join('');
 }
 
-function addLog(symbol, price){
-  const list = document.getElementById('logList');
-  if(list.querySelector('.empty')) list.innerHTML = '';
-  const entry = document.createElement('div');
-  entry.className = 'log-entry';
-  const t = new Date().toLocaleTimeString();
-  entry.innerHTML = `<span><span class="tag">BUY</span> ${symbol} @ $${price.toFixed(2)}</span><span>${t}</span>`;
-  list.prepend(entry);
-}
+// ===================== MAIN LOOP =====================
+async function checkAll() {
+  if (!isRunning) return;
+  const key = document.getElementById('apiKey').value.trim();
+  if (!key) { log('API key missing'); stop(); return; }
+  localStorage.setItem('td_api_key', key);
 
-function beep(){
-  if(!document.getElementById('soundToggle').checked) return;
-  try{
-    const ctx = new (window.AudioContext||window.webkitAudioContext)();
-    [0,0.18,0.36].forEach(delay=>{
-      const o = ctx.createOscillator(), g = ctx.createGain();
-      o.type='sine'; o.frequency.value=880;
-      o.connect(g); g.connect(ctx.destination);
-      g.gain.setValueAtTime(0.15, ctx.currentTime+delay);
-      o.start(ctx.currentTime+delay); o.stop(ctx.currentTime+delay+0.15);
-    });
-  }catch(e){}
-}
+  document.getElementById('statusDot').className = 'dot active';
+  document.getElementById('statusText').textContent = 'Checking...';
 
-function triggerAlarm(symbol, price){
-  document.getElementById('alarmText').textContent = `${symbol} at $${price.toFixed(2)} — VWAP, RSI, MACD, volume and CMF all confirmed bullish.`;
-  document.getElementById('alarmOverlay').style.display='flex';
-  beep();
-  addLog(symbol, price);
-}
-function dismissAlarm(){ document.getElementById('alarmOverlay').style.display='none'; }
+  const results = [];
+  for (const ticker of tickers) {
+    try {
+      const data = await fetchDaily(ticker, key);
+      const ev = evaluateTicker(data);
+      ev.ticker = ticker;
+      results.push(ev);
 
-async function pollOnce(){
-  const apiKey = document.getElementById('apiKey').value.trim();
-  const interval = document.getElementById('interval').value;
-  const symbols = document.getElementById('symbols').value.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean).slice(0,3);
-  const statusLine = document.getElementById('statusLine');
-  for(const symbol of symbols){
-    try{
-      const bars = await fetchBars(symbol, interval, apiKey);
-      if(bars.length < 40) throw new Error('Not enough bars returned yet');
-      const m = computeAll(bars);
-      const evalRes = evaluateConfluence(m);
-      renderTicker(symbol, m, evalRes, null);
-      if(evalRes.allPass && state.lastAlarmBar[symbol] !== m.lastBarTime){
-        state.lastAlarmBar[symbol] = m.lastBarTime;
-        triggerAlarm(symbol, m.price);
+      // Alert logic
+      const prev = prevScores[ticker] !== undefined ? prevScores[ticker] : -1;
+      if (prev >= 0) {
+        if (ev.score >= 4 && prev < 4) {
+          const msg = `${ticker}: Score jumped to ${ev.score}/5 — ${ev.action}`;
+          log(msg, 'bull');
+          sendNotif('Confluence Alarm — ' + ticker, msg);
+          alertSound();
+        } else if (ev.score <= 2 && prev >= 4) {
+          const msg = `${ticker}: Score dropped to ${ev.score}/5 — consider exit`;
+          log(msg, 'bear');
+          sendNotif('Confluence Warning — ' + ticker, msg);
+          alertSound();
+        }
       }
-    }catch(e){
-      renderTicker(symbol, null, null, e.message);
+      prevScores[ticker] = ev.score;
+    } catch (e) {
+      log(`${ticker}: Error — ${e.message}`);
+      results.push({ ticker, score: 0, conditions: [], action: 'Error: ' + e.message, details: { price: 0, vwap: 0, rsi: '-', macdHist: '-', volume: 0, volSMA: '-', hvn: 0 } });
     }
   }
-  statusLine.textContent = `Last checked ${new Date().toLocaleTimeString()}. Next check in ${document.getElementById('poll').value}s.`;
+
+  renderGrid(results);
+  const next = new Date(Date.now() + intervalMin * 60000);
+  document.getElementById('statusText').textContent = 'Monitoring ' + tickers.length + ' ticker(s)';
+  document.getElementById('nextCheck').textContent = 'Next: ' + next.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+  document.getElementById('statusDot').className = 'dot active';
 }
 
-document.getElementById('startBtn').addEventListener('click', ()=>{
-  const btn = document.getElementById('startBtn');
-  if(!state.running){
-    const apiKey = document.getElementById('apiKey').value.trim();
-    if(!apiKey){ alert('Enter your Twelve Data API key first.'); return; }
-    localStorage.setItem('td_key', apiKey);
-    state.running = true;
-    btn.textContent = 'Stop monitoring';
-    btn.classList.add('stop');
-    pollOnce();
-    const secs = +document.getElementById('poll').value * 1000;
-    state.timer = setInterval(pollOnce, secs);
-  } else {
-    state.running = false;
-    clearInterval(state.timer);
-    btn.textContent = 'Start monitoring';
-    btn.classList.remove('stop');
-    document.getElementById('statusLine').textContent = 'Stopped.';
-  }
-});
+function start() {
+  const raw = document.getElementById('tickers').value;
+  tickers = raw.split(',').map(t => t.trim().toUpperCase()).filter(t => t);
+  if (!tickers.length) { log('Enter at least one ticker'); return; }
+  intervalMin = parseInt(document.getElementById('interval').value);
+  const key = document.getElementById('apiKey').value.trim();
+  if (!key) { log('Enter your Twelve Data API key'); return; }
 
-window.addEventListener('load', ()=>{
-  const saved = localStorage.getItem('td_key');
-  if(saved) document.getElementById('apiKey').value = saved;
-  if('serviceWorker' in navigator){
-    navigator.serviceWorker.register('service-worker.js').catch(()=>{});
-  }
-});
+  isRunning = true;
+  document.getElementById('startBtn').disabled = true;
+  document.getElementById('stopBtn').disabled = false;
+  log('Started monitoring: ' + tickers.join(', '));
+
+  checkAll();
+  timer = setInterval(checkAll, intervalMin * 60000);
+}
+
+function stop() {
+  isRunning = false;
+  if (timer) clearInterval(timer);
+  timer = null;
+  document.getElementById('startBtn').disabled = false;
+  document.getElementById('stopBtn').disabled = true;
+  document.getElementById('statusDot').className = 'dot';
+  document.getElementById('statusText').textContent = 'Stopped';
+  document.getElementById('nextCheck').textContent = '';
+  log('Monitoring stopped');
+}
+
+// Resume audio context on first interaction
+document.addEventListener('click', () => {
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}, { once: true });
 </script>
+
 </body>
 </html>
