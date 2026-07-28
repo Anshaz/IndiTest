@@ -274,6 +274,27 @@
   }
   .ticker-tag .remove:hover { color: var(--danger); }
 
+  .profile-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-size: 10px;
+    padding: 1px 4px;
+    margin-left: 2px;
+    cursor: pointer;
+    font-family: inherit;
+    min-width: auto;
+    width: auto;
+  }
+  .profile-select:focus { outline: none; border-color: var(--accent); }
+  .profile-select option {
+    background: var(--surface-raised);
+    color: var(--text-primary);
+    font-size: 12px;
+    padding: 4px;
+  }
+
   @media (max-width: 600px) {
     body { padding: 16px; }
     .timeframe-row { grid-template-columns: 1fr; }
@@ -297,14 +318,7 @@
       <input type="password" id="apiKey" placeholder="Paste your free API key" autocomplete="off">
       <div class="hint">Get a free key at <a href="https://twelvedata.com">twelvedata.com</a> (800 calls/day)</div>
     </div>
-    <div class="form-group">
-      <label>Stock profile</label>
-      <select id="profile">
-        <option value="spec">Speculative / low-float (e.g. BBAI, MARA)</option>
-        <option value="stable">Stable / high-float (e.g. AAPL, MSFT)</option>
-      </select>
-      <div class="hint">Changes scoring thresholds to match how the stock moves</div>
-    </div>
+
   </div>
   <div class="form-row">
     <div class="form-group">
@@ -330,7 +344,7 @@
         <option value="TDD">TDD : TDD</option>
         <option value="TSLA">TSLA : Tesla</option>
       </select>
-      <div class="hint">Hold Ctrl/Cmd to select multiple. Selected tickers will be analyzed.</div>
+      <div class="hint">Hold Ctrl/Cmd to select multiple. Click a tag's dropdown to set Spec/Stable profile.</div>
       <div id="watchlistTags" style="margin-top:8px;"></div>
     </div>
     <div class="form-group">
@@ -636,12 +650,62 @@ function toggleSection(id) {
   chevron.classList.toggle('open');
 }
 
+// ===================== PER-TICKER PROFILES =====================
+const DEFAULT_PROFILES = {
+  "BBAI": "spec",
+  "BTC": "spec",
+  "HIMS": "spec",
+  "MARA": "spec",
+  "PLTR": "spec",
+  "SOFI": "spec",
+  "TDD": "spec"
+};
+
+let watchlistProfiles = {};
+
+function loadProfiles() {
+  try {
+    const saved = localStorage.getItem('confluence_profiles');
+    if (saved) {
+      watchlistProfiles = JSON.parse(saved);
+    } else {
+      watchlistProfiles = { ...DEFAULT_PROFILES };
+      saveProfiles();
+    }
+  } catch (e) {
+    watchlistProfiles = { ...DEFAULT_PROFILES };
+  }
+}
+
+function saveProfiles() {
+  localStorage.setItem('confluence_profiles', JSON.stringify(watchlistProfiles));
+}
+
+function setProfile(ticker, profile) {
+  watchlistProfiles[ticker] = profile;
+  saveProfiles();
+  log(ticker + ' profile set to ' + (profile === 'spec' ? 'Speculative' : 'Stable'));
+}
+
+function getTickerProfile(ticker) {
+  return watchlistProfiles[ticker] || 'stable';
+}
+
 // ===================== WATCHLIST MANAGEMENT =====================
 function updateWatchlistDisplay() {
   const select = document.getElementById('watchlist');
   const container = document.getElementById('watchlistTags');
   const selected = Array.from(select.selectedOptions).map(o => o.value);
-  container.innerHTML = selected.map(t => `<span class="ticker-tag">${t} <span class="remove" onclick="removeFromWatchlist('${t}')">×</span></span>`).join('');
+  container.innerHTML = selected.map(t => {
+    const profile = getTickerProfile(t);
+    return `<span class="ticker-tag">${t} 
+      <select class="profile-select" onchange="setProfile('${t}', this.value)" title="Set profile for ${t}">
+        <option value="spec" ${profile==='spec'?'selected':''}>Spec</option>
+        <option value="stable" ${profile==='stable'?'selected':''}>Stable</option>
+      </select>
+      <span class="remove" onclick="removeFromWatchlist('${t}')">×</span>
+    </span>`;
+  }).join('');
 }
 function removeFromWatchlist(ticker) {
   const select = document.getElementById('watchlist');
@@ -661,9 +725,13 @@ function addToWatchlist() {
     opt.textContent = t;
     opt.selected = true;
     select.appendChild(opt);
+    if (!watchlistProfiles[t]) {
+      watchlistProfiles[t] = 'stable';
+    }
   });
   if (newTickers.length) {
     input.value = '';
+    saveProfiles();
     updateWatchlistDisplay();
     log('Added to watchlist: ' + newTickers.join(', '));
   }
@@ -673,6 +741,7 @@ function addToWatchlist() {
 let apiKey = localStorage.getItem('td_api_key') || '';
 let logs = [];
 if (apiKey) document.getElementById('apiKey').value = apiKey;
+loadProfiles();
 
 // ===================== LOGGING =====================
 function log(msg, type = '') {
@@ -839,8 +908,8 @@ function atrPercentile(ohlcv, atrPeriod = 14, lookback = 50) {
 }
 
 // ===================== PROFILE CONFIG =====================
-function getProfileConfig() {
-  const p = document.getElementById('profile').value;
+function getProfileConfig(ticker) {
+  const p = getTickerProfile(ticker);
   if (p === 'spec') {
     return {
       name: 'Speculative',
@@ -1009,12 +1078,15 @@ function renderGrid(results) {
     const atrText = r.daily.atr.compressed ? 'compressed' : r.daily.atr.expanded ? 'expanded' : 'normal';
     const atrColor = r.daily.atr.compressed ? 'var(--positive)' : r.daily.atr.expanded ? 'var(--danger)' : 'var(--text-tertiary)';
     const stopHtml = r.daily.stop ? `<div class="stop-line">Suggested stop: <strong>$${r.daily.stop}</strong> (below higher low${r.daily.higherLow ? ' at $' + r.daily.higherLow.price.toFixed(2) : ''})</div>` : '';
+    const profileBadge = r.cfg.name === 'Speculative' 
+      ? '<span class="profile-badge profile-spec">Spec</span>' 
+      : '<span class="profile-badge profile-stable">Stable</span>';
 
     return `
       <div class="ticker-card">
         <div class="ticker-header">
           <div>
-            <div class="ticker-name">${r.ticker}</div>
+            <div class="ticker-name">${r.ticker}${profileBadge}</div>
             <div class="ticker-meta">${r.cfg.name} · ATR: <span style="color:${atrColor}">${atrText}</span> (${r.daily.details.atrPct}pct) · $${r.daily.details.price.toFixed(2)}</div>
           </div>
           <div class="score-pill ${pillClass}">${r.daily.score}/5</div>
@@ -1058,13 +1130,13 @@ async function runAnalysis() {
 
   if (!allTickers.length) { log('Select at least one ticker from watchlist or type one'); return; }
 
-  const cfg = getProfileConfig();
   document.getElementById('statusDot').className = 'dot active';
   document.getElementById('statusText').textContent = 'Analyzing ' + allTickers.length + ' ticker(s)...';
   document.getElementById('runBtn').disabled = true;
 
   const results = [];
   for (const ticker of allTickers) {
+    const cfg = getProfileConfig(ticker);
     try {
       const [weeklyData, dailyData] = await Promise.all([
         fetchData(ticker, '1week', key),
