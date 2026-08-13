@@ -652,13 +652,28 @@ function toggleSection(id) {
 
 // ===================== PER-TICKER PROFILES =====================
 const DEFAULT_PROFILES = {
+  // Stable / established
+  "ADBE": "stable",
+  "AAPL": "stable",
+  "AMD": "stable",
+  "AMZN": "stable",
+  "ASML": "stable",
+  "MSFT": "stable",
+  "MU": "stable",
+  "NVDA": "stable",
+  "ORCL": "stable",
+  "QCOM": "stable",
+  "TTD": "stable",
+
+  // Speculative / higher risk
   "BBAI": "spec",
   "BTC": "spec",
   "HIMS": "spec",
   "MARA": "spec",
   "PLTR": "spec",
+  "SNDK": "spec",
   "SOFI": "spec",
-  "TDD": "spec"
+  "TSLA": "spec"
 };
 
 let watchlistProfiles = {};
