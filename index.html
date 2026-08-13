@@ -324,25 +324,39 @@
     <div class="form-group">
       <label>My watchlist (multi-select)</label>
       <select id="watchlist" multiple onchange="updateWatchlistDisplay()">
-        <option value="ADBE">ADBE : Adobe</option>
-        <option value="AAPL">AAPL : Apple</option>
-        <option value="AMD">AMD : Advanced Micro Devices</option>
-        <option value="AMZN">AMZN : Amazon</option>
-        <option value="ASML">ASML : ASML Holding</option>
-        <option value="BBAI">BBAI : BigBear.ai</option>
-        <option value="BTC">BTC : Bitcoin</option>
-        <option value="HIMS">HIMS : Hims & Hers</option>
-        <option value="MARA">MARA : Marathon Digital</option>
-        <option value="MSFT">MSFT : Microsoft</option>
-        <option value="MU">MU : Micron Technology</option>
-        <option value="NVDA">NVDA : Nvidia</option>
-        <option value="ORCL">ORCL : Oracle</option>
-        <option value="PLTR">PLTR : Palantir</option>
-        <option value="QCOM">QCOM : Qualcomm</option>
-        <option value="SNDK">SNDK : Sandisk</option>
-        <option value="SOFI">SOFI : SoFi</option>
-        <option value="TTD">TTD : TTD</option>
-        <option value="TSLA">TSLA : Tesla</option>
+  <option value="ADBE">ADBE : Adobe</option>
+  <option value="AAPL">AAPL : Apple</option>
+  <option value="AMD">AMD : Advanced Micro Devices</option>
+  <option value="AMAT">AMAT : Applied Materials</option>
+  <option value="AMZN">AMZN : Amazon</option>
+  <option value="ANET">ANET : Arista Networks</option>
+  <option value="ASML">ASML : ASML Holding</option>
+  <option value="AVGO">AVGO : Broadcom</option>
+  <option value="BBAI">BBAI : BigBear.ai</option>
+  <option value="BTC">BTC : Bitcoin</option>
+  <option value="CDNS">CDNS : Cadence Design Systems</option>
+  <option value="CRWD">CRWD : CrowdStrike</option>
+  <option value="GOOGL">GOOGL : Alphabet</option>
+  <option value="HIMS">HIMS : Hims & Hers</option>
+  <option value="LLY">LLY : Eli Lilly</option>
+  <option value="LRCX">LRCX : Lam Research</option>
+  <option value="MA">MA : Mastercard</option>
+  <option value="MARA">MARA : Marathon Digital</option>
+  <option value="MELI">MELI : MercadoLibre</option>
+  <option value="META">META : Meta Platforms</option>
+  <option value="MSFT">MSFT : Microsoft</option>
+  <option value="MU">MU : Micron Technology</option>
+  <option value="NFLX">NFLX : Netflix</option>
+  <option value="NVDA">NVDA : Nvidia</option>
+  <option value="ORCL">ORCL : Oracle</option>
+  <option value="PLTR">PLTR : Palantir</option>
+  <option value="QCOM">QCOM : Qualcomm</option>
+  <option value="SNDK">SNDK : Sandisk</option>
+  <option value="SOFI">SOFI : SoFi</option>
+  <option value="TSLA">TSLA : Tesla</option>
+  <option value="TTD">TTD : Trade Desk</option>
+  <option value="V">V : Visa</option>
+  <option value="NOW">NOW : ServiceNow</option>
       </select>
       <div class="hint">Hold Ctrl/Cmd to select multiple. Click a tag's dropdown to set Spec/Stable profile.</div>
       <div id="watchlistTags" style="margin-top:8px;"></div>
@@ -652,27 +666,42 @@ function toggleSection(id) {
 
 // ===================== PER-TICKER PROFILES =====================
 const DEFAULT_PROFILES = {
-  // Stable / established
+const DEFAULT_PROFILES = {
+  // Stable
   "ADBE": "stable",
   "AAPL": "stable",
   "AMD": "stable",
+  "AMAT": "stable",
   "AMZN": "stable",
+  "ANET": "stable",
   "ASML": "stable",
+  "AVGO": "stable",
+  "CDNS": "stable",
+  "GOOGL": "stable",
+  "LLY": "stable",
+  "LRCX": "stable",
+  "MA": "stable",
+  "META": "stable",
   "MSFT": "stable",
   "MU": "stable",
+  "NFLX": "stable",
   "NVDA": "stable",
   "ORCL": "stable",
   "QCOM": "stable",
-  "TTD": "stable",
+  "V": "stable",
+  "NOW": "stable",
 
-  // Speculative / higher risk
+  // Speculative / higher-risk
   "BBAI": "spec",
   "BTC": "spec",
+  "CRWD": "spec",
   "HIMS": "spec",
   "MARA": "spec",
+  "MELI": "spec",
   "PLTR": "spec",
   "SNDK": "spec",
   "SOFI": "spec",
+  "TTD": "spec",
   "TSLA": "spec"
 };
 
