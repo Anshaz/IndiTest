@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confluence Scorer — Daily Research Tool</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-raised: #1c2128;
+    --border: #30363d;
+    --text-primary: #c9d1d9;
+    --text-secondary: #8b949e;
+    --text-tertiary: #6e7681;
+    --accent: #58a6ff;
+    --positive: #3fb950;
+    --warning: #d29922;
+    --danger: #f85149;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding: 24px;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: var(--text-secondary); font-size: 14px; margin-bottom: 24px; }
+  h2 { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.4px; }
+  h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-primary); }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .form-row { display: flex; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+  .form-row label { display: block; font-size: 11px; color: var(--text-tertiary); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
+  .form-row input, .form-row select, .form-row textarea {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    width: 100%;
+    min-width: 180px;
+  }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
+  .form-group { flex: 1; min-width: 180px; }
+
+  .btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.9; }
+  .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-secondary { background: var(--surface-raised); color: var(--text-primary); border: 1px solid var(--border); }
+  .btn-danger { background: var(--danger); }
+  .btn-small { padding: 6px 12px; font-size: 12px; }
+
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 8px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-tertiary); }
+  .dot.active { background: var(--positive); box-shadow: 0 0 6px var(--positive); }
+  .dot.error { background: var(--danger); }
+
+  .ticker-grid { display: grid; gap: 12px; }
+  .ticker-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .ticker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .ticker-name { font-size: 18px; font-weight: 600; }
+  .ticker-meta { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+  .ticker-price { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
+  .score-pill {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 600;
+    border: 3px solid var(--border);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+  }
+  .score-pill.go { border-color: var(--positive); color: var(--positive); }
+  .score-pill.watch { border-color: var(--warning); color: var(--warning); }
+  .score-pill.wait { border-color: var(--text-tertiary); color: var(--text-tertiary); }
+  .score-pill.hold { border-color: var(--danger); color: var(--danger); }
+
+  .timeframe-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .tf-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .tf-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-tertiary); margin-bottom: 6px; font-weight: 500; }
+  .tf-score { font-size: 20px; font-weight: 600; }
+  .tf-desc { font-size: 12px; color: var(--text-secondary); margin-top: 4px; }
+
+  .conditions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .condition {
+    font-size: 11px; padding: 3px 8px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--text-tertiary);
+  }
+  .condition.on { background: color-mix(in srgb, var(--positive) 15%, transparent); border-color: var(--positive); color: var(--positive); }
+  .condition.off { background: color-mix(in srgb, var(--danger) 10%, transparent); border-color: color-mix(in srgb, var(--danger) 40%, transparent); color: var(--danger); }
+  .condition.pre { background: color-mix(in srgb, var(--warning) 12%, transparent); border-color: var(--warning); color: var(--warning); }
+
+  .action-text { font-size: 13px; margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: var(--surface); border-left: 3px solid var(--border); }
+  .action-text.go { border-left-color: var(--positive); background: color-mix(in srgb, var(--positive) 8%, transparent); }
+  .action-text.watch { border-left-color: var(--warning); background: color-mix(in srgb, var(--warning) 8%, transparent); }
+  .action-text.wait { border-left-color: var(--text-tertiary); }
+
+  .stop-line {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+    padding: 6px 10px;
+    background: var(--surface);
+    border-radius: 6px;
+    border: 1px dashed var(--border);
+  }
+
+  .academy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+  }
+  .lesson-card {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .lesson-card h4 {
+    font-size: 14px; font-weight: 600; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .lesson-card p { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+  .lesson-card .example {
+    font-size: 12px;
+    background: var(--surface);
+    border-left: 2px solid var(--accent);
+    padding: 8px 10px;
+    border-radius: 0 6px 6px 0;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .lesson-card .example strong { color: var(--text-primary); }
+
+  .score-guide {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .sg-item {
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    text-align: center;
+  }
+  .sg-num { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .sg-label { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+  .sg-desc { font-size: 11px; color: var(--text-tertiary); line-height: 1.4; }
+
+  .log { max-height: 220px; overflow-y: auto; font-size: 12px; font-family: monospace; }
+  .log-entry { padding: 6px 0; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+  .log-entry:last-child { border-bottom: none; }
+  .log-time { color: var(--text-tertiary); margin-right: 8px; }
+  .log-bull { color: var(--positive); }
+  .log-bear { color: var(--danger); }
+  .log-stalk { color: var(--warning); }
+
+  .hint { font-size: 12px; color: var(--text-tertiary); margin-top: 6px; line-height: 1.5; }
+  .hint a { color: var(--accent); text-decoration: none; }
+  .hint a:hover { text-decoration: underline; }
+  .hint strong { color: var(--text-secondary); }
+
+  .profile-badge {
+    display: inline-block;
+    font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 500;
+    margin-left: 6px;
+  }
+  .profile-spec { background: color-mix(in srgb, var(--warning) 15%, transparent); color: var(--warning); }
+  .profile-stable { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+
+  .collapsible-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .collapsible-header h2 { margin-bottom: 0; }
+  .chevron { font-size: 14px; color: var(--text-tertiary); transition: transform 0.2s; }
+  .chevron.open { transform: rotate(180deg); }
+  .collapsible-body { margin-top: 14px; }
+  .collapsible-body.hidden { display: none; }
+
+  /* Multi-select styling */
+  select[multiple] {
+    min-height: 120px;
+    padding: 8px;
+  }
+  select[multiple] option {
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-bottom: 2px;
+  }
+  select[multiple] option:checked {
+    background: color-mix(in srgb, var(--accent) 20%, transparent);
+    color: var(--text-primary);
+  }
+  select[multiple] option:hover {
+    background: var(--surface-raised);
+  }
+
+  .ticker-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--surface-raised);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    margin: 2px;
+  }
+  .ticker-tag .remove {
+    cursor: pointer;
+    color: var(--text-tertiary);
+    font-size: 14px;
+    line-height: 1;
+  }
+  .ticker-tag .remove:hover { color: var(--danger); }
+
+  .profile-select {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-size: 10px;
+    padding: 1px 4px;
+    margin-left: 2px;
+    cursor: pointer;
+    font-family: inherit;
+    min-width: auto;
+    width: auto;
+  }
+  .profile-select:focus { outline: none; border-color: var(--accent); }
+  .profile-select option {
+    background: var(--surface-raised);
+    color: var(--text-primary);
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 16px; }
+    .timeframe-row { grid-template-columns: 1fr; }
+    .ticker-header { flex-direction: column; }
+  }
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body>
+
+<h1>Confluence Scorer</h1>
+<div class="subtitle">Daily research tool · Check entries on your own time</div>
+
+<!-- ===================== CONFIG ===================== -->
+<div class="card">
+  <h2>Configuration</h2>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Twelve Data API Key</label>
+      <input type="password" id="apiKey" placeholder="Paste your free API key" autocomplete="off">
+      <div class="hint">Get a free key at <a href="https://twelvedata.com">twelvedata.com</a> (800 calls/day)</div>
+    </div>
+
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>My watchlist (multi-select)</label>
+      <select id="watchlist" multiple onchange="updateWatchlistDisplay()">
+  <option value="ADBE">ADBE : Adobe</option>
+  <option value="AAPL">AAPL : Apple</option>
+  <option value="AMD">AMD : Advanced Micro Devices</option>
+  <option value="AMAT">AMAT : Applied Materials</option>
+  <option value="AMZN">AMZN : Amazon</option>
+  <option value="ANET">ANET : Arista Networks</option>
+  <option value="ASML">ASML : ASML Holding</option>
+  <option value="AVGO">AVGO : Broadcom</option>
+  <option value="BBAI">BBAI : BigBear.ai</option>
+  <option value="BTC">BTC : Bitcoin</option>
+  <option value="CDNS">CDNS : Cadence Design Systems</option>
+  <option value="CRWD">CRWD : CrowdStrike</option>
+  <option value="GOOGL">GOOGL : Alphabet</option>
+  <option value="HIMS">HIMS : Hims & Hers</option>
+  <option value="LLY">LLY : Eli Lilly</option>
+  <option value="LRCX">LRCX : Lam Research</option>
+  <option value="MA">MA : Mastercard</option>
+  <option value="MARA">MARA : Marathon Digital</option>
+  <option value="MELI">MELI : MercadoLibre</option>
+  <option value="META">META : Meta Platforms</option>
+  <option value="MSFT">MSFT : Microsoft</option>
+  <option value="MU">MU : Micron Technology</option>
+  <option value="NFLX">NFLX : Netflix</option>
+  <option value="NVDA">NVDA : Nvidia</option>
+  <option value="ORCL">ORCL : Oracle</option>
+  <option value="PLTR">PLTR : Palantir</option>
+  <option value="QCOM">QCOM : Qualcomm</option>
+  <option value="SNDK">SNDK : Sandisk</option>
+  <option value="SOFI">SOFI : SoFi</option>
+  <option value="TSLA">TSLA : Tesla</option>
+  <option value="TTD">TTD : Trade Desk</option>
+  <option value="V">V : Visa</option>
+  <option value="NOW">NOW : ServiceNow</option>
+      </select>
+      <div class="hint">Hold Ctrl/Cmd to select multiple. Click a tag's dropdown to set Spec/Stable profile.</div>
+      <div id="watchlistTags" style="margin-top:8px;"></div>
+    </div>
+    <div class="form-group">
+      <label>Additional tickers (comma-separated)</label>
+      <input type="text" id="tickers" placeholder="BBAI, AAPL, TSLA" value="">
+      <div class="hint">Type extra tickers here. These will be added to your watchlist selection.</div>
+    </div>
+  </div>
+  <div class="form-row" style="margin-top:8px;">
+    <button class="btn" id="runBtn" onclick="runAnalysis()">Run analysis</button>
+    <button class="btn btn-secondary btn-small" onclick="addToWatchlist()">+ Add to watchlist</button>
+    <button class="btn btn-secondary btn-small" onclick="clearResults()">Clear results</button>
+  </div>
+  <div class="status-bar">
+    <span id="statusDot" class="dot"></span>
+    <span id="statusText">Ready</span>
+    <span id="lastRun"></span>
+  </div>
+</div>
+
+<!-- ===================== LIVE SCORES ===================== -->
+<div class="card">
+  <h2>Analysis results</h2>
+  <div id="tickerGrid" class="ticker-grid">
+    <div style="color:var(--text-tertiary); font-size:14px; text-align:center; padding:20px;">Click "Run analysis" to check your watchlist</div>
+  </div>
+</div>
+
+<!-- ===================== ALERT LOG ===================== -->
+<div class="card">
+  <h2>Session log</h2>
+  <div id="log" class="log">
+    <div class="log-entry"><span class="log-time">--:--</span> Ready. Select tickers and run analysis.</div>
+  </div>
+</div>
+
+<!-- ===================== ACADEMY: SCORE GUIDE ===================== -->
+<div class="card">
+  <div class="collapsible-header" onclick="toggleSection('scoreGuide')">
+    <h2>What does my score mean?</h2>
+    <span class="chevron" id="chevron-scoreGuide">▼</span>
+  </div>
+  <div class="collapsible-body" id="body-scoreGuide">
+    <p class="hint" style="margin-bottom:12px;">Think of the score as a <strong>readiness meter</strong>. It does not tell you to buy blindly — it tells you how many layers of confirmation have aligned. The more layers, the higher your odds of a successful trade.</p>
+    <div class="score-guide">
+      <div class="sg-item">
+        <div class="sg-num" style="color:var(--danger)">0–1</div>
+        <div class="sg-label" style="color:var(--danger)">Wait</div>
+        <div class="sg-desc">No setup. Momentum is weak or against you. Do not force a trade.</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num" style="color:var(--warning)">2</div>
+        <div class="sg-label" style="color:var(--warning)">Building</div>
+        <div class="sg-desc">Divergence or structure forming. Add to watchlist and stalk.</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num" style="color:var(--warning)">3</div>
+        <div class="sg-label" style="color:var(--warning)">Plan entry</div>
+        <div class="sg-desc">Momentum aligning. Prepare your stop-loss and position size.</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num" style="color:var(--accent)">4</div>
+        <div class="sg-label" style="color:var(--accent)">Setup active</div>
+        <div class="sg-desc">Strong signal. Enter only if ATR is compressed (room to run).</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num" style="color:var(--accent)">4</div>
+        <div class="sg-label" style="color:var(--accent)">Setup active</div>
+        <div class="sg-desc">Strong signal. Enter only if ATR is compressed (room to run).</div>
+      </div>
+      <div class="sg-item">
+        <div class="sg-num" style="color:var(--positive)">5–6</div>
+        <div class="sg-label" style="color:var(--positive)">Execute</div>
+        <div class="sg-desc">5+ layers aligned. Stop below higher low. Target next LVN.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ACADEMY: INDICATORS ===================== -->
+<div class="card">
+  <div class="collapsible-header" onclick="toggleSection('indicators')">
+    <h2>Indicator guide for beginners</h2>
+    <span class="chevron" id="chevron-indicators">▼</span>
+  </div>
+  <div class="collapsible-body" id="body-indicators">
+    <div class="academy-grid">
+
+      <div class="lesson-card">
+        <h4>
+          <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent)20%,transparent);color:var(--accent);text-align:center;line-height:22px;font-size:12px;">1</span>
+          VWAP — the fair-price anchor
+        </h4>
+        <p><strong>What it measures:</strong> The average price that traders have actually paid, weighted by volume. Institutions use it as a "fair value" line.</p>
+        <div class="example">
+          <strong>Example:</strong> BBAI is at $2.84 and VWAP is at $2.85. Price is straddling the line — no clear bias yet. If BBAI gaps up to $3.10 and holds above VWAP at $2.90, that means the average buyer is now in profit. There is less overhead supply (people wanting to sell at break-even), so the path up is clearer.
+        </div>
+        <p style="margin-top:8px;"><strong>What to look for:</strong> Price <em>reclaiming</em> VWAP from below on above-average volume = early long bias. Price <em>rejecting</em> VWAP from above = early short bias.</p>
+      </div>
+
+      <div class="lesson-card">
+        <h4>
+          <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent)20%,transparent);color:var(--accent);text-align:center;line-height:22px;font-size:12px;">2</span>
+          RSI Divergence — the early warning
+        </h4>
+        <p><strong>What it measures:</strong> When price makes a lower low but RSI makes a higher low, it means selling pressure is weakening even though price is still dropping. This is exhaustion.</p>
+        <div class="example">
+          <strong>Example:</strong> BBAI drops from $3.00 to $2.50 to $2.40. But RSI reads 28 → 25 → 30. The second low in price ($2.40) is lower than the first ($2.50), yet RSI at 30 is <em>higher</em> than 25. Sellers are running out of ammunition. The next bounce is much more likely to hold.
+        </div>
+        <p style="margin-top:8px;"><strong>What to look for:</strong> Price lower low + RSI higher low within the last 10 bars. This scores +1 in the app. It replaces the old noisy "RSI cross above SMA" rule.</p>
+      </div>
+
+      <div class="lesson-card">
+        <h4>
+          <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent)20%,transparent);color:var(--accent);text-align:center;line-height:22px;font-size:12px;">3</span>
+          Higher Low — market structure
+        </h4>
+        <p><strong>What it measures:</strong> Actual price action. A higher low means buyers stepped in at a higher price than the previous dip. The downtrend is breaking structurally.</p>
+        <div class="example">
+          <strong>Example:</strong> BBAI makes a low at $2.20, bounces to $2.60, then pulls back to $2.35. The second low ($2.35) is higher than $2.20. Buyers are willing to buy sooner. That $2.35 level becomes your stop. If price breaks below it, the structure is broken and you are wrong.
+        </div>
+        <p style="margin-top:8px;"><strong>What to look for:</strong> The most recent significant swing low is higher than the one before it. The app finds this automatically and suggests it as your stop level.</p>
+      </div>
+
+      <div class="lesson-card">
+        <h4>
+          <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent)20%,transparent);color:var(--accent);text-align:center;line-height:22px;font-size:12px;">4</span>
+          MACD — trend momentum
+        </h4>
+        <p><strong>What it measures:</strong> The gap between a fast moving average (12 periods) and a slow one (26 periods). The histogram shows whether that gap is widening or shrinking.</p>
+        <div class="example">
+          <strong>Example:</strong> BBAI MACD histogram reads -0.39, then -0.28, then -0.15. The bars are getting <em>less negative</em> (shrinking red bars). Downward momentum is decelerating — like a ball rolling uphill and slowing down. When the histogram flips from red to green, that is the trend potentially reversing.
+        </div>
+        <p style="margin-top:8px;"><strong>What to look for:</strong> Histogram <em>negative</em> and turning up for 2+ bars. This ensures you are buying a reversal, not chasing a move already in progress.</p>
+      </div>
+
+      <div class="lesson-card">
+        <h4>
+          <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent)20%,transparent);color:var(--accent);text-align:center;line-height:22px;font-size:12px;">5</span>
+          Volume — conviction check
+        </h4>
+        <p><strong>What it measures:</strong> How many shares changed hands. Volume is the only indicator that cannot be faked — it shows real money moving.</p>
+        <div class="example">
+          <strong>Example:</strong> BBAI bounces 5% but volume is 12K vs its 9-day average of 45K. That bounce is a <em>dead-cat bounce</em> — no real buyers stepped in. A day later it falls again. Contrast with a 5% bounce on 80K volume: institutions are actually accumulating. That move has legs.
+        </div>
+        <p style="margin-top:8px;"><strong>What to look for:</strong> Volume above its 9-day SMA on a green candle = conviction. Volume spike on a red candle = distribution (smart money selling). Volume below average on any move = low conviction, likely to fail.</p>
+      </div>
+
+      <div class="lesson-card">
+        <h4>
+          <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent)20%,transparent);color:var(--accent);text-align:center;line-height:22px;font-size:12px;">6</span>
+          ATR Compression — the coiled spring
+        </h4>
+        <p><strong>What it measures:</strong> Average True Range tells you how much a stock typically moves per day. When ATR drops into the bottom 30% of its recent range, the stock is "coiled." Breakouts from compression have much higher follow-through.</p>
+        <div class="example">
+          <strong>Example:</strong> BBAI's daily range is usually $0.40 (ATR = 0.40). For the last 5 days, it has only moved $0.15 per day. ATR has compressed. When the next move comes — up or down — it is likely to be a <em>big</em> move because the energy has built up. Entering a long when ATR is compressed and the other 4 layers align means you catch the expansion, not the contraction.
+        </div>
+        <p style="margin-top:8px;"><strong>What to look for:</strong> ATR(14) in the bottom 30% of its 50-day range. The app marks this as "compressed." Avoid entries when ATR is already expanded (top 30%) — that is when whipsaws happen.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ACADEMY: MULTI-TIMEFRAME ===================== -->
+<div class="card">
+  <div class="collapsible-header" onclick="toggleSection('mtf')">
+    <h2>Why two timeframes?</h2>
+    <span class="chevron" id="chevron-mtf">▼</span>
+  </div>
+  <div class="collapsible-body hidden" id="body-mtf">
+    <p class="hint" style="margin-bottom:12px;">Trading against the higher timeframe is like swimming against the current. The weekly chart tells you the <strong>trend</strong>. The daily chart tells you <strong>when to enter</strong>.</p>
+    <div class="academy-grid">
+      <div class="lesson-card">
+        <h4>Weekly — the "wind direction"</h4>
+        <p>We only check two things on the weekly chart:</p>
+        <ul style="font-size:13px;color:var(--text-secondary);padding-left:18px;line-height:1.7;">
+          <li>Is price above weekly VWAP? → Trend is up</li>
+          <li>Is the weekly MACD histogram improving? → Momentum supporting the trend</li>
+        </ul>
+        <div class="example" style="margin-top:10px;">
+          <strong>Scenario:</strong> Weekly shows price above VWAP and MACD turning up. Daily score hits 4/5. This is a <em>high-probability long</em> because you are trading <em>with</em> the weekly trend.<br><br>
+          <strong>Counter-scenario:</strong> Weekly shows price below VWAP. Daily score hits 4/5. This is a <em>counter-trend bounce</em> — it might work, but your stop must be tighter and your position smaller because the bigger trend is against you.
+        </div>
+      </div>
+      <div class="lesson-card">
+        <h4>Daily — the "entry door"</h4>
+        <p>This is where the 5-layer score lives. It tells you if the short-term setup is ready.</p>
+        <ul style="font-size:13px;color:var(--text-secondary);padding-left:18px;line-height:1.7;">
+          <li>Score 0–1: No trade. Go outside.</li>
+          <li>Score 2–3: Watchlist. Divergence or structure forming. Set alerts.</li>
+          <li>Score 4: Setup active. ATR compressed? Define stop + target.</li>
+          <li>Score 5: Execute. All layers aligned. Stop below higher low.</li>
+        </ul>
+        <div class="example" style="margin-top:10px;">
+          <strong>Rule of thumb:</strong> Only take 5/6 or 6/6 setups when weekly trend is also bullish. If weekly is bearish, only take 6/6 with half position size and a very tight stop.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ACADEMY: VOLATILITY PROFILES ===================== -->
+<div class="card">
+  <div class="collapsible-header" onclick="toggleSection('profiles')">
+    <h2>Speculative vs. Stable stocks</h2>
+    <span class="chevron" id="chevron-profiles">▼</span>
+  </div>
+  <div class="collapsible-body hidden" id="body-profiles">
+    <p class="hint" style="margin-bottom:12px;">A low-float AI stock like BBAI moves differently than a mega-cap like Apple. The same indicator thresholds would be too strict for one and too loose for the other. The app adjusts automatically.</p>
+    <div class="academy-grid">
+      <div class="lesson-card">
+        <h4><span class="profile-badge profile-spec">Speculative</span> Low-float, volatile</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">Examples: BBAI, MARA, RIVN, small-cap biotech</p>
+        <ul style="font-size:12px;color:var(--text-secondary);padding-left:18px;line-height:1.7;">
+          <li>RSI overbought threshold: <strong>75</strong> (these stocks can run to 80+)</li>
+          <li>Volume needs: just <strong>above average</strong> (1.0x SMA)</li>
+          <li>HVN proximity: <strong>±10%</strong> of range (price whipsaws more)</li>
+          <li>MACD: histogram just needs to <strong>stop falling</strong></li>
+          <li>Weekly trend: <strong>optional</strong> — these can move against the trend</li>
+          <li>ATR compression: <strong>bottom 40%</strong> (they compress less often)</li>
+        </ul>
+        <div class="example" style="margin-top:10px;">
+          <strong>Why:</strong> Speculative stocks gap 10–20% overnight. Waiting for perfect confluence means missing the move. The app is more lenient so you catch the early momentum, but you must use <strong>tighter stops</strong> because reversals are brutal.
+        </div>
+      </div>
+      <div class="lesson-card">
+        <h4><span class="profile-badge profile-stable">Stable</span> High-float, less volatile</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">Examples: AAPL, MSFT, JNJ, SPY</p>
+        <ul style="font-size:12px;color:var(--text-secondary);padding-left:18px;line-height:1.7;">
+          <li>RSI overbought threshold: <strong>60</strong> (moves are slower, exhaustion comes earlier)</li>
+          <li>Volume needs: <strong>1.2x SMA</strong> (needs stronger conviction to break out)</li>
+          <li>HVN proximity: <strong>±5%</strong> of range (price respects levels more)</li>
+          <li>MACD: histogram must show <strong>clear upward turn</strong></li>
+          <li>Weekly trend: <strong>required</strong> — counter-trend moves rarely pay</li>
+          <li>ATR compression: <strong>bottom 25%</strong> (they compress more reliably)</li>
+        </ul>
+        <div class="example" style="margin-top:10px;">
+          <strong>Why:</strong> Mega-caps grind. A 5% move takes weeks. False breakouts are common, so the app demands stronger confirmation before alerting. But when they do break, they tend to <strong>follow through</strong> — wider stops work better here.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ACADEMY: TRADE EXAMPLES ===================== -->
+<div class="card">
+  <div class="collapsible-header" onclick="toggleSection('examples')">
+    <h2>Real trade scenarios</h2>
+    <span class="chevron" id="chevron-examples">▼</span>
+  </div>
+  <div class="collapsible-body hidden" id="body-examples">
+    <div class="academy-grid">
+      <div class="lesson-card">
+        <h4 style="color:var(--positive)">✓ Excellent entry (5/5)</h4>
+        <p style="font-size:13px;color:var(--text-secondary);">BBAI at $2.50 after a 3-week downtrend.</p>
+        <div class="example">
+          <strong>Weekly:</strong> Price just reclaimed weekly VWAP. MACD histogram flattened.<br>
+          <strong>Daily:</strong> Price $2.50, VWAP $2.42 (above ✓). RSI divergence: price made lower low at $2.40 vs prior $2.50, but RSI 28→30 (higher low ✓). MACD hist -0.15 → -0.08 → -0.02 (negative & turning up ✓). Volume 55K vs 35K SMA (✓). Higher low structure at $2.40 vs prior $2.20 (✓). ATR compressed to bottom 35% of range (✓).<br><br>
+          <strong>Score: 6/6</strong> on daily, weekly bullish, ATR compressed.<br>
+          <strong>Action:</strong> Enter at $2.50. <strong>Stop at $2.35</strong> (below higher low). Target $3.20 (next LVN). Risk $0.15, reward $0.70 = <strong>1:4.7 R:R</strong>.
+        </div>
+      </div>
+      <div class="lesson-card">
+        <h4 style="color:var(--danger)">✗ Trap — no divergence (1/5)</h4>
+        <p style="font-size:13px;color:var(--text-secondary);">BBAI at $3.10 after a sharp green candle.</p>
+        <div class="example">
+          <strong>Weekly:</strong> Price below weekly VWAP. Bearish trend.<br>
+          <strong>Daily:</strong> Price $3.10, VWAP $2.95 (above ✓). RSI 72, no divergence — price and RSI both made lower highs (✗). MACD hist +0.05 but falling (✗). Volume 22K vs 40K SMA (✗). No higher low structure (✗). ATR expanded (✗).<br><br>
+          <strong>Score: 1/6</strong> on daily, weekly bearish.<br>
+          <strong>Action:</strong> This is a <em>bear-market rally</em> with no exhaustion signal. The one green candle looks tempting but there is no divergence, no volume, and no structure. Next day it gaps down to $2.70. Waiting saved you $0.40/share.
+        </div>
+      </div>
+      <div class="lesson-card">
+        <h4 style="color:var(--warning)">⚠ Partial setup — stalk (3/5)</h4>
+        <p style="font-size:13px;color:var(--text-secondary);">AAPL at $185 after earnings.</p>
+        <div class="example">
+          <strong>Weekly:</strong> Price above VWAP. Bullish.<br>
+          <strong>Daily:</strong> Price $185, VWAP $183 (above ✓). RSI 58, divergence forming but not confirmed yet (✗). MACD hist -0.3 → -0.2 (negative & turning up ✓). Volume 85M vs 80M SMA (barely above, marginal ✓). Higher low at $182 vs $178 (✓). ATR <strong>expanded</strong> (top 25% of range) (✗).<br><br>
+          <strong>Score: 3/6</strong> on daily, weekly bullish.<br>
+          <strong>Action:</strong> Structure and momentum are aligning, but ATR is already expanded. The stock has already moved. Set an alert for ATR to compress (usually 3–5 days of tight range) and re-check. Entering now risks buying the top of the move.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== FOOTER HINTS ===================== -->
+<div class="card">
+  <h2>Quick reference</h2>
+  <div class="hint">
+    <strong>Before every trade, answer these 4 questions:</strong><br>
+    1. What is the weekly trend telling me? (Trade with it, not against it)<br>
+    2. What is my daily score? (5+ for entry, 2 or less for exit)<br>
+    3. Is ATR compressed? (Bottom 30% = room to run. Top 30% = avoid)<br>
+    4. Where is my stop? (Below the higher low — the app suggests one)<br><br>
+    <strong>Rate limits:</strong> Each ticker uses 2 API calls (weekly + daily). 10 tickers = 20 calls per run. Free tier = 800/day.<br>
+    <strong>Data source:</strong> Twelve Data (daily + weekly OHLCV). All indicators computed client-side in your browser.
+  </div>
+</div>
+
+<script>
+// ===================== COLLAPSIBLE SECTIONS =====================
+function toggleSection(id) {
+  const body = document.getElementById('body-' + id);
+  const chevron = document.getElementById('chevron-' + id);
+  body.classList.toggle('hidden');
+  chevron.classList.toggle('open');
+}
+
+// ===================== PER-TICKER PROFILES =====================
+const DEFAULT_PROFILES = {
+  // Stable
+  "ADBE": "stable", "AAPL": "stable", "AMD": "stable", "AMAT": "stable",
+  "AMZN": "stable", "ANET": "stable", "ASML": "stable", "AVGO": "stable",
+  "CDNS": "stable", "GOOGL": "stable", "LLY": "stable", "LRCX": "stable",
+  "MA": "stable", "META": "stable", "MSFT": "stable", "MU": "stable",
+  "NFLX": "stable", "NVDA": "stable", "ORCL": "stable", "QCOM": "stable",
+  "V": "stable", "NOW": "stable",
+  // Speculative
+  "BBAI": "spec", "BTC": "spec", "CRWD": "spec", "HIMS": "spec",
+  "MARA": "spec", "MELI": "spec", "PLTR": "spec", "SNDK": "spec",
+  "SOFI": "spec", "TTD": "spec", "TSLA": "spec"
+};
+
+let watchlistProfiles = {};
+
+function loadProfiles() {
+  try {
+    const saved = localStorage.getItem('confluence_profiles');
+    if (saved) {
+      watchlistProfiles = JSON.parse(saved);
+    } else {
+      watchlistProfiles = { ...DEFAULT_PROFILES };
+      saveProfiles();
+    }
+  } catch (e) {
+    watchlistProfiles = { ...DEFAULT_PROFILES };
+  }
+}
+
+function saveProfiles() {
+  localStorage.setItem('confluence_profiles', JSON.stringify(watchlistProfiles));
+}
+
+function setProfile(ticker, profile) {
+  watchlistProfiles[ticker] = profile;
+  saveProfiles();
+  log(ticker + ' profile set to ' + (profile === 'spec' ? 'Speculative' : 'Stable'));
+}
+
+function getTickerProfile(ticker) {
+  return watchlistProfiles[ticker] || 'stable';
+}
+
+// ===================== WATCHLIST MANAGEMENT =====================
+function updateWatchlistDisplay() {
+  const select = document.getElementById('watchlist');
+  const container = document.getElementById('watchlistTags');
+  const selected = Array.from(select.selectedOptions).map(o => o.value);
+  container.innerHTML = selected.map(t => {
+    const profile = getTickerProfile(t);
+    return `<span class="ticker-tag">${t} 
+      <select class="profile-select" onchange="setProfile('${t}', this.value)" title="Set profile for ${t}">
+        <option value="spec" ${profile==='spec'?'selected':''}>Spec</option>
+        <option value="stable" ${profile==='stable'?'selected':''}>Stable</option>
+      </select>
+      <span class="remove" onclick="removeFromWatchlist('${t}')">×</span>
+    </span>`;
+  }).join('');
+}
+function removeFromWatchlist(ticker) {
+  const select = document.getElementById('watchlist');
+  for (let i = 0; i < select.options.length; i++) {
+    if (select.options[i].value === ticker) select.options[i].selected = false;
+  }
+  updateWatchlistDisplay();
+}
+function addToWatchlist() {
+  const input = document.getElementById('tickers');
+  const select = document.getElementById('watchlist');
+  const raw = input.value;
+  const newTickers = raw.split(',').map(t => t.trim().toUpperCase()).filter(t => t && !Array.from(select.options).some(o => o.value === t));
+  newTickers.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t;
+    opt.textContent = t;
+    opt.selected = true;
+    select.appendChild(opt);
+    if (!watchlistProfiles[t]) watchlistProfiles[t] = 'stable';
+  });
+  if (newTickers.length) {
+    input.value = '';
+    saveProfiles();
+    updateWatchlistDisplay();
+    log('Added to watchlist: ' + newTickers.join(', '));
+  }
+}
+
+// ===================== STATE =====================
+let apiKey = localStorage.getItem('td_api_key') || '';
+let logs = [];
+if (apiKey) document.getElementById('apiKey').value = apiKey;
+loadProfiles();
+
+// ===================== LOGGING =====================
+function log(msg, type = '') {
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  logs.unshift({ time, msg, type });
+  if (logs.length > 50) logs.pop();
+  renderLog();
+}
+function renderLog() {
+  const el = document.getElementById('log');
+  el.innerHTML = logs.map(l => {
+    const cls = l.type === 'bull' ? 'log-bull' : l.type === 'bear' ? 'log-bear' : l.type === 'stalk' ? 'log-stalk' : '';
+    return `<div class="log-entry"><span class="log-time">${l.time}</span><span class="${cls}">${l.msg}</span></div>`;
+  }).join('');
+}
+
+// ===================== INDICATOR MATH =====================
+function ema(data, period) {
+  const k = 2 / (period + 1);
+  const out = [];
+  let sum = 0;
+  for (let i = 0; i < data.length; i++) {
+    if (i < period - 1) { out.push(null); sum += data[i]; continue; }
+    if (i === period - 1) { sum += data[i]; out.push(sum / period); continue; }
+    out.push(data[i] * k + out[i - 1] * (1 - k));
+  }
+  return out;
+}
+
+function sma(data, period) {
+  const out = [];
+  for (let i = 0; i < data.length; i++) {
+    if (i < period - 1) { out.push(null); continue; }
+    let sum = 0;
+    for (let j = 0; j < period; j++) sum += data[i - j];
+    out.push(sum / period);
+  }
+  return out;
+}
+
+function rsi(closes, period = 14) {
+  const out = [];
+  let gains = 0, losses = 0;
+  for (let i = 0; i < closes.length; i++) {
+    if (i === 0) { out.push(null); continue; }
+    const change = closes[i] - closes[i - 1];
+    const gain = change > 0 ? change : 0;
+    const loss = change < 0 ? -change : 0;
+    if (i < period) {
+      gains += gain; losses += loss;
+      out.push(null); continue;
+    }
+    if (i === period) {
+      gains = (gains + gain) / period;
+      losses = (losses + loss) / period;
+    } else {
+      gains = (gains * (period - 1) + gain) / period;
+      losses = (losses * (period - 1) + loss) / period;
+    }
+    if (losses === 0) { out.push(100); continue; }
+    const rs = gains / losses;
+    out.push(100 - (100 / (1 + rs)));
+  }
+  return out;
+}
+
+function macd(closes, fast = 12, slow = 26, signal = 9) {
+  const emaFast = ema(closes, fast);
+  const emaSlow = ema(closes, slow);
+  const macdLine = emaFast.map((v, i) => v !== null && emaSlow[i] !== null ? v - emaSlow[i] : null);
+  const cleanMacd = macdLine.filter(v => v !== null);
+  const signalLineRaw = ema(cleanMacd, signal);
+  const paddedSignal = new Array(macdLine.length).fill(null);
+  let si = signalLineRaw.length - 1;
+  for (let i = macdLine.length - 1; i >= 0 && si >= 0; i--) {
+    if (macdLine[i] !== null) { paddedSignal[i] = signalLineRaw[si]; si--; }
+  }
+  const histogram = macdLine.map((v, i) => v !== null && paddedSignal[i] !== null ? v - paddedSignal[i] : null);
+  return { macdLine, signalLine: paddedSignal, histogram };
+}
+
+function vwap(ohlcv) {
+  const out = [];
+  let cumTPV = 0, cumVol = 0;
+  for (let i = 0; i < ohlcv.length; i++) {
+    const tp = (ohlcv[i].h + ohlcv[i].l + ohlcv[i].c) / 3;
+    cumTPV += tp * ohlcv[i].v;
+    cumVol += ohlcv[i].v;
+    out.push(cumVol > 0 ? cumTPV / cumVol : tp);
+  }
+  return out;
+}
+
+function volumeProfileHVN(ohlcv, bins = 20) {
+  const minP = Math.min(...ohlcv.map(d => d.l));
+  const maxP = Math.max(...ohlcv.map(d => d.h));
+  const binSize = (maxP - minP) / bins || 1;
+  const volMap = new Array(bins).fill(0);
+  for (const d of ohlcv) {
+    const tp = (d.h + d.l + d.c) / 3;
+    const idx = Math.min(Math.floor((tp - minP) / binSize), bins - 1);
+    volMap[idx] += d.v;
+  }
+  let maxVol = 0, maxIdx = 0;
+  for (let i = 0; i < bins; i++) { if (volMap[i] > maxVol) { maxVol = volMap[i]; maxIdx = i; } }
+  return minP + (maxIdx + 0.5) * binSize;
+}
+
+function atr(ohlcv, period = 14) {
+  const out = [];
+  for (let i = 0; i < ohlcv.length; i++) {
+    if (i === 0) { out.push(ohlcv[i].h - ohlcv[i].l); continue; }
+    const tr1 = ohlcv[i].h - ohlcv[i].l;
+    const tr2 = Math.abs(ohlcv[i].h - ohlcv[i-1].c);
+    const tr3 = Math.abs(ohlcv[i].l - ohlcv[i-1].c);
+    const tr = Math.max(tr1, tr2, tr3);
+    if (i < period) {
+      out.push(tr);
+    } else if (i === period) {
+      let sum = 0;
+      for (let j = 0; j < period; j++) sum += out[j];
+      out.push(sum / period);
+    } else {
+      out.push((out[i-1] * (period - 1) + tr) / period);
+    }
+  }
+  return out;
+}
+
+function findSwingLows(ohlcv, lookback = 3) {
+  const lows = [];
+  for (let i = lookback; i < ohlcv.length - lookback; i++) {
+    let isLow = true;
+    for (let j = 1; j <= lookback; j++) {
+      if (ohlcv[i].l >= ohlcv[i-j].l || ohlcv[i].l >= ohlcv[i+j].l) { isLow = false; break; }
+    }
+    if (isLow) lows.push({ index: i, price: ohlcv[i].l });
+  }
+  return lows;
+}
+
+function findHigherLow(ohlcv) {
+  // Confirmed swing lows
+  const lows = findSwingLows(ohlcv, 3);
+  if (lows.length >= 2) {
+    const last = lows[lows.length - 1];
+    const prev = lows[lows.length - 2];
+    if (last.price > prev.price) return { price: last.price, prevPrice: prev.price, confirmed: true };
+  }
+  // Fallback: recent 1-bar lows (unconfirmed, for early detection)
+  const recent = [];
+  const start = Math.max(3, ohlcv.length - 15);
+  for (let i = start; i < ohlcv.length - 1; i++) {
+    if (ohlcv[i].l < ohlcv[i-1].l && ohlcv[i].l <= ohlcv[i+1].l) {
+      recent.push({ index: i, price: ohlcv[i].l });
+    }
+  }
+  if (recent.length >= 2) {
+    const last = recent[recent.length - 1];
+    const prev = recent[recent.length - 2];
+    if (last.price > prev.price) return { price: last.price, prevPrice: prev.price, confirmed: false };
+  }
+  return null;
+}
+
+function findRSIDivergence(closes, rsiVals, lookback = 12) {
+  const n = closes.length;
+  if (n < lookback + 5) return false;
+  // Find 2-bar swing lows in closes
+  const swingLows = [];
+  for (let i = 2; i < n - 2; i++) {
+    if (closes[i] < closes[i-1] && closes[i] < closes[i-2] &&
+        closes[i] < closes[i+1] && closes[i] < closes[i+2]) {
+      if (rsiVals[i] !== null) swingLows.push({ idx: i, price: closes[i], rsi: rsiVals[i] });
+    }
+  }
+  const recent = swingLows.filter(s => s.idx >= n - lookback - 2);
+  if (recent.length < 2) return false;
+  const low1 = recent[recent.length - 2];
+  const low2 = recent[recent.length - 1];
+  return low2.price < low1.price && low2.rsi > low1.rsi;
+}
+
+function findRSIOversoldBounce(rsiVals, threshold = 40, lookback = 12) {
+  const recent = rsiVals.slice(-lookback).filter(v => v !== null);
+  if (recent.length < 3) return false;
+  const minVal = Math.min(...recent);
+  if (minVal >= threshold) return false;
+  const current = recent[recent.length - 1];
+  return current > minVal;
+}
+
+function findRSISlope(rsiVals) {
+  const last3 = rsiVals.slice(-3).filter(v => v !== null);
+  if (last3.length < 3) return false;
+  const [a, b, c] = last3;
+  return c > 45 && c < 70 && c > b && b > a;
+}
+
+function atrPercentile(ohlcv, cfg, atrPeriod = 14, lookback = 50) {
+  const atrVals = atr(ohlcv, atrPeriod);
+  const recent = atrVals.slice(-lookback).filter(v => v !== null && !isNaN(v));
+  if (recent.length < 10) return { percentile: 50, compressed: false, expanded: false };
+  const current = recent[recent.length - 1];
+  const sorted = [...recent].sort((a, b) => a - b);
+  const rank = sorted.findIndex(v => v >= current);
+  const pct = (rank / sorted.length) * 100;
+  const compressedThreshold = cfg ? cfg.atrCompressed : 30;
+  return { percentile: pct, compressed: pct < compressedThreshold, expanded: pct > 70 };
+}
+
+// ===================== PROFILE CONFIG =====================
+function getProfileConfig(ticker) {
+  const p = getTickerProfile(ticker);
+  if (p === 'spec') {
+    return {
+      name: 'Speculative',
+      rsiOverbought: 75,
+      volMultiplier: 1.0,
+      hvnRange: 0.10,
+      macdStrict: false,
+      weeklyRequired: false,
+      minBars: 40,
+      atrCompressed: 40
+    };
+  }
+  return {
+    name: 'Stable',
+    rsiOverbought: 60,
+    volMultiplier: 1.1,
+    hvnRange: 0.05,
+    macdStrict: true,
+    weeklyRequired: true,
+    minBars: 60,
+    atrCompressed: 25
+  };
+}
+
+// ===================== MACD EVALUATION =====================
+function evaluateMACD(hist, cfg) {
+  const histNow = hist[hist.length - 1];
+  const histPrev = hist[hist.length - 2];
+  const histPrev2 = hist[hist.length - 3];
+  if (histNow === null || histPrev === null) return { signal: false, value: histNow };
+  const turningUp = histNow > histPrev;
+  if (cfg.macdStrict) {
+    const twoBarsUp = histPrev2 !== null && histPrev > histPrev2;
+    const continuation = histNow > 0 && turningUp;
+    const reversal = histNow < 0 && turningUp && twoBarsUp;
+    return { signal: reversal || continuation, value: histNow };
+  }
+  const crossover = histNow > 0 && histPrev < 0;
+  return { signal: turningUp || crossover, value: histNow };
+}
+
+// ===================== DAILY SCORING (6 layers) =====================
+function evaluateTicker(ohlcv, cfg) {
+  const closes = ohlcv.map(d => d.c);
+  const volumes = ohlcv.map(d => d.v);
+  const last = ohlcv[ohlcv.length - 1];
+
+  if (ohlcv.length < cfg.minBars) {
+    return { score: 0, conditions: [], action: 'Insufficient data (need ' + cfg.minBars + '+ bars)', details: {}, stop: null, divergence: false };
+  }
+
+  // 1. VWAP Bias — above, near, or reclaiming
+  const vwapVals = vwap(ohlcv);
+  const vwapLast = vwapVals[vwapVals.length - 1];
+  const prevPrice = ohlcv[ohlcv.length - 2].c;
+  const prevVWAP = vwapVals[vwapVals.length - 2];
+  const aboveVWAP = last.c > vwapLast;
+  const nearVWAP = last.c >= vwapLast * 0.985 && last.c > prevPrice;
+  const reclaimingVWAP = last.c > vwapLast && prevPrice <= prevVWAP;
+  const vwapSignal = aboveVWAP || nearVWAP || reclaimingVWAP;
+
+  // 2. RSI Momentum — divergence, oversold bounce, or healthy slope
+  const rsiVals = rsi(closes, 14);
+  const rsiNow = rsiVals[rsiVals.length - 1];
+  const hasDivergence = findRSIDivergence(closes, rsiVals, 12);
+  const oversoldBounce = findRSIOversoldBounce(rsiVals, cfg.name === 'Speculative' ? 35 : 40, 12);
+  const healthySlope = findRSISlope(rsiVals);
+  const rsiSignal = (hasDivergence || oversoldBounce || healthySlope) && (rsiNow !== null && rsiNow < cfg.rsiOverbought);
+
+  // 3. MACD Momentum
+  const macdData = macd(closes);
+  const macdResult = evaluateMACD(macdData.histogram, cfg);
+
+  // 4. Volume
+  const volSMA = sma(volumes, 9);
+  const volNow = volumes[volumes.length - 1];
+  const volSmaNow = volSMA[volSMA.length - 1];
+  const volAbove = volNow > volSmaNow * cfg.volMultiplier;
+
+  // 5. Structure — higher low
+  const hl = findHigherLow(ohlcv);
+  const hasHigherLow = hl !== null;
+
+  // 6. Volatility — ATR compressed
+  const atrPct = atrPercentile(ohlcv, cfg);
+  const atrCompressed = atrPct.compressed;
+
+  const conditions = [
+    { name: 'VWAP Bias', on: vwapSignal, detail: aboveVWAP ? 'Above' : reclaimingVWAP ? 'Reclaiming' : nearVWAP ? 'Near & rising' : 'Below' },
+    { name: 'RSI Momentum', on: rsiSignal, detail: hasDivergence ? 'Divergence' : oversoldBounce ? 'Oversold bounce' : healthySlope ? 'Rising 45-70' : 'Weak' },
+    { name: 'MACD Momentum', on: macdResult.signal, detail: macdResult.value !== null ? macdResult.value.toFixed(3) : '-' },
+    { name: 'Volume > ' + cfg.volMultiplier + '×SMA', on: volAbove, detail: volSmaNow ? Math.round(volSmaNow).toLocaleString() : '-' },
+    { name: 'Higher Low', on: hasHigherLow, detail: hl ? '$' + hl.price.toFixed(2) + (hl.confirmed ? '' : ' (early)') : 'None' },
+    { name: 'ATR Compressed', on: atrCompressed, detail: Math.round(atrPct.percentile) + 'pct' }
+  ];
+
+  const score = conditions.filter(c => c.on).length;
+
+  const actions = {
+    0: 'No setup. Wait for momentum and liquidity to align.',
+    1: 'Weak signal. One layer alone is not enough.',
+    2: 'Building — watchlist. Divergence or structure forming. Set alerts.',
+    3: 'Building — plan entry. Momentum aligning above VWAP. Watch for ATR compression.',
+    4: 'Setup active. Strong momentum + volume. Enter if ATR compressed.',
+    5: 'High conviction — execute. Most layers aligned. Stop below higher low.',
+    6: 'Max confluence — execute. All layers aligned. Stop below higher low.'
+  };
+
+  const stopPrice = hl ? (hl.price * 0.985).toFixed(2) : null;
+
+  return {
+    score,
+    conditions,
+    action: actions[score] || actions[0],
+    divergence: hasDivergence,
+    atr: atrPct,
+    higherLow: hl,
+    stop: stopPrice,
+    details: {
+      price: last.c,
+      vwap: vwapLast,
+      rsi: rsiNow ? rsiNow.toFixed(1) : '-',
+      macdHist: macdResult.value !== null ? macdResult.value.toFixed(3) : '-',
+      volume: volNow,
+      volSMA: volSmaNow ? Math.round(volSmaNow) : '-',
+      hvn: volumeProfileHVN(ohlcv).toFixed(2),
+      atrPct: Math.round(atrPct.percentile)
+    }
+  };
+}
+
+// ===================== WEEKLY SCORING =====================
+function evaluateWeekly(ohlcv, cfg) {
+  const closes = ohlcv.map(d => d.c);
+  const last = ohlcv[ohlcv.length - 1];
+  if (ohlcv.length < 20) return { score: 0, trend: 'Insufficient data', bullish: false };
+
+  const vwapVals = vwap(ohlcv);
+  const aboveVWAP = last.c > vwapVals[vwapVals.length - 1];
+
+  const macdData = macd(closes);
+  const hist = macdData.histogram;
+  const histNow = hist[hist.length - 1];
+  const histPrev = hist[hist.length - 2];
+  const improving = histNow !== null && histPrev !== null && histNow > histPrev;
+
+  let score = 0;
+  if (aboveVWAP) score++;
+  if (improving) score++;
+
+  const trend = aboveVWAP && improving ? 'Bullish' : aboveVWAP ? 'Cautiously bullish' : improving ? 'Bearish, improving' : 'Bearish';
+  return { score, trend, bullish: aboveVWAP };
+}
+
+// ===================== API =====================
+async function fetchData(ticker, interval, key) {
+  const url = `https://api.twelvedata.com/time_series?symbol=${ticker}&interval=${interval}&outputsize=100&apikey=${key}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (data.status === 'error') throw new Error(data.message);
+  if (!data.values) throw new Error('No data returned');
+  const values = data.values.reverse();
+  return values.map(v => ({
+    o: parseFloat(v.open),
+    h: parseFloat(v.high),
+    l: parseFloat(v.low),
+    c: parseFloat(v.close),
+    v: parseFloat(v.volume)
+  }));
+}
+
+// ===================== UI RENDER =====================
+function renderGrid(results) {
+  const grid = document.getElementById('tickerGrid');
+  if (!results.length) {
+    grid.innerHTML = '<div style="color:var(--text-tertiary); font-size:14px; text-align:center; padding:20px;">No tickers configured</div>';
+    return;
+  }
+  grid.innerHTML = results.map(r => {
+    const pillClass = r.daily.score >= 5 ? 'go' : r.daily.score >= 3 ? 'watch' : r.daily.score >= 1 ? 'wait' : 'hold';
+    const actionClass = r.daily.score >= 5 ? 'go' : r.daily.score >= 3 ? 'watch' : 'wait';
+    const conds = r.daily.conditions.map(c => {
+      const cls = c.on ? 'on' : 'off';
+      const icon = c.on ? '✓' : '✗';
+      return `<span class="condition ${cls}" title="${c.detail}">${icon} ${c.name}</span>`;
+    }).join('');
+    const weeklyClass = r.weekly.bullish ? 'color:var(--positive)' : 'color:var(--danger)';
+    const weeklyIcon = r.weekly.bullish ? '▲' : '▼';
+    const atrText = r.daily.atr.compressed ? 'compressed' : r.daily.atr.expanded ? 'expanded' : 'normal';
+    const atrColor = r.daily.atr.compressed ? 'var(--positive)' : r.daily.atr.expanded ? 'var(--danger)' : 'var(--text-tertiary)';
+    const stopHtml = r.daily.stop ? `<div class="stop-line">Suggested stop: <strong>$${r.daily.stop}</strong> (below higher low${r.daily.higherLow ? ' at $' + r.daily.higherLow.price.toFixed(2) : ''})</div>` : '';
+    const profileBadge = r.cfg.name === 'Speculative'
+      ? '<span class="profile-badge profile-spec">Spec</span>'
+      : '<span class="profile-badge profile-stable">Stable</span>';
+    const dailyScoreColor = r.daily.score >= 5 ? 'color:var(--positive)' : r.daily.score >= 3 ? 'color:var(--warning)' : 'color:var(--danger)';
+
+    return `
+      <div class="ticker-card">
+        <div class="ticker-header">
+          <div>
+            <div class="ticker-name">${r.ticker}${profileBadge}</div>
+            <div class="ticker-meta">${r.cfg.name} · ATR: <span style="color:${atrColor}">${atrText}</span> (${r.daily.details.atrPct}pct) · $${r.daily.details.price.toFixed(2)}</div>
+          </div>
+          <div class="score-pill ${pillClass}">${r.daily.score}/6</div>
+        </div>
+        <div class="timeframe-row">
+          <div class="tf-box">
+            <div class="tf-label">Weekly trend</div>
+            <div class="tf-score" style="${weeklyClass}">${weeklyIcon} ${r.weekly.trend}</div>
+            <div class="tf-desc">${r.weekly.score}/2 conditions</div>
+          </div>
+          <div class="tf-box">
+            <div class="tf-label">Daily setup</div>
+            <div class="tf-score" style="${dailyScoreColor}">${r.daily.score}/6</div>
+            <div class="tf-desc">${r.daily.action.substring(0, 50)}...</div>
+          </div>
+        </div>
+        <div class="conditions">${conds}</div>
+        <div class="action-text ${actionClass}">${r.daily.action}</div>
+        ${stopHtml}
+      </div>
+    `;
+  }).join('');
+}
+
+function clearResults() {
+  document.getElementById('tickerGrid').innerHTML = '<div style="color:var(--text-tertiary); font-size:14px; text-align:center; padding:20px;">Click "Run analysis" to check your watchlist</div>';
+  log('Results cleared');
+}
+
+// ===================== MAIN ANALYSIS =====================
+async function runAnalysis() {
+  const key = document.getElementById('apiKey').value.trim();
+  if (!key) { log('Enter your Twelve Data API key'); return; }
+  localStorage.setItem('td_api_key', key);
+
+  const select = document.getElementById('watchlist');
+  const watchlistTickers = Array.from(select.selectedOptions).map(o => o.value.trim().toUpperCase()).filter(t => t);
+  const raw = document.getElementById('tickers').value;
+  const extraTickers = raw.split(',').map(t => t.trim().toUpperCase()).filter(t => t);
+  const allTickers = [...new Set([...watchlistTickers, ...extraTickers])];
+
+  if (!allTickers.length) { log('Select at least one ticker from watchlist or type one'); return; }
+
+  document.getElementById('statusDot').className = 'dot active';
+  document.getElementById('statusText').textContent = 'Analyzing ' + allTickers.length + ' ticker(s)...';
+  document.getElementById('runBtn').disabled = true;
+
+  const results = [];
+  for (const ticker of allTickers) {
+    const cfg = getProfileConfig(ticker);
+    try {
+      const [weeklyData, dailyData] = await Promise.all([
+        fetchData(ticker, '1week', key),
+        fetchData(ticker, '1day', key)
+      ]);
+      const weekly = evaluateWeekly(weeklyData, cfg);
+      const daily = evaluateTicker(dailyData, cfg);
+      results.push({ ticker, weekly, daily, cfg });
+    } catch (e) {
+      log(`${ticker}: Error — ${e.message}`);
+      results.push({
+        ticker,
+        weekly: { score: 0, trend: 'Error', bullish: false },
+        daily: { score: 0, conditions: [], action: 'Error: ' + e.message, details: { price: 0, vwap: 0, rsi: '-', macdHist: '-', volume: 0, volSMA: '-', hvn: 0, atrPct: 0 }, stop: null, divergence: false, atr: { compressed: false, expanded: false }, higherLow: null },
+        cfg
+      });
+    }
+  }
+
+  renderGrid(results);
+  const now = new Date();
+  document.getElementById('statusText').textContent = 'Analysis complete · ' + allTickers.length + ' ticker(s)';
+  document.getElementById('lastRun').textContent = 'Last run: ' + now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
+  document.getElementById('statusDot').className = 'dot';
+  document.getElementById('runBtn').disabled = false;
+  log('Analysis complete for: ' + allTickers.join(', '));
+}
+</script>
+
+</body>
+</html>
