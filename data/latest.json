@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T21:10:11.534Z",
+  "generatedAt": "2026-08-18T21:45:46.531Z",
   "tickerCount": 33,
   "successCount": 33,
   "errors": [],
@@ -27,7 +27,7 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "17.270"
+            "detail": "15.328"
           },
           {
             "name": "Volume (unavailable)",
@@ -61,10 +61,10 @@
         "stop": "61281.08",
         "volumeReliable": false,
         "details": {
-          "price": 64614,
-          "vwap": 64566.886666666665,
-          "rsi": "54.8",
-          "macdHist": "17.270",
+          "price": 64583.57,
+          "vwap": 64556.74333333334,
+          "rsi": "54.6",
+          "macdHist": "15.328",
           "volume": 0,
           "volSMA": "-",
           "hvn": "58803.30",
@@ -388,12 +388,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-1.646"
+            "detail": "-1.648"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "34,160,509"
+            "detail": "38,275,078"
           },
           {
             "name": "Higher Low",
@@ -421,12 +421,12 @@
         "stop": "296.81",
         "volumeReliable": true,
         "details": {
-          "price": 310.23,
-          "vwap": 316.4672012863216,
+          "price": 310.20001,
+          "vwap": 316.203601366633,
           "rsi": "48.0",
-          "macdHist": "-1.646",
-          "volume": 1597837,
-          "volSMA": 34160509,
+          "macdHist": "-1.648",
+          "volume": 38628956,
+          "volSMA": 38275078,
           "hvn": "271.61",
           "atrPct": 24
         }
@@ -435,6 +435,78 @@
         "score": 1,
         "trend": "Cautiously bullish",
         "bullish": true
+      }
+    },
+    {
+      "ticker": "AMD",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": false,
+            "detail": "1.878"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": true,
+            "detail": "22,368,456"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$463.21"
+          },
+          {
+            "name": "ATR Compressed",
+            "on": true,
+            "detail": "4pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 4,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 463.20999,
+          "prevPrice": 424.029999,
+          "confirmed": true
+        },
+        "stop": "447.73",
+        "volumeReliable": true,
+        "details": {
+          "price": 484.67499,
+          "vwap": 492.249327484294,
+          "rsi": "47.6",
+          "macdHist": "1.878",
+          "volume": 29378324,
+          "volSMA": 22368456,
+          "hvn": "203.66",
+          "atrPct": 4
+        }
+      },
+      "weekly": {
+        "score": 0,
+        "trend": "Bearish",
+        "bullish": false
       }
     },
     {
@@ -460,12 +532,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "19.181"
+            "detail": "19.162"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "1,065,505"
+            "detail": "1,196,811"
           },
           {
             "name": "Higher Low",
@@ -490,15 +562,15 @@
           "prevPrice": 1582,
           "confirmed": false
         },
-        "stop": "1634.73",
+        "stop": "1634.72",
         "volumeReliable": true,
         "details": {
-          "price": 1803.285,
-          "vwap": 1705.509682835052,
+          "price": 1802.97998,
+          "vwap": 1709.0964444811923,
           "rsi": "53.9",
-          "macdHist": "19.181",
-          "volume": 94634,
-          "volSMA": 1065505,
+          "macdHist": "19.162",
+          "volume": 1276389,
+          "volSMA": 1196811,
           "hvn": "1441.29",
           "atrPct": 6
         }
@@ -532,12 +604,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-0.567"
+            "detail": "-0.564"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "19,222,684"
+            "detail": "20,733,312"
           },
           {
             "name": "Higher Low",
@@ -565,12 +637,12 @@
         "stop": "335.79",
         "volumeReliable": true,
         "details": {
-          "price": 344.03,
-          "vwap": 345.4539576099876,
-          "rsi": "46.0",
-          "macdHist": "-0.567",
-          "volume": 933650,
-          "volSMA": 19222684,
+          "price": 344.070007,
+          "vwap": 345.4003109643068,
+          "rsi": "46.1",
+          "macdHist": "-0.564",
+          "volume": 14529301,
+          "volSMA": 20733312,
           "hvn": "317.26",
           "atrPct": 2
         }
@@ -672,12 +744,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "5.610"
+            "detail": "5.622"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "6,830,573"
+            "detail": "7,579,934"
           },
           {
             "name": "Higher Low",
@@ -702,15 +774,15 @@
           "prevPrice": 276.84,
           "confirmed": false
         },
-        "stop": "282.74",
+        "stop": "282.73",
         "volumeReliable": true,
         "details": {
-          "price": 327.96,
-          "vwap": 304.0059410461096,
-          "rsi": "52.3",
-          "macdHist": "5.610",
-          "volume": 455699,
-          "volSMA": 6830573,
+          "price": 328.14999,
+          "vwap": 304.6827108302439,
+          "rsi": "52.4",
+          "macdHist": "5.622",
+          "volume": 7199945,
+          "volSMA": 7579934,
           "hvn": "154.38",
           "atrPct": 16
         }
@@ -1253,7 +1325,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "45,960,869"
+            "detail": "47,481,577"
           },
           {
             "name": "Higher Low",
@@ -1281,12 +1353,12 @@
         "stop": "16.63",
         "volumeReliable": true,
         "details": {
-          "price": 13.415,
-          "vwap": 15.785355799221044,
+          "price": 13.42,
+          "vwap": 15.73485947954138,
           "rsi": "32.0",
           "macdHist": "-0.334",
-          "volume": 822567,
-          "volSMA": 45960869,
+          "volume": 14508938,
+          "volSMA": 47481577,
           "hvn": "22.66",
           "atrPct": 48
         }
@@ -1325,7 +1397,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "3,828,641"
+            "detail": "4,211,401"
           },
           {
             "name": "Higher Low",
@@ -1354,11 +1426,11 @@
         "volumeReliable": true,
         "details": {
           "price": 263.12,
-          "vwap": 251.10833897215863,
+          "vwap": 251.51407114599272,
           "rsi": "57.4",
           "macdHist": "-0.452",
-          "volume": 203524,
-          "volSMA": 3828641,
+          "volume": 3648361,
+          "volSMA": 4211401,
           "hvn": "248.86",
           "atrPct": 90
         }
@@ -1367,78 +1439,6 @@
         "score": 2,
         "trend": "Bullish",
         "bullish": true
-      }
-    },
-    {
-      "ticker": "AMD",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 2,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": false,
-            "detail": "1.864"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "19,185,455"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$463.21"
-          },
-          {
-            "name": "ATR Compressed",
-            "on": true,
-            "detail": "4pct"
-          }
-        ],
-        "action": "Weak signal. One layer alone is not enough.",
-        "divergence": false,
-        "atr": {
-          "percentile": 4,
-          "compressed": true,
-          "expanded": false
-        },
-        "higherLow": {
-          "price": 463.20999,
-          "prevPrice": 424.029999,
-          "confirmed": true
-        },
-        "stop": "447.73",
-        "volumeReliable": true,
-        "details": {
-          "price": 484.45,
-          "vwap": 492.69774504454494,
-          "rsi": "47.5",
-          "macdHist": "1.864",
-          "volume": 731313,
-          "volSMA": 19185455,
-          "hvn": "203.66",
-          "atrPct": 4
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
       }
     },
     {
@@ -1464,12 +1464,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-0.908"
+            "detail": "-0.906"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "29,398,517"
+            "detail": "32,111,536"
           },
           {
             "name": "Higher Low",
@@ -1497,12 +1497,12 @@
         "stop": "266.80",
         "volumeReliable": true,
         "details": {
-          "price": 259.46,
-          "vwap": 258.9562311552498,
+          "price": 259.48001,
+          "vwap": 258.9774919706041,
           "rsi": "50.9",
-          "macdHist": "-0.908",
-          "volume": 1557419,
-          "volSMA": 29398517,
+          "macdHist": "-0.906",
+          "volume": 25974587,
+          "volSMA": 32111536,
           "hvn": "230.20",
           "atrPct": 54
         }
@@ -1608,12 +1608,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-2.642"
+            "detail": "-2.638"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "14,972,561"
+            "detail": "16,716,961"
           },
           {
             "name": "Higher Low",
@@ -1641,12 +1641,12 @@
         "stop": "361.53",
         "volumeReliable": true,
         "details": {
-          "price": 379.945,
-          "vwap": 399.31918327023755,
+          "price": 380.01001,
+          "vwap": 398.5325694715373,
           "rsi": "41.2",
-          "macdHist": "-2.642",
-          "volume": 875417,
-          "volSMA": 14972561,
+          "macdHist": "-2.638",
+          "volume": 16575015,
+          "volSMA": 16716961,
           "hvn": "340.48",
           "atrPct": 4
         }
@@ -1680,12 +1680,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-0.456"
+            "detail": "-0.454"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "1,815,465"
+            "detail": "1,950,049"
           },
           {
             "name": "Higher Low",
@@ -1710,15 +1710,15 @@
           "prevPrice": 325.95999,
           "confirmed": true
         },
-        "stop": "323.55",
+        "stop": "323.54",
         "volumeReliable": true,
         "details": {
-          "price": 316.45,
-          "vwap": 335.37553548913945,
-          "rsi": "32.8",
-          "macdHist": "-0.456",
-          "volume": 83249,
-          "volSMA": 1815465,
+          "price": 316.48999,
+          "vwap": 334.9404623716396,
+          "rsi": "32.9",
+          "macdHist": "-0.454",
+          "volume": 1294499,
+          "volSMA": 1950049,
           "hvn": "328.17",
           "atrPct": 0
         }
@@ -2041,7 +2041,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "37,374,964"
+            "detail": "41,852,252"
           },
           {
             "name": "Higher Low",
@@ -2066,11 +2066,11 @@
         "volumeReliable": true,
         "details": {
           "price": 8.965,
-          "vwap": 10.943422640485888,
+          "vwap": 10.858165948542004,
           "rsi": "35.1",
           "macdHist": "-0.123",
-          "volume": 1445932,
-          "volSMA": 37374964,
+          "volume": 41741522,
+          "volSMA": 41852252,
           "hvn": "12.12",
           "atrPct": 0
         }
@@ -2316,12 +2316,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "1.187"
+            "detail": "1.186"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "7,196,231"
+            "detail": "7,904,379"
           },
           {
             "name": "Higher Low",
@@ -2345,12 +2345,12 @@
         "stop": null,
         "volumeReliable": true,
         "details": {
-          "price": 514.395,
-          "vwap": 520.335202946931,
+          "price": 514.38,
+          "vwap": 519.8954933796028,
           "rsi": "46.6",
-          "macdHist": "1.187",
-          "volume": 405601,
-          "volSMA": 7196231,
+          "macdHist": "1.186",
+          "volume": 6778938,
+          "volSMA": 7904379,
           "hvn": "227.62",
           "atrPct": 28
         }
