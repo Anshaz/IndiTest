@@ -482,10 +482,44 @@
       if (!Number.isFinite(vol) || vol < 0) vol = 0;
       volSamples++;
       if (vol > 0) volNonZero++;
-      cleaned.push({ o, h, l, c, v: vol });
+      cleaned.push({ o, h, l, c, v: vol, t: v.datetime || null });
     }
     const volumeReliable = volSamples > 0 && (volNonZero / volSamples) > 0.8;
     return { bars: cleaned, volumeReliable };
+  }
+
+  // Aggregates daily bars into weekly bars locally (Mon-Fri grouped by ISO
+  // week), so evaluateWeekly() can run without a second API call. Requires
+  // the `t` (datetime) field sanitizeOHLCV now preserves. Needs enough
+  // trailing daily history to produce ~35+ weekly bars for MACD(12,26,9) to
+  // have a valid signal line — pass at least ~200 daily bars in.
+  function isoWeekKey(dateStr) {
+    const d = new Date(dateStr + 'T00:00:00Z');
+    const day = (d.getUTCDay() + 6) % 7; // Mon=0..Sun=6
+    d.setUTCDate(d.getUTCDate() - day); // back up to Monday of that week
+    return d.toISOString().slice(0, 10);
+  }
+
+  function resampleToWeekly(dailyBars) {
+    const weeks = new Map(); // weekKey -> array of bars, in original (ascending) order
+    for (const bar of dailyBars) {
+      if (!bar.t) continue; // can't bucket without a date
+      const key = isoWeekKey(bar.t);
+      if (!weeks.has(key)) weeks.set(key, []);
+      weeks.get(key).push(bar);
+    }
+    const keys = [...weeks.keys()].sort();
+    return keys.map(key => {
+      const group = weeks.get(key);
+      return {
+        o: group[0].o,
+        h: Math.max(...group.map(b => b.h)),
+        l: Math.min(...group.map(b => b.l)),
+        c: group[group.length - 1].c,
+        v: group.reduce((sum, b) => sum + b.v, 0),
+        t: key
+      };
+    });
   }
 
   return {
@@ -493,6 +527,6 @@
     ema, sma, rsi, emaFromIndex, macd, vwap, volumeProfileHVN, atr,
     findSwingLows, findHigherLow, findRSIDivergence, findRSIOversoldBounce, findRSISlope,
     atrPercentile, getProfileConfig, classifyVolatility,
-    evaluateMACD, evaluateTicker, evaluateWeekly, sanitizeOHLCV
+    evaluateMACD, evaluateTicker, evaluateWeekly, sanitizeOHLCV, resampleToWeekly
   };
 });

@@ -38,6 +38,28 @@ optionally set `"profiles"` overrides. Anything not explicitly listed in
 trailing volatility. Commit the change; the next scheduled run (or a manual
 trigger) picks it up.
 
+## How the scan avoids rate limits
+
+Twelve Data's free tier caps you at **8 API credits/minute**. The
+comma-separated "batch" endpoint (multiple symbols in one HTTP call)
+looked like the obvious optimization, but a real run showed it's billed
+at a much higher weight per symbol on this plan (33 tickers batched cost
+165 credits — 5/symbol) than a standard single-symbol call (1 credit/symbol,
+per Twelve Data's docs). So `scan.mjs` now:
+
+- fetches **one ticker at a time**, paced to stay under the per-minute
+  budget (default: 6 requests/minute, tunable via `TWELVEDATA_REQUESTS_PER_MINUTE`)
+- fetches **daily bars only** and derives weekly bars locally by
+  resampling (`Engine.resampleToWeekly`), halving the requests needed per
+  ticker
+- retries automatically with a 65-second wait if it still hits the
+  per-minute limit (e.g. from other API usage happening concurrently)
+
+For a 33-ticker watchlist this takes roughly 5-10 minutes end to end,
+occasionally more if it has to wait out a rate limit — that's expected,
+not a bug. The job timeout is set to 30 minutes as a safety net for a
+genuinely stuck run.
+
 ## Historical logging (for a future backtest)
 
 Every scan run also appends today's scored results to `data/history.jsonl`

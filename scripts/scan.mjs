@@ -2,11 +2,11 @@
 // ===================================================================
 // Scheduled scan job. Run once a day (see .github/workflows/scan.yml).
 //
-// Fetches the whole watchlist.config.json list via TwelveData's batch
-// endpoint (comma-separated symbols → ONE HTTP call per interval,
-// regardless of watchlist size) and scores every ticker using the exact
-// same engine.js the live "Manual Lookup" page in the browser uses, so
-// the two can never quietly disagree.
+// Fetches each watchlist ticker's daily bars with ONE paced request per
+// symbol (see note below on why not the batch endpoint), derives weekly
+// bars locally by resampling, and scores everything using the exact same
+// engine.js the live "Manual Lookup" page in the browser uses, so the two
+// can never quietly disagree.
 //
 // Output: data/latest.json — read directly by index.html's Auto Scan tab.
 //
@@ -27,61 +27,56 @@ if (!API_KEY) {
   process.exit(1);
 }
 
-const BATCH_CHUNK_SIZE = 100; // TwelveData batch supports up to ~120 symbols/call; stay under that with margin
+// The comma-separated /time_series "batch" endpoint looked like an
+// optimization (1 HTTP call instead of N) but is billed at a much higher
+// weight per symbol on the free/Basic plan than a standard single-symbol
+// call — confirmed by a real run: 33 tickers batched cost 165 credits
+// (5/symbol) against an 8-credits/minute cap. A plain single-symbol
+// /time_series call is the documented standard weight (1 credit/symbol),
+// so we fetch one ticker at a time, paced under that per-minute budget.
+//
+// We also only fetch DAILY bars now (with enough history to resample into
+// weekly bars locally — see Engine.resampleToWeekly), which halves the
+// number of requests needed per ticker: 1 instead of 2.
+const REQUESTS_PER_MINUTE = Number(process.env.TWELVEDATA_REQUESTS_PER_MINUTE || 6); // buffer under the observed 8/min cap
+const MIN_DELAY_MS = Math.ceil(60000 / REQUESTS_PER_MINUTE);
+const DAILY_OUTPUTSIZE = 260; // ~1 trading year — resamples to ~50 weekly bars, comfortably above MACD's ~35-bar need
+
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+async function fetchOne(ticker, retries = 3) {
+  const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(ticker)}&interval=1day&outputsize=${DAILY_OUTPUTSIZE}&apikey=${encodeURIComponent(API_KEY)}`;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.status === 'error') {
+      const creditLimited = /run out of api credits/i.test(data.message || '');
+      if (creditLimited && attempt < retries) {
+        // Credits reset on the minute boundary — wait a full minute plus a
+        // safety margin rather than guessing at the exact reset instant.
+        console.warn(`  ${ticker}: hit per-minute credit limit, waiting 65s (attempt ${attempt + 1}/${retries})...`);
+        await sleep(65000);
+        continue;
+      }
+      return { error: data.message || 'Provider error' };
+    }
+    if (!data.values || !data.values.length) return { error: 'No data returned' };
+    return { values: data.values };
+  }
+  return { error: 'Failed after retries (persistent rate limit)' };
+}
 
 async function readConfig() {
   const raw = await fs.readFile(path.join(ROOT, 'watchlist.config.json'), 'utf8');
   return JSON.parse(raw);
 }
 
-function chunk(arr, size) {
-  const out = [];
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size));
-  return out;
-}
-
-async function fetchBatch(symbols, interval, retries = 3) {
-  const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(symbols.join(','))}&interval=${interval}&outputsize=100&apikey=${encodeURIComponent(API_KEY)}`;
-  for (let attempt = 0; attempt <= retries; attempt++) {
-    const res = await fetch(url);
-    const data = await res.json();
-
-    // Single-symbol shape has 'values' at the top level. Multi-symbol batch
-    // shape is an object keyed by symbol, each with its own 'status'/'values'.
-    if (data.values) return { [symbols[0]]: data };
-
-    if (data.status === 'error') {
-      const rateLimited = /limit/i.test(data.message || '');
-      if (rateLimited && attempt < retries) {
-        await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
-        continue;
-      }
-      throw new Error(data.message || 'Unknown batch error');
-    }
-    return data; // { SYMBOL: { status, values, meta }, ... }
-  }
-  throw new Error(`Batch request for ${interval} failed after retries`);
-}
-
-async function fetchWatchlist(symbols, interval) {
-  const out = {};
-  for (const group of chunk(symbols, BATCH_CHUNK_SIZE)) {
-    const batch = await fetchBatch(group, interval);
-    Object.assign(out, batch);
-    // small pacing gap between chunks — free tier is 8 req/min, we're
-    // nowhere near that with 1-2 chunks, but stay polite regardless
-    await new Promise(r => setTimeout(r, 500));
-  }
-  return out;
-}
-
-function normalizeSymbolResponse(symbolData, ticker) {
-  if (!symbolData) return { error: 'No response for symbol' };
-  if (symbolData.status === 'error') return { error: symbolData.message || 'Provider error' };
-  if (!symbolData.values || !symbolData.values.length) return { error: 'No data returned' };
-  const { bars, volumeReliable } = Engine.sanitizeOHLCV([...symbolData.values].reverse());
-  if (bars.length < 10) return { error: 'Insufficient valid bars after cleaning' };
-  return { bars, volumeReliable };
+function normalizeAndSplit(values) {
+  const { bars: dailyBars, volumeReliable } = Engine.sanitizeOHLCV([...values].reverse());
+  if (dailyBars.length < 10) return { error: 'Insufficient valid bars after cleaning' };
+  const weeklyBars = Engine.resampleToWeekly(dailyBars);
+  if (weeklyBars.length < 15) return { error: 'Not enough history to resample a usable weekly series' };
+  return { dailyBars, weeklyBars, volumeReliable };
 }
 
 async function main() {
@@ -89,42 +84,52 @@ async function main() {
   const tickers = [...new Set(config.tickers.map(t => t.trim()))];
   const profiles = config.profiles || {};
 
-  console.log(`Scanning ${tickers.length} tickers...`);
-
-  const [dailyRaw, weeklyRaw] = await Promise.all([
-    fetchWatchlist(tickers, '1day'),
-    fetchWatchlist(tickers, '1week')
-  ]);
+  console.log(`Scanning ${tickers.length} tickers (paced at ~${REQUESTS_PER_MINUTE}/min, 1 request each)...`);
+  const estMinutes = Math.ceil((tickers.length * MIN_DELAY_MS) / 60000);
+  console.log(`Estimated time: ~${estMinutes} minute(s)`);
 
   const results = [];
   const errors = [];
 
-  for (const ticker of tickers) {
-    const daily = normalizeSymbolResponse(dailyRaw[ticker], ticker);
-    const weekly = normalizeSymbolResponse(weeklyRaw[ticker], ticker);
+  for (let i = 0; i < tickers.length; i++) {
+    const ticker = tickers[i];
+    const started = Date.now();
 
-    if (daily.error || weekly.error) {
-      const message = daily.error || weekly.error;
-      console.warn(`  ${ticker}: ${message}`);
-      errors.push({ ticker, message });
-      continue;
+    const fetched = await fetchOne(ticker);
+    if (fetched.error) {
+      console.warn(`  ${ticker}: ${fetched.error}`);
+      errors.push({ ticker, message: fetched.error });
+    } else {
+      const normalized = normalizeAndSplit(fetched.values);
+      if (normalized.error) {
+        console.warn(`  ${ticker}: ${normalized.error}`);
+        errors.push({ ticker, message: normalized.error });
+      } else {
+        const hasExplicitProfile = Object.prototype.hasOwnProperty.call(profiles, ticker);
+        const profileKey = hasExplicitProfile ? profiles[ticker] : Engine.classifyVolatility(normalized.dailyBars);
+        const cfg = Engine.getProfileConfig(profileKey);
+
+        const dailyResult = Engine.evaluateTicker(normalized.dailyBars, cfg, normalized.volumeReliable);
+        const weeklyResult = Engine.evaluateWeekly(normalized.weeklyBars, cfg);
+
+        results.push({
+          ticker,
+          cfg: { name: cfg.name },
+          autoClassified: !hasExplicitProfile,
+          daily: dailyResult,
+          weekly: weeklyResult
+        });
+        console.log(`  ${ticker}: ${dailyResult.score}/${dailyResult.maxScore} (${cfg.name}${!hasExplicitProfile ? ', auto' : ''})`);
+      }
     }
 
-    const hasExplicitProfile = Object.prototype.hasOwnProperty.call(profiles, ticker);
-    const profileKey = hasExplicitProfile ? profiles[ticker] : Engine.classifyVolatility(daily.bars);
-    const cfg = Engine.getProfileConfig(profileKey);
-
-    const dailyResult = Engine.evaluateTicker(daily.bars, cfg, daily.volumeReliable);
-    const weeklyResult = Engine.evaluateWeekly(weekly.bars, cfg);
-
-    results.push({
-      ticker,
-      cfg: { name: cfg.name },
-      autoClassified: !hasExplicitProfile,
-      daily: dailyResult,
-      weekly: weeklyResult
-    });
-    console.log(`  ${ticker}: ${dailyResult.score}/${dailyResult.maxScore} (${cfg.name}${!hasExplicitProfile ? ', auto' : ''})`);
+    // Pace to stay under the per-minute credit budget, but don't sleep
+    // after the very last request or if a retry-wait already ate the gap.
+    if (i < tickers.length - 1) {
+      const elapsed = Date.now() - started;
+      const remaining = MIN_DELAY_MS - elapsed;
+      if (remaining > 0) await sleep(remaining);
+    }
   }
 
   // Highest-conviction setups first — this is the whole point of the
