@@ -1,0 +1,30 @@
+# ── Local secrets ──────────────────────────────────────────────
+# If you ever run scan.mjs/backtest.mjs locally with
+# `node --env-file=.env scripts/scan.mjs`, put TWELVEDATA_API_KEY in
+# .env — never commit that file. .env.example (committed) is the template.
+.env
+.env.local
+.env.*.local
+
+# ── OS / editor cruft ──────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# ── Node (only matters if you add npm dependencies later —
+#    scan.mjs/backtest.mjs currently use zero external packages) ──
+node_modules/
+npm-debug.log*
+
+# ── Local scratch/test runs ────────────────────────────────────
+# Uncomment if you want to experiment with scan.mjs/backtest.mjs locally
+# without touching the "real" committed history the live site reads from.
+# Leave these OUT of .gitignore for the deployed repo — data/latest.json
+# and data/history* are supposed to be committed; that's how the Auto Scan
+# tab gets its data with zero API calls per visit.
+# data/latest.json
+# data/history.jsonl
+# data/history/

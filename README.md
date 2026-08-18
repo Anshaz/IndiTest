@@ -81,3 +81,21 @@ This is a heuristic multi-factor screener, refactored for correctness —
 not a backtested trading system. Treat scores as "how many layers of
 confirmation lined up," not a validated edge. See prior conversation for
 the full breakdown of what's solid vs. what's still untested assumption.
+
+## Secrets & privacy
+
+Your Twelve Data key never lives in a repo file: production reads it from
+a GitHub Actions secret, and Manual Lookup keeps it in the browser's
+`localStorage`. `.gitignore` covers local dev accidents (`.env`, editor/OS
+cruft) — copy `.env.example` to `.env` if you want to run
+`scan.mjs`/`backtest.mjs` locally (`node --env-file=.env scripts/scan.mjs`).
+
+The thing actually worth deciding on purpose: `data/latest.json`,
+`data/history.jsonl`, and `data/history/*.json` are **committed to the
+repo by design** — that's how Auto Scan reads results with zero API calls.
+If the repo is public, your watchlist and its daily scores are public too,
+indefinitely (full history in git log). If you'd rather that stay private,
+make the **repo** private rather than gitignoring those files — gitignoring
+them just breaks Auto Scan (nothing for the page to fetch). A private repo
+still works with GitHub Pages (GitHub Pro/Team/Enterprise) or you can serve
+`data/` from anywhere else you control instead.

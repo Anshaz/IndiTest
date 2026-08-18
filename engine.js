@@ -32,7 +32,7 @@
     // Speculative
     "BBAI": "spec", "BTC": "spec", "CRWD": "spec", "HIMS": "spec",
     "MARA": "spec", "MELI": "spec", "PLTR": "spec", "SNDK": "spec",
-    "SOFI": "spec", "TTD": "spec", "TSLA": "spec", "CRCL": "spec", "COIN": "spec", "RBLX": "spec", "SNOW": "spec"
+    "SOFI": "spec", "TTD": "spec", "TSLA": "spec"
   };
 
   // ===================== INDICATOR MATH =====================
