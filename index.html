@@ -318,6 +318,44 @@
   .mode-tab:hover { border-color: var(--accent); }
   .mode-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
   .stale-badge { color: var(--warning); font-size: 12px; margin-left: 6px; }
+
+  /* ===== Auto Scan table ===== */
+  .scan-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 8px; }
+  .scan-table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+  .scan-table th, .scan-table td { padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .scan-table thead th {
+    position: sticky; top: 0; background: var(--surface-raised); color: var(--text-tertiary);
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500;
+    cursor: pointer; user-select: none; z-index: 1;
+  }
+  .scan-table thead th:hover { color: var(--text-primary); }
+  .scan-table thead th.sorted { color: var(--accent); }
+  .scan-table tbody tr { transition: background 0.1s; }
+  .scan-table tbody tr:hover { background: var(--surface-raised); }
+  .scan-table tbody tr:last-child td { border-bottom: none; }
+  .scan-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .scan-table .t-ticker { font-weight: 600; }
+  .scan-table .t-score-pill {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 34px; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 12px;
+    border: 2px solid var(--border);
+  }
+  .scan-table .t-score-pill.go { border-color: var(--positive); color: var(--positive); }
+  .scan-table .t-score-pill.watch { border-color: var(--warning); color: var(--warning); }
+  .scan-table .t-score-pill.wait { border-color: var(--text-tertiary); color: var(--text-tertiary); }
+  .scan-table .t-score-pill.hold { border-color: var(--danger); color: var(--danger); }
+  .scan-table .t-conditions { display: inline-flex; gap: 3px; }
+  .scan-table .t-cond-dot {
+    width: 18px; height: 18px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 700; border: 1px solid var(--border); color: var(--text-tertiary);
+    background: var(--surface);
+  }
+  .scan-table .t-cond-dot.on { background: color-mix(in srgb, var(--positive) 15%, transparent); border-color: var(--positive); color: var(--positive); }
+  .scan-table .t-cond-dot.off { background: color-mix(in srgb, var(--danger) 10%, transparent); border-color: color-mix(in srgb, var(--danger) 40%, transparent); color: var(--danger); }
+  .scan-table .t-cond-dot.excluded { opacity: 0.35; }
+  .scan-table .t-weekly { font-weight: 600; }
+  .scan-table .t-action { max-width: 260px; white-space: normal; font-size: 12px; color: var(--text-secondary); }
+  .scan-table tbody td.t-error { color: var(--danger); font-style: italic; white-space: normal; }
 </style>
 <base target="_blank">
 </head>
@@ -429,8 +467,27 @@
 <!-- ===================== SCORES (shared by both modes) ===================== -->
 <div class="card">
   <h2>Results</h2>
-  <div id="tickerGrid" class="ticker-grid">
-    <div style="color:var(--text-tertiary); font-size:14px; text-align:center; padding:20px;">Loading…</div>
+  <div id="autoTableWrap" class="scan-table-wrap">
+    <table class="scan-table">
+      <thead>
+        <tr>
+          <th data-sort="ticker">Ticker</th>
+          <th data-sort="score">Score</th>
+          <th data-sort="weekly">Weekly</th>
+          <th data-sort="price" class="num">Price</th>
+          <th data-sort="atr">ATR</th>
+          <th>Conditions</th>
+          <th data-sort="stop" class="num">Stop</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="autoTableBody">
+        <tr><td colspan="8" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div id="tickerGrid" class="ticker-grid" style="display:none;">
+    <div style="color:var(--text-tertiary); font-size:14px; text-align:center; padding:20px;">Click "Run analysis" to check tickers on demand</div>
   </div>
 </div>
 
@@ -815,6 +872,8 @@ function switchMode(mode) {
   document.getElementById('tab-manual').classList.toggle('active', mode === 'manual');
   document.getElementById('autoPanel').style.display = mode === 'auto' ? '' : 'none';
   document.getElementById('manualPanel').style.display = mode === 'manual' ? '' : 'none';
+  document.getElementById('autoTableWrap').style.display = mode === 'auto' ? '' : 'none';
+  document.getElementById('tickerGrid').style.display = mode === 'manual' ? '' : 'none';
   if (mode === 'auto') {
     if (autoScanData) renderAutoResults(); else loadAutoScan();
   } else {
@@ -848,7 +907,7 @@ function renderAutoResults() {
     const ratio = r.daily.maxScore ? r.daily.score / r.daily.maxScore : 0;
     return ratio >= minRatio;
   });
-  renderGrid(filtered);
+  renderAutoTable(filtered);
 
   const generated = new Date(autoScanData.generatedAt);
   const ageHours = (Date.now() - generated.getTime()) / 3600000;
@@ -861,6 +920,100 @@ function renderAutoResults() {
   document.getElementById('autoStatusText').innerHTML =
     `Last scan: ${generated.toLocaleString()} · ${autoScanData.successCount}/${autoScanData.tickerCount} tickers · showing ${filtered.length}${errPart}${staleWarning}`;
 }
+
+// ===================== AUTO SCAN TABLE =====================
+let tableSort = { key: 'score', dir: 'desc' };
+
+function tableSortValue(r, key) {
+  switch (key) {
+    case 'ticker': return r.ticker;
+    case 'score': return r.daily.maxScore ? r.daily.score / r.daily.maxScore : 0;
+    case 'weekly': return r.weekly.score;
+    case 'price': return r.daily.details ? r.daily.details.price : 0;
+    case 'atr': return r.daily.details ? r.daily.details.atrPct : 0;
+    case 'stop': return r.daily.stop ? parseFloat(r.daily.stop) : -Infinity;
+    default: return 0;
+  }
+}
+
+function setTableSort(key) {
+  if (tableSort.key === key) {
+    tableSort.dir = tableSort.dir === 'desc' ? 'asc' : 'desc';
+  } else {
+    tableSort = { key, dir: key === 'ticker' ? 'asc' : 'desc' };
+  }
+  renderAutoResults();
+}
+
+function renderAutoTable(results) {
+  const tbody = document.getElementById('autoTableBody');
+
+  // header sort-state indicator
+  document.querySelectorAll('.scan-table thead th[data-sort]').forEach(th => {
+    const key = th.getAttribute('data-sort');
+    th.classList.toggle('sorted', key === tableSort.key);
+    const base = th.textContent.replace(/ [↑↓]$/, '');
+    th.textContent = base + (key === tableSort.key ? (tableSort.dir === 'desc' ? ' ↓' : ' ↑') : '');
+  });
+
+  if (!results.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
+    return;
+  }
+
+  const sorted = [...results].sort((a, b) => {
+    const va = tableSortValue(a, tableSort.key), vb = tableSortValue(b, tableSort.key);
+    const cmp = typeof va === 'string' ? va.localeCompare(vb) : va - vb;
+    return tableSort.dir === 'desc' ? -cmp : cmp;
+  });
+
+  tbody.innerHTML = sorted.map(r => {
+    if (r.daily.action && r.daily.action.startsWith('Error:')) {
+      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="7" class="t-error">${r.daily.action}</td></tr>`;
+    }
+
+    const maxScore = r.daily.maxScore || 6;
+    const ratio = maxScore > 0 ? r.daily.score / maxScore : 0;
+    const pillClass = ratio >= 0.85 ? 'go' : ratio >= 0.5 ? 'watch' : r.daily.score >= 1 ? 'wait' : 'hold';
+
+    const profileBadge = r.cfg.name === 'Speculative'
+      ? '<span class="profile-badge profile-spec">Spec</span>'
+      : '<span class="profile-badge profile-stable">Stable</span>';
+    const autoBadge = r.autoClassified ? '<span class="profile-badge" style="background:color-mix(in srgb, var(--text-tertiary) 20%, transparent); color:var(--text-secondary);" title="No manual profile set — classified from trailing volatility">auto</span>' : '';
+
+    const weeklyColor = r.weekly.bullish ? 'var(--positive)' : 'var(--danger)';
+    const weeklyIcon = r.weekly.bullish ? '▲' : '▼';
+
+    const atrText = r.daily.atr && r.daily.atr.compressed ? 'compressed' : r.daily.atr && r.daily.atr.expanded ? 'expanded' : 'normal';
+    const atrColor = r.daily.atr && r.daily.atr.compressed ? 'var(--positive)' : r.daily.atr && r.daily.atr.expanded ? 'var(--danger)' : 'var(--text-tertiary)';
+
+    const conditionsHtml = r.daily.conditions.map(c => {
+      const cls = c.excluded ? 'excluded' : (c.on ? 'on' : 'off');
+      const icon = c.excluded ? '–' : (c.on ? '✓' : '✗');
+      const initial = c.name.replace(/[^A-Za-z]/g, '')[0] || '?';
+      return `<span class="t-cond-dot ${cls}" title="${c.name}: ${c.detail}">${icon}</span>`;
+    }).join('');
+
+    const price = r.daily.details ? '$' + r.daily.details.price.toFixed(2) : '-';
+    const stop = r.daily.stop ? '$' + r.daily.stop : '–';
+
+    return `
+      <tr>
+        <td class="t-ticker">${r.ticker} ${profileBadge}${autoBadge}</td>
+        <td><span class="t-score-pill ${pillClass}">${r.daily.score}/${maxScore}</span></td>
+        <td class="t-weekly" style="color:${weeklyColor}">${weeklyIcon} ${r.weekly.score}/2</td>
+        <td class="num">${price}</td>
+        <td style="color:${atrColor}">${atrText}</td>
+        <td><span class="t-conditions">${conditionsHtml}</span></td>
+        <td class="num">${stop}</td>
+        <td class="t-action">${r.daily.action}</td>
+      </tr>`;
+  }).join('');
+}
+
+document.querySelectorAll('.scan-table thead th[data-sort]').forEach(th => {
+  th.addEventListener('click', () => setTableSort(th.getAttribute('data-sort')));
+});
 
 
 // ===================== LOGGING =====================
