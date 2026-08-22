@@ -90,6 +90,7 @@ async function main() {
 
   const results = [];
   const errors = [];
+  let spyDailyBars = null; // captured in-loop if SPY is in the watchlist — reused for regime, no extra fetch
 
   for (let i = 0; i < tickers.length; i++) {
     const ticker = tickers[i];
@@ -105,6 +106,8 @@ async function main() {
         console.warn(`  ${ticker}: ${normalized.error}`);
         errors.push({ ticker, message: normalized.error });
       } else {
+        if (ticker === 'SPY') spyDailyBars = normalized.dailyBars;
+
         const hasExplicitProfile = Object.prototype.hasOwnProperty.call(profiles, ticker);
         const profileKey = hasExplicitProfile ? profiles[ticker] : Engine.classifyVolatility(normalized.dailyBars);
         const cfg = Engine.getProfileConfig(profileKey);
@@ -136,11 +139,33 @@ async function main() {
   // auto-scan: open the page, see what's actionable, no manual scanning.
   results.sort((a, b) => (b.daily.score / b.daily.maxScore) - (a.daily.score / a.daily.maxScore));
 
+  // Market regime: is the broad market itself trending up or down? Surfaced
+  // separately from individual ticker scores — doesn't change what a score
+  // means, just adds context alongside it. Falls back to a dedicated fetch
+  // only if SPY somehow isn't in the watchlist.
+  let regime = null;
+  if (spyDailyBars) {
+    regime = Engine.evaluateMarketRegime(spyDailyBars, 50);
+    console.log(`\nMarket regime (SPY, 50-day): ${regime.bullish === null ? 'insufficient data' : regime.bullish ? 'BULLISH' : 'BEARISH'}` +
+      (regime.pctFromSma !== null ? ` (${regime.pctFromSma > 0 ? '+' : ''}${regime.pctFromSma.toFixed(1)}% from SMA)` : ''));
+  } else {
+    console.log('\nSPY not found in watchlist results — fetching separately for market regime...');
+    const spyFetch = await fetchOne('SPY');
+    if (!spyFetch.error) {
+      const spyNormalized = normalizeAndSplit(spyFetch.values);
+      if (!spyNormalized.error) {
+        regime = Engine.evaluateMarketRegime(spyNormalized.dailyBars, 50);
+      }
+    }
+    if (!regime) console.warn('Could not compute market regime — SPY fetch failed.');
+  }
+
   const output = {
     generatedAt: new Date().toISOString(),
     tickerCount: tickers.length,
     successCount: results.length,
     errors,
+    regime,
     results
   };
 

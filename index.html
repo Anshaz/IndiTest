@@ -356,6 +356,17 @@
   .scan-table .t-weekly { font-weight: 600; }
   .scan-table .t-action { max-width: 260px; white-space: normal; font-size: 12px; color: var(--text-secondary); }
   .scan-table tbody td.t-error { color: var(--danger); font-style: italic; white-space: normal; }
+
+  .regime-banner {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    border-radius: 8px; font-size: 13px; border-left: 3px solid var(--border);
+  }
+  .regime-banner.bullish { background: color-mix(in srgb, var(--positive) 8%, transparent); border-left-color: var(--positive); }
+  .regime-banner.bearish { background: color-mix(in srgb, var(--warning) 8%, transparent); border-left-color: var(--warning); }
+  .regime-icon { font-size: 18px; }
+  .t-size-cell { font-size: 12px; }
+  .t-size-cell .size-shares { font-weight: 600; color: var(--text-primary); }
+  .t-size-cell .size-warn { color: var(--warning); }
 </style>
 <base target="_blank">
 </head>
@@ -365,6 +376,28 @@
 <div class="subtitle">Daily research tool · Check entries on your own time</div>
 
 <!-- ===================== MODE TABS ===================== -->
+<!-- ===================== RISK SETTINGS (shared by both modes) ===================== -->
+<div class="card">
+  <h2>Risk Settings</h2>
+  <p class="hint">Used to suggest a position size per setup (risk-based, not a recommendation to trade). Stored locally in your browser only.</p>
+  <div class="form-row" style="margin-top:8px;">
+    <div class="form-group">
+      <label>Account size ($)</label>
+      <input type="number" id="accountSize" placeholder="e.g. 10000" min="0" step="100">
+    </div>
+    <div class="form-group">
+      <label>Risk per trade (%)</label>
+      <input type="number" id="riskPercent" placeholder="e.g. 1" min="0" max="100" step="0.1" value="1">
+    </div>
+  </div>
+</div>
+
+<!-- ===================== MARKET REGIME (shared by both modes) ===================== -->
+<div class="card" id="regimeCard" style="display:none;">
+  <h2>Market Regime</h2>
+  <div id="regimeBanner"></div>
+</div>
+
 <div class="mode-tabs">
   <button class="mode-tab active" id="tab-auto" onclick="switchMode('auto')">📅 Auto Scan</button>
   <button class="mode-tab" id="tab-manual" onclick="switchMode('manual')">🔍 Manual Lookup</button>
@@ -504,11 +537,12 @@
           <th>Conditions</th>
           <th data-sort="stop" class="num">Stop</th>
           <th data-sort="target" class="num">Target</th>
+          <th data-sort="size" class="num">Size</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody id="autoTableBody">
-        <tr><td colspan="9" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
+        <tr><td colspan="10" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
       </tbody>
     </table>
   </div>
@@ -887,9 +921,11 @@ let apiKey = localStorage.getItem('td_api_key') || '';
 let logs = [];
 if (apiKey) document.getElementById('apiKey').value = apiKey;
 loadProfiles();
+loadRiskSettings();
 
 let currentMode = 'auto';
 let autoScanData = null; // raw payload from data/latest.json
+let lastManualResults = null; // last runAnalysis() results, for live re-render on settings change
 
 // ===================== MODE SWITCHING (Auto Scan <-> Manual Lookup) =====================
 function switchMode(mode) {
@@ -934,6 +970,7 @@ function renderAutoResults() {
     return ratio >= minRatio;
   });
   renderAutoTable(filtered);
+  renderRegimeBanner(autoScanData.regime);
 
   const generated = new Date(autoScanData.generatedAt);
   const ageHours = (Date.now() - generated.getTime()) / 3600000;
@@ -945,6 +982,60 @@ function renderAutoResults() {
   document.getElementById('autoStatusDot').className = 'dot';
   document.getElementById('autoStatusText').innerHTML =
     `Last scan: ${generated.toLocaleString()} · ${autoScanData.successCount}/${autoScanData.tickerCount} tickers · showing ${filtered.length}${errPart}${staleWarning}`;
+}
+
+// ===================== RISK SETTINGS (position sizing) =====================
+function loadRiskSettings() {
+  const accountSize = localStorage.getItem('risk_account_size');
+  const riskPercent = localStorage.getItem('risk_percent');
+  if (accountSize !== null) document.getElementById('accountSize').value = accountSize;
+  if (riskPercent !== null) document.getElementById('riskPercent').value = riskPercent;
+}
+function saveRiskSettings() {
+  localStorage.setItem('risk_account_size', document.getElementById('accountSize').value);
+  localStorage.setItem('risk_percent', document.getElementById('riskPercent').value);
+}
+function getPositionSizeFor(r) {
+  const accountSize = parseFloat(document.getElementById('accountSize').value);
+  const riskPercent = parseFloat(document.getElementById('riskPercent').value);
+  if (!(accountSize > 0) || !(riskPercent > 0)) return null;
+  if (!r.daily.details || !r.daily.stop) return null;
+  return calculatePositionSize(accountSize, riskPercent, r.daily.details.price, parseFloat(r.daily.stop));
+}
+function positionSizeHtml(r) {
+  const accountSize = parseFloat(document.getElementById('accountSize').value);
+  const riskPercent = parseFloat(document.getElementById('riskPercent').value);
+  if (!(accountSize > 0) || !(riskPercent > 0)) {
+    return '<span class="t-size-cell" style="color:var(--text-tertiary)" title="Set account size and risk % above">–</span>';
+  }
+  const ps = getPositionSizeFor(r);
+  if (!ps) return '<span class="t-size-cell" style="color:var(--text-tertiary)">–</span>';
+  const warn = ps.capitalConstrained ? ' <span class="size-warn" title="Account size (not risk %) limited this position">⚠</span>' : '';
+  return `<span class="t-size-cell" title="Risking $${ps.actualRiskDollars} (${ps.positionPercentOfAccount}% of account) on $${ps.positionValue} position">` +
+    `<span class="size-shares">${ps.shares}</span> sh${warn}</span>`;
+}
+
+// ===================== MARKET REGIME DISPLAY =====================
+function renderRegimeBanner(regime) {
+  const card = document.getElementById('regimeCard');
+  const banner = document.getElementById('regimeBanner');
+  if (!regime || regime.insufficient || regime.bullish === null) {
+    card.style.display = 'none';
+    return;
+  }
+  card.style.display = '';
+  const cls = regime.bullish ? 'bullish' : 'bearish';
+  const icon = regime.bullish ? '▲' : '▼';
+  const label = regime.bullish ? 'Bullish' : 'Bearish';
+  const pctStr = regime.pctFromSma !== null ? `${regime.pctFromSma > 0 ? '+' : ''}${regime.pctFromSma.toFixed(1)}%` : '';
+  const note = regime.bullish
+    ? 'Broad market is above its 50-day trend.'
+    : 'Broad market is below its 50-day trend — long setups have historically underperformed fighting this. Consider reduced size or waiting for confirmation, not a rule to force.';
+  banner.innerHTML = `<div class="regime-banner ${cls}">` +
+    `<span class="regime-icon">${icon}</span>` +
+    `<div><strong>SPY: ${label}</strong> (${pctStr} from 50-day average, $${regime.price.toFixed(2)} vs $${regime.sma.toFixed(2)})` +
+    `<div style="color:var(--text-secondary); margin-top:2px;">${note}</div></div>` +
+    `</div>`;
 }
 
 // ===================== AUTO SCAN TABLE =====================
@@ -959,6 +1050,10 @@ function tableSortValue(r, key) {
     case 'atr': return r.daily.details ? r.daily.details.atrPct : 0;
     case 'stop': return r.daily.stop ? parseFloat(r.daily.stop) : -Infinity;
     case 'target': return r.daily.target ? parseFloat(r.daily.target) : -Infinity;
+    case 'size': {
+      const ps = getPositionSizeFor(r);
+      return ps ? ps.shares : -Infinity;
+    }
     default: return 0;
   }
 }
@@ -994,7 +1089,7 @@ function renderAutoTable(results) {
   });
 
   if (!results.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
     return;
   }
 
@@ -1006,7 +1101,7 @@ function renderAutoTable(results) {
 
   tbody.innerHTML = sorted.map(r => {
     if (r.daily.action && r.daily.action.startsWith('Error:')) {
-      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="8" class="t-error">${r.daily.action}</td></tr>`;
+      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="9" class="t-error">${r.daily.action}</td></tr>`;
     }
 
     const maxScore = r.daily.maxScore || 6;
@@ -1048,6 +1143,7 @@ function renderAutoTable(results) {
         <td><span class="t-conditions">${conditionsHtml}</span></td>
         <td class="num">${stop}</td>
         <td class="num">${target}</td>
+        <td class="num">${positionSizeHtml(r)}</td>
         <td class="t-action">${r.daily.action}</td>
       </tr>`;
   }).join('');
@@ -1186,6 +1282,15 @@ function renderGrid(results) {
     const atrColor = r.daily.atr.compressed ? 'var(--positive)' : r.daily.atr.expanded ? 'var(--danger)' : 'var(--text-tertiary)';
     const stopHtml = r.daily.stop ? `<div class="stop-line">Suggested stop: <strong>$${r.daily.stop}</strong> (below higher low${r.daily.higherLow ? ' at $' + r.daily.higherLow.price.toFixed(2) : ''})</div>` : '';
     const targetHtml = r.daily.target ? `<div class="stop-line">Suggested target: <strong>$${r.daily.target}</strong> (1:${r.daily.rewardMultiplier} reward:risk${r.daily.riskPerShare ? ', $' + r.daily.riskPerShare + ' risk/share' : ''})</div>` : '';
+    const positionHtml = (() => {
+      const accountSize = parseFloat(document.getElementById('accountSize').value);
+      const riskPercent = parseFloat(document.getElementById('riskPercent').value);
+      if (!(accountSize > 0) || !(riskPercent > 0) || !r.daily.stop || !r.daily.details) return '';
+      const ps = calculatePositionSize(accountSize, riskPercent, r.daily.details.price, parseFloat(r.daily.stop));
+      if (!ps) return '';
+      const warn = ps.capitalConstrained ? ' <span style="color:var(--warning)">⚠ capital-constrained, not risk-constrained</span>' : '';
+      return `<div class="stop-line">Suggested position: <strong>${ps.shares} shares</strong> ($${ps.positionValue}, risking $${ps.actualRiskDollars} / ${ps.positionPercentOfAccount}% of account)${warn}</div>`;
+    })();
     const profileBadge = r.cfg.name === 'Speculative'
       ? '<span class="profile-badge profile-spec">Spec</span>'
       : '<span class="profile-badge profile-stable">Stable</span>';
@@ -1219,6 +1324,7 @@ function renderGrid(results) {
         <div class="action-text ${actionClass}">${r.daily.action}</div>
         ${stopHtml}
         ${targetHtml}
+        ${positionHtml}
       </div>
     `;
   }).join('');
@@ -1283,16 +1389,38 @@ async function runAnalysis() {
   }, 3);
 
   renderGrid(results);
+  lastManualResults = results;
   const now = new Date();
   document.getElementById('statusText').textContent = 'Analysis complete · ' + allTickers.length + ' ticker(s)';
   document.getElementById('lastRun').textContent = 'Last run: ' + now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
   document.getElementById('statusDot').className = 'dot';
   document.getElementById('runBtn').disabled = false;
   log('Analysis complete for: ' + allTickers.join(', '));
+
+  // Market regime, same 50-day SPY check as the auto scan. Reuses the
+  // existing fetch cache — if SPY was already in this run's tickers, this
+  // costs zero extra API calls; otherwise it's one more.
+  try {
+    const spyRes = await fetchData('SPY', '1day', key);
+    renderRegimeBanner(evaluateMarketRegime(spyRes.bars, 50));
+  } catch (e) {
+    document.getElementById('regimeCard').style.display = 'none';
+  }
 }
 
 // ===================== INIT =====================
 loadAutoScan(); // default tab is Auto Scan — load it immediately on page open
+
+// Position sizing depends only on client-side settings + already-fetched
+// results, so changing account size/risk % re-renders instantly without
+// any re-fetch, in whichever mode is currently active.
+['accountSize', 'riskPercent'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    saveRiskSettings();
+    if (currentMode === 'auto' && autoScanData) renderAutoResults();
+    else if (currentMode === 'manual' && lastManualResults) renderGrid(lastManualResults);
+  });
+});
 </script>
 
 </body>
