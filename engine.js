@@ -551,38 +551,6 @@
     });
   }
 
-  // ===================== POSITION SIZING (new, additive — does not touch evaluateTicker) =====================
-  // Given an account size and a risk-per-trade %, and a specific setup's
-  // entry/stop, computes how many shares keeps the dollar risk within that
-  // %. This is a display-layer calculation deliberately kept separate from
-  // evaluateTicker() — position sizing depends on the user's account, not
-  // the ticker's technicals, so it doesn't belong in the scoring engine's
-  // return shape (which scan.mjs, backtest.mjs, and the bot bridge all key
-  // off of already).
-  function calculatePositionSize(accountSize, riskPercent, entryPrice, stopPrice) {
-    if (!(accountSize > 0) || !(riskPercent > 0) || !(entryPrice > 0) || !(stopPrice > 0)) return null;
-    const riskPerShare = entryPrice - stopPrice;
-    if (riskPerShare <= 0) return null; // stop isn't actually below entry — not a valid long risk distance
-
-    const maxRiskDollars = accountSize * (riskPercent / 100);
-    const riskBasedShares = Math.floor(maxRiskDollars / riskPerShare);
-    const affordableShares = Math.floor(accountSize / entryPrice);
-    const shares = Math.max(0, Math.min(riskBasedShares, affordableShares));
-    const capitalConstrained = affordableShares < riskBasedShares;
-    const positionValue = shares * entryPrice;
-    const actualRiskDollars = shares * riskPerShare;
-
-    return {
-      shares,
-      riskPerShare: riskPerShare.toFixed(2),
-      maxRiskDollars: maxRiskDollars.toFixed(2),
-      actualRiskDollars: actualRiskDollars.toFixed(2),
-      positionValue: positionValue.toFixed(2),
-      positionPercentOfAccount: ((positionValue / accountSize) * 100).toFixed(1),
-      capitalConstrained // true if account size (not risk %) was the binding constraint — worth flagging to the user
-    };
-  }
-
   // ===================== MARKET REGIME (new, additive) =====================
   // Simple, standard trend gate: is the broad market (SPY/QQQ) above its own
   // longer-term moving average? Long setups historically underperform when
@@ -610,6 +578,6 @@
     findSwingLows, findHigherLow, findRSIDivergence, findRSIOversoldBounce, findRSISlope,
     atrPercentile, getProfileConfig, classifyVolatility,
     evaluateMACD, evaluateTicker, evaluateWeekly, sanitizeOHLCV, resampleToWeekly,
-    calculatePositionSize, evaluateMarketRegime
+    evaluateMarketRegime
   };
 });
