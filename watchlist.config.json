@@ -1,21 +1,31 @@
 {
-  "_comment": "Tickers scanned automatically once per trading day. Edit this list directly (add/remove symbols) — no code changes needed. 'profiles' overrides Speculative vs Stable classification for a symbol; omit a ticker from 'profiles' to let the scan auto-classify it from its own volatility instead.",
+  "_comment": "Tickers scanned automatically once per trading day. Edit this list directly (add/remove symbols) — no code changes needed. 'profiles' overrides Speculative vs Stable classification for a symbol; omit a ticker from 'profiles' to let the scan auto-classify it from its own volatility instead. Kept in sync with engine.js's DEFAULT_PROFILES and index.html's Manual Lookup dropdown — if you add a ticker here, add it to those too (or just leave it out of 'profiles' and let auto-classification handle it).",
   "tickers": [
-    "ADBE", "AAPL", "AMD", "AMAT", "AMZN", "ANET", "ASML", "AVGO",
-    "CDNS", "GOOGL", "LLY", "LRCX", "MA", "META", "MSFT", "MU",
-    "NFLX", "NVDA", "ORCL", "QCOM", "V", "NOW",
-    "BBAI", "BTC/USD", "CRWD", "HIMS", "MARA", "MELI", "PLTR", "SNDK",
-    "SOFI", "TTD", "TSLA"
+    "AAPL", "ADBE", "AMAT", "AMD", "AMZN", "ANET", "ASML", "AVGO",
+    "BABA", "BBAI", "BTC/USD", "CAT", "CDNS", "COIN", "COST", "CRCL",
+    "CRWD", "CVX", "DIS", "GOOGL", "GS", "HIMS", "INTC", "IONQ",
+    "JNJ", "JPM", "KO", "LCID", "LLY", "LRCX", "MA", "MARA",
+    "MELI", "META", "MRNA", "MSFT", "MU", "NFLX", "NIO", "NOW",
+    "NVDA", "ORCL", "PG", "PLTR", "QCOM", "QQQ", "RIOT", "RIVN",
+    "RKLB", "SNDK", "SOFI", "SPY", "TSLA", "TTD", "UNH", "V",
+    "WMT", "XOM"
   ],
   "profiles": {
-    "ADBE": "stable", "AAPL": "stable", "AMD": "stable", "AMAT": "stable",
+    "AAPL": "stable", "ADBE": "stable", "AMAT": "stable", "AMD": "stable",
     "AMZN": "stable", "ANET": "stable", "ASML": "stable", "AVGO": "stable",
-    "CDNS": "stable", "GOOGL": "stable", "LLY": "stable", "LRCX": "stable",
-    "MA": "stable", "META": "stable", "MSFT": "stable", "MU": "stable",
-    "NFLX": "stable", "NVDA": "stable", "ORCL": "stable", "QCOM": "stable",
-    "V": "stable", "NOW": "stable",
-    "BBAI": "spec", "BTC/USD": "spec", "CRWD": "spec", "HIMS": "spec",
-    "MARA": "spec", "MELI": "spec", "PLTR": "spec", "SNDK": "spec",
-    "SOFI": "spec", "TTD": "spec", "TSLA": "spec"
+    "CAT": "stable", "CDNS": "stable", "COST": "stable", "CVX": "stable",
+    "DIS": "stable", "GOOGL": "stable", "GS": "stable", "INTC": "stable",
+    "JNJ": "stable", "JPM": "stable", "KO": "stable", "LLY": "stable",
+    "LRCX": "stable", "MA": "stable", "META": "stable", "MSFT": "stable",
+    "MU": "stable", "NFLX": "stable", "NOW": "stable", "NVDA": "stable",
+    "ORCL": "stable", "PG": "stable", "QCOM": "stable", "QQQ": "stable",
+    "SPY": "stable", "UNH": "stable", "V": "stable", "WMT": "stable",
+    "XOM": "stable",
+    "BABA": "spec", "BBAI": "spec", "BTC/USD": "spec", "COIN": "spec",
+    "CRCL": "spec", "CRWD": "spec", "HIMS": "spec", "IONQ": "spec",
+    "LCID": "spec", "MARA": "spec", "MELI": "spec", "MRNA": "spec",
+    "NIO": "spec", "PLTR": "spec", "RIOT": "spec", "RIVN": "spec",
+    "RKLB": "spec", "SNDK": "spec", "SOFI": "spec", "TSLA": "spec",
+    "TTD": "spec"
   }
 }

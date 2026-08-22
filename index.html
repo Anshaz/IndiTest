@@ -346,9 +346,9 @@
   .scan-table .t-score-pill.hold { border-color: var(--danger); color: var(--danger); }
   .scan-table .t-conditions { display: inline-flex; gap: 3px; }
   .scan-table .t-cond-dot {
-    width: 18px; height: 18px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 700; border: 1px solid var(--border); color: var(--text-tertiary);
-    background: var(--surface);
+    padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px;
+    font-size: 10px; font-weight: 600; border: 1px solid var(--border); color: var(--text-tertiary);
+    background: var(--surface); white-space: nowrap;
   }
   .scan-table .t-cond-dot.on { background: color-mix(in srgb, var(--positive) 15%, transparent); border-color: var(--positive); color: var(--positive); }
   .scan-table .t-cond-dot.off { background: color-mix(in srgb, var(--danger) 10%, transparent); border-color: color-mix(in srgb, var(--danger) 40%, transparent); color: var(--danger); }
@@ -409,39 +409,64 @@
     <div class="form-group">
       <label>My watchlist (multi-select)</label>
       <select id="watchlist" multiple onchange="updateWatchlistDisplay()">
-  <option value="ADBE">ADBE : Adobe</option>
   <option value="AAPL">AAPL : Apple</option>
-  <option value="AMD">AMD : Advanced Micro Devices</option>
+  <option value="ADBE">ADBE : Adobe</option>
   <option value="AMAT">AMAT : Applied Materials</option>
+  <option value="AMD">AMD : Advanced Micro Devices</option>
   <option value="AMZN">AMZN : Amazon</option>
   <option value="ANET">ANET : Arista Networks</option>
   <option value="ASML">ASML : ASML Holding</option>
   <option value="AVGO">AVGO : Broadcom</option>
+  <option value="BABA">BABA : Alibaba</option>
   <option value="BBAI">BBAI : BigBear.ai</option>
-  <option value="BTC">BTC : Bitcoin</option>
+  <option value="BTC/USD">BTC/USD : Bitcoin</option>
+  <option value="CAT">CAT : Caterpillar</option>
   <option value="CDNS">CDNS : Cadence Design Systems</option>
+  <option value="COIN">COIN : Coinbase</option>
+  <option value="COST">COST : Costco</option>
+  <option value="CRCL">CRCL : Circle Internet Group</option>
   <option value="CRWD">CRWD : CrowdStrike</option>
+  <option value="CVX">CVX : Chevron</option>
+  <option value="DIS">DIS : Disney</option>
   <option value="GOOGL">GOOGL : Alphabet</option>
+  <option value="GS">GS : Goldman Sachs</option>
   <option value="HIMS">HIMS : Hims & Hers</option>
+  <option value="INTC">INTC : Intel</option>
+  <option value="IONQ">IONQ : IonQ</option>
+  <option value="JNJ">JNJ : Johnson & Johnson</option>
+  <option value="JPM">JPM : JPMorgan Chase</option>
+  <option value="KO">KO : Coca-Cola</option>
+  <option value="LCID">LCID : Lucid Group</option>
   <option value="LLY">LLY : Eli Lilly</option>
   <option value="LRCX">LRCX : Lam Research</option>
   <option value="MA">MA : Mastercard</option>
   <option value="MARA">MARA : Marathon Digital</option>
   <option value="MELI">MELI : MercadoLibre</option>
   <option value="META">META : Meta Platforms</option>
+  <option value="MRNA">MRNA : Moderna</option>
   <option value="MSFT">MSFT : Microsoft</option>
   <option value="MU">MU : Micron Technology</option>
   <option value="NFLX">NFLX : Netflix</option>
+  <option value="NIO">NIO : NIO Inc</option>
+  <option value="NOW">NOW : ServiceNow</option>
   <option value="NVDA">NVDA : Nvidia</option>
   <option value="ORCL">ORCL : Oracle</option>
+  <option value="PG">PG : Procter & Gamble</option>
   <option value="PLTR">PLTR : Palantir</option>
   <option value="QCOM">QCOM : Qualcomm</option>
+  <option value="QQQ">QQQ : Invesco QQQ (Nasdaq-100 ETF)</option>
+  <option value="RIOT">RIOT : Riot Platforms</option>
+  <option value="RIVN">RIVN : Rivian</option>
+  <option value="RKLB">RKLB : Rocket Lab</option>
   <option value="SNDK">SNDK : Sandisk</option>
   <option value="SOFI">SOFI : SoFi</option>
+  <option value="SPY">SPY : SPDR S&P 500 ETF</option>
   <option value="TSLA">TSLA : Tesla</option>
   <option value="TTD">TTD : Trade Desk</option>
+  <option value="UNH">UNH : UnitedHealth Group</option>
   <option value="V">V : Visa</option>
-  <option value="NOW">NOW : ServiceNow</option>
+  <option value="WMT">WMT : Walmart</option>
+  <option value="XOM">XOM : ExxonMobil</option>
       </select>
       <div class="hint">Hold Ctrl/Cmd to select multiple. Click a tag's dropdown to set Spec/Stable profile.</div>
       <div id="watchlistTags" style="margin-top:8px;"></div>
@@ -478,11 +503,12 @@
           <th data-sort="atr">ATR</th>
           <th>Conditions</th>
           <th data-sort="stop" class="num">Stop</th>
+          <th data-sort="target" class="num">Target</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody id="autoTableBody">
-        <tr><td colspan="8" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
+        <tr><td colspan="9" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
       </tbody>
     </table>
   </div>
@@ -932,6 +958,7 @@ function tableSortValue(r, key) {
     case 'price': return r.daily.details ? r.daily.details.price : 0;
     case 'atr': return r.daily.details ? r.daily.details.atrPct : 0;
     case 'stop': return r.daily.stop ? parseFloat(r.daily.stop) : -Infinity;
+    case 'target': return r.daily.target ? parseFloat(r.daily.target) : -Infinity;
     default: return 0;
   }
 }
@@ -943,6 +970,16 @@ function setTableSort(key) {
     tableSort = { key, dir: key === 'ticker' ? 'asc' : 'desc' };
   }
   renderAutoResults();
+}
+
+function abbreviateCondition(name) {
+  if (name.includes('VWAP')) return 'VWAP';
+  if (name.includes('RSI')) return 'RSI';
+  if (name.includes('MACD')) return 'MACD';
+  if (name.includes('Volume')) return 'VOL';
+  if (name.includes('Higher Low')) return 'HL';
+  if (name.includes('ATR')) return 'ATR';
+  return name.slice(0, 4).toUpperCase();
 }
 
 function renderAutoTable(results) {
@@ -957,7 +994,7 @@ function renderAutoTable(results) {
   });
 
   if (!results.length) {
-    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
     return;
   }
 
@@ -969,7 +1006,7 @@ function renderAutoTable(results) {
 
   tbody.innerHTML = sorted.map(r => {
     if (r.daily.action && r.daily.action.startsWith('Error:')) {
-      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="7" class="t-error">${r.daily.action}</td></tr>`;
+      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="8" class="t-error">${r.daily.action}</td></tr>`;
     }
 
     const maxScore = r.daily.maxScore || 6;
@@ -990,12 +1027,16 @@ function renderAutoTable(results) {
     const conditionsHtml = r.daily.conditions.map(c => {
       const cls = c.excluded ? 'excluded' : (c.on ? 'on' : 'off');
       const icon = c.excluded ? '–' : (c.on ? '✓' : '✗');
-      const initial = c.name.replace(/[^A-Za-z]/g, '')[0] || '?';
-      return `<span class="t-cond-dot ${cls}" title="${c.name}: ${c.detail}">${icon}</span>`;
+      const label = abbreviateCondition(c.name);
+      return `<span class="t-cond-dot ${cls}" title="${c.name}: ${c.detail}">${icon} ${label}</span>`;
     }).join('');
 
     const price = r.daily.details ? '$' + r.daily.details.price.toFixed(2) : '-';
     const stop = r.daily.stop ? '$' + r.daily.stop : '–';
+    const rrTitle = (r.daily.target && r.daily.rewardMultiplier)
+      ? `1:${r.daily.rewardMultiplier} reward:risk, ${r.daily.riskPerShare ? '$' + r.daily.riskPerShare + ' risk/share' : ''}`
+      : 'No target available (no stop reference)';
+    const target = r.daily.target ? `<span title="${rrTitle}">$${r.daily.target}</span>` : '–';
 
     return `
       <tr>
@@ -1006,6 +1047,7 @@ function renderAutoTable(results) {
         <td style="color:${atrColor}">${atrText}</td>
         <td><span class="t-conditions">${conditionsHtml}</span></td>
         <td class="num">${stop}</td>
+        <td class="num">${target}</td>
         <td class="t-action">${r.daily.action}</td>
       </tr>`;
   }).join('');
@@ -1143,6 +1185,7 @@ function renderGrid(results) {
     const atrText = r.daily.atr.compressed ? 'compressed' : r.daily.atr.expanded ? 'expanded' : 'normal';
     const atrColor = r.daily.atr.compressed ? 'var(--positive)' : r.daily.atr.expanded ? 'var(--danger)' : 'var(--text-tertiary)';
     const stopHtml = r.daily.stop ? `<div class="stop-line">Suggested stop: <strong>$${r.daily.stop}</strong> (below higher low${r.daily.higherLow ? ' at $' + r.daily.higherLow.price.toFixed(2) : ''})</div>` : '';
+    const targetHtml = r.daily.target ? `<div class="stop-line">Suggested target: <strong>$${r.daily.target}</strong> (1:${r.daily.rewardMultiplier} reward:risk${r.daily.riskPerShare ? ', $' + r.daily.riskPerShare + ' risk/share' : ''})</div>` : '';
     const profileBadge = r.cfg.name === 'Speculative'
       ? '<span class="profile-badge profile-spec">Spec</span>'
       : '<span class="profile-badge profile-stable">Stable</span>';
@@ -1175,6 +1218,7 @@ function renderGrid(results) {
         <div class="conditions">${conds}</div>
         <div class="action-text ${actionClass}">${r.daily.action}</div>
         ${stopHtml}
+        ${targetHtml}
       </div>
     `;
   }).join('');

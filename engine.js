@@ -22,17 +22,24 @@
 })(typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : null), function () {
 
   const DEFAULT_PROFILES = {
-    // Stable
+    // Stable — mega-cap / lower-volatility, spanning more sectors
     "ADBE": "stable", "AAPL": "stable", "AMD": "stable", "AMAT": "stable",
     "AMZN": "stable", "ANET": "stable", "ASML": "stable", "AVGO": "stable",
     "CDNS": "stable", "GOOGL": "stable", "LLY": "stable", "LRCX": "stable",
     "MA": "stable", "META": "stable", "MSFT": "stable", "MU": "stable",
     "NFLX": "stable", "NVDA": "stable", "ORCL": "stable", "QCOM": "stable",
     "V": "stable", "NOW": "stable",
-    // Speculative
-    "BBAI": "spec", "BTC": "spec", "CRWD": "spec", "HIMS": "spec",
+    "JPM": "stable", "GS": "stable", "JNJ": "stable", "UNH": "stable",
+    "PG": "stable", "KO": "stable", "WMT": "stable", "COST": "stable",
+    "XOM": "stable", "CVX": "stable", "CAT": "stable", "DIS": "stable",
+    "INTC": "stable", "SPY": "stable", "QQQ": "stable",
+    // Speculative — low-float / high-beta / newer, spanning more themes
+    "BBAI": "spec", "BTC/USD": "spec", "CRWD": "spec", "HIMS": "spec",
     "MARA": "spec", "MELI": "spec", "PLTR": "spec", "SNDK": "spec",
-    "SOFI": "spec", "TTD": "spec", "TSLA": "spec"
+    "SOFI": "spec", "TTD": "spec", "TSLA": "spec",
+    "COIN": "spec", "RIOT": "spec", "MRNA": "spec", "RIVN": "spec",
+    "LCID": "spec", "BABA": "spec", "NIO": "spec", "RKLB": "spec",
+    "IONQ": "spec", "CRCL": "spec"
   };
 
   // ===================== INDICATOR MATH =====================
@@ -281,7 +288,8 @@
         weeklyRequired: false,
         minBars: 40,
         atrCompressed: 40,
-        stopAtrMultiplier: 1.0 // wider cushion — spec names whipsaw more, a flat % is too tight in high-ATR names and too loose in low-ATR ones
+        stopAtrMultiplier: 1.0, // wider cushion — spec names whipsaw more, a flat % is too tight in high-ATR names and too loose in low-ATR ones
+        rewardMultiplier: 2.5 // spec names run further once they move — a wider target captures more of that, at the cost of a lower hit rate
       };
     }
     return {
@@ -293,7 +301,8 @@
       weeklyRequired: true,
       minBars: 60,
       atrCompressed: 25,
-      stopAtrMultiplier: 0.5
+      stopAtrMultiplier: 0.5,
+      rewardMultiplier: 2.0
     };
   }
 
@@ -343,7 +352,7 @@
     const last = ohlcv[ohlcv.length - 1];
 
     if (ohlcv.length < cfg.minBars) {
-      return { score: 0, maxScore: 6, conditions: [], action: 'Insufficient data (need ' + cfg.minBars + '+ bars)', details: {}, stop: null, divergence: false };
+      return { score: 0, maxScore: 6, conditions: [], action: 'Insufficient data (need ' + cfg.minBars + '+ bars)', details: {}, stop: null, target: null, riskPerShare: null, rewardMultiplier: cfg.rewardMultiplier, divergence: false, volumeReliable: true, higherLow: null, atr: { compressed: false, expanded: false, percentile: 0 } };
     }
 
     // 1. VWAP Bias — above, near, or reclaiming
@@ -419,6 +428,23 @@
       ? (hl.price - atrNow * cfg.stopAtrMultiplier).toFixed(2)
       : (hl ? (hl.price * 0.985).toFixed(2) : null);
 
+    // Take-profit target: entry (current close) plus the same risk distance
+    // the stop already defines, scaled by a profile-specific reward:risk
+    // multiple. Same R-multiple logic the app's own trade-example cards
+    // already use ("risk $0.15, reward $0.70 = 1:4.7 R:R") — this just
+    // computes it automatically instead of leaving it as a worked example.
+    // This is a target derived from volatility structure, not a prediction
+    // of where price will actually go — treat it as a planning reference,
+    // not a guarantee, same as the stop.
+    let targetPrice = null;
+    let riskPerShare = null;
+    if (stopPrice !== null) {
+      riskPerShare = last.c - parseFloat(stopPrice);
+      if (riskPerShare > 0) {
+        targetPrice = (last.c + riskPerShare * cfg.rewardMultiplier).toFixed(2);
+      }
+    }
+
     return {
       score,
       maxScore,
@@ -428,6 +454,9 @@
       atr: atrPct,
       higherLow: hl,
       stop: stopPrice,
+      target: targetPrice,
+      rewardMultiplier: cfg.rewardMultiplier,
+      riskPerShare: riskPerShare !== null ? riskPerShare.toFixed(2) : null,
       volumeReliable,
       details: {
         price: last.c,
