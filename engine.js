@@ -585,6 +585,48 @@
     return { bullish, price: priceNow, sma: smaNow, pctFromSma, insufficient: false };
   }
 
+  // ===================== RELATIVE STRENGTH VS SPY (new, additive) =====================
+  // Does this ticker's own return over the lookback window beat SPY's
+  // return over the same window? A stock going up isn't informative on its
+  // own if the whole market went up more -- this is new information the
+  // existing 6 conditions never captured (they all look only at a
+  // ticker's own price history in isolation).
+  //
+  // Aligns by BAR DATE, not raw array index -- ticker and SPY series can
+  // have slightly different bar counts (a data gap, a listing quirk), and
+  // index-based alignment would silently compare the wrong days. Like
+  // evaluateMarketRegime, this is surfaced as separate context, not folded
+  // into the 0-6 score, until it's actually been validated the same way
+  // the six existing conditions were (and mostly failed that test).
+  function relativeStrength(tickerBars, spyBars, lookback = 20) {
+    if (!tickerBars || !spyBars || tickerBars.length < lookback + 1 || spyBars.length < lookback + 1) {
+      return { tickerReturn: null, spyReturn: null, excessReturn: null, outperforming: null, insufficient: true };
+    }
+    const tickerNow = tickerBars[tickerBars.length - 1];
+    const tickerThen = tickerBars[tickerBars.length - 1 - lookback];
+    if (!tickerThen.c || tickerThen.c === 0) {
+      return { tickerReturn: null, spyReturn: null, excessReturn: null, outperforming: null, insufficient: true };
+    }
+    const tickerReturn = (tickerNow.c - tickerThen.c) / tickerThen.c;
+
+    // Find SPY's bar on the exact same date as tickerThen; if that exact
+    // date is missing from SPY's series (rare -- a data gap), fall back to
+    // the closest SPY bar AT OR BEFORE that date, never after (which would
+    // be lookahead).
+    let spyThen = null;
+    for (let i = spyBars.length - 1; i >= 0; i--) {
+      if (spyBars[i].t <= tickerThen.t) { spyThen = spyBars[i]; break; }
+    }
+    const spyNow = spyBars[spyBars.length - 1];
+    if (!spyThen || !spyThen.c || spyThen.c === 0) {
+      return { tickerReturn, spyReturn: null, excessReturn: null, outperforming: null, insufficient: true };
+    }
+
+    const spyReturn = (spyNow.c - spyThen.c) / spyThen.c;
+    const excessReturn = tickerReturn - spyReturn;
+    return { tickerReturn, spyReturn, excessReturn, outperforming: excessReturn > 0, insufficient: false };
+  }
+
   // ===================== CONDITION FLAGS (new, additive) =====================
   // evaluateTicker() returns a `conditions` array with dynamic name strings
   // (e.g. "Volume > 1.1×SMA") that aren't stable keys to log or aggregate
@@ -616,6 +658,6 @@
     findSwingLows, findHigherLow, findRSIDivergence, findRSIOversoldBounce, findRSISlope,
     atrPercentile, getProfileConfig, classifyVolatility,
     evaluateMACD, evaluateTicker, evaluateWeekly, sanitizeOHLCV, resampleToWeekly,
-    evaluateMarketRegime, conditionFlags
+    evaluateMarketRegime, conditionFlags, relativeStrength
   };
 });

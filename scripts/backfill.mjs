@@ -89,7 +89,14 @@ async function loadExistingHistory() {
 // in the series, where day i's evaluation uses ONLY dailyBars[0..i].
 // Exported as a named function (not inlined in main) specifically so it
 // can be unit-tested in isolation for the no-lookahead property.
-export function walkForward(ticker, dailyBars, volumeReliable, profiles) {
+//
+// spyBars (optional) is SPY's FULL fetched series, un-sliced -- for each
+// day i, this function does its OWN no-lookahead slice of it (only SPY
+// bars dated on or before that day), the same discipline as the ticker's
+// own slice above. Passing the full series in and slicing per-day here
+// (rather than pre-slicing outside) keeps that guarantee enforced in one
+// place, the same way dailyBars.slice(0, i+1) is.
+export function walkForward(ticker, dailyBars, volumeReliable, profiles, spyBars = null) {
   const rows = [];
   const hasExplicitProfile = Object.prototype.hasOwnProperty.call(profiles, ticker);
 
@@ -104,6 +111,13 @@ export function walkForward(ticker, dailyBars, volumeReliable, profiles) {
     const weeklySlice = Engine.resampleToWeekly(slice);
     const dailyResult = Engine.evaluateTicker(slice, cfg, volumeReliable);
     const weeklyResult = Engine.evaluateWeekly(weeklySlice, cfg);
+
+    let relativeStrength = { insufficient: true };
+    if (spyBars) {
+      const currentDate = dailyBars[i].t;
+      const spySlice = spyBars.filter(b => b.t <= currentDate); // <-- same no-lookahead discipline, applied to SPY's own series
+      relativeStrength = Engine.relativeStrength(slice, spySlice, 20);
+    }
 
     const bar = dailyBars[i];
     rows.push({
@@ -120,7 +134,11 @@ export function walkForward(ticker, dailyBars, volumeReliable, profiles) {
       higherLowPrice: dailyResult.higherLow ? dailyResult.higherLow.price : null,
       atrPct: dailyResult.details ? dailyResult.details.atrPct : null,
       volumeReliable,
-      conditions: Engine.conditionFlags(dailyResult.conditions),
+      conditions: {
+        ...Engine.conditionFlags(dailyResult.conditions),
+        RS: !relativeStrength.insufficient ? relativeStrength.outperforming : null
+      },
+      excessReturnVsSpy: !relativeStrength.insufficient ? relativeStrength.excessReturn : null,
       source: 'backfill'
     });
   }
@@ -133,8 +151,33 @@ async function main() {
   const profiles = config.profiles || {};
 
   console.log(`Backfilling ${tickers.length} tickers, outputsize=${OUTPUTSIZE} (~${Math.round(OUTPUTSIZE / 252)} trading years), paced at ~${REQUESTS_PER_MINUTE}/min...`);
-  const estMinutes = Math.ceil((tickers.length * MIN_DELAY_MS) / 60000);
+  const estMinutes = Math.ceil(((tickers.length + 1) * MIN_DELAY_MS) / 60000);
   console.log(`Fetch phase estimated time: ~${estMinutes} minute(s)  (plus local computation after each fetch)\n`);
+
+  // SPY's full history is fetched FIRST, unconditionally, before any other
+  // ticker -- needed as the baseline for every OTHER ticker's day-by-day
+  // relative-strength calculation. Same reasoning as scan.mjs: many
+  // tickers sort ahead of SPY alphabetically, so capturing it "whenever
+  // its turn comes up" in the main loop wouldn't supply it to those
+  // earlier tickers.
+  console.log('Fetching SPY baseline first (for relative-strength calculations)...');
+  let spyBars = null;
+  let spyVolumeReliable = null;
+  const spyStart = Date.now();
+  const spyFetched = await fetchOne('SPY', OUTPUTSIZE);
+  if (spyFetched.error) {
+    console.warn(`  SPY: ${spyFetched.error} — relative-strength will be unavailable for this backfill run`);
+  } else {
+    const sanitized = Engine.sanitizeOHLCV([...spyFetched.values].reverse());
+    if (sanitized.bars.length >= MIN_WARMUP_BARS) {
+      spyBars = sanitized.bars;
+      spyVolumeReliable = sanitized.volumeReliable;
+    } else {
+      console.warn(`  SPY: only ${sanitized.bars.length} usable bars, relative-strength unavailable this run`);
+    }
+  }
+  const spyElapsed = Date.now() - spyStart;
+  if (MIN_DELAY_MS - spyElapsed > 0) await sleep(MIN_DELAY_MS - spyElapsed);
 
   const existingRows = await loadExistingHistory();
   const existingKeys = new Set(existingRows.map(r => `${r.date}|${r.ticker}`));
@@ -146,25 +189,40 @@ async function main() {
   for (let i = 0; i < tickers.length; i++) {
     const ticker = tickers[i];
     const started = Date.now();
+    const isSpy = ticker === 'SPY';
 
-    const fetched = await fetchOne(ticker, OUTPUTSIZE);
+    // SPY's own backfill turn reuses the baseline fetched above instead of
+    // spending a second credit and round-trip on the same symbol.
+    const fetched = isSpy
+      ? (spyBars ? { reused: true } : { error: 'SPY baseline fetch failed above' })
+      : await fetchOne(ticker, OUTPUTSIZE);
+
     if (fetched.error) {
       console.warn(`  ${ticker}: ${fetched.error}`);
       errors.push({ ticker, message: fetched.error });
     } else {
-      const { bars, volumeReliable } = Engine.sanitizeOHLCV([...fetched.values].reverse());
+      let bars, volumeReliable;
+      if (isSpy) {
+        bars = spyBars;
+        volumeReliable = spyVolumeReliable;
+      } else {
+        const sanitized = Engine.sanitizeOHLCV([...fetched.values].reverse());
+        bars = sanitized.bars;
+        volumeReliable = sanitized.volumeReliable;
+      }
+
       if (bars.length < MIN_WARMUP_BARS) {
         console.warn(`  ${ticker}: only ${bars.length} usable bars after cleaning, skipping`);
         errors.push({ ticker, message: 'Insufficient bars after cleaning' });
       } else {
-        const allRows = walkForward(ticker, bars, volumeReliable, profiles);
+        const allRows = walkForward(ticker, bars, volumeReliable, profiles, spyBars);
         const freshRows = allRows.filter(r => !existingKeys.has(`${r.date}|${r.ticker}`));
         newRows.push(...freshRows);
         console.log(`  ${ticker}: ${bars.length} bars fetched -> ${allRows.length} days evaluated -> ${freshRows.length} new rows (${allRows.length - freshRows.length} already existed)`);
       }
     }
 
-    if (i < tickers.length - 1) {
+    if (i < tickers.length - 1 && !isSpy) {
       const elapsed = Date.now() - started;
       const remaining = MIN_DELAY_MS - elapsed;
       if (remaining > 0) await sleep(remaining);

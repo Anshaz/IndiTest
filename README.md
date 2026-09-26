@@ -226,6 +226,31 @@ needed for this one. Exit checks use daily close prices only (no intrabar
 highs/lows are logged), so treat this as a reasonable approximation of real
 fills, not an exact replay.
 
+## Relative strength vs SPY
+
+A stock going up isn't informative on its own if the whole market went up
+more — none of the original 6 conditions look outside a ticker's own price
+history to check that. This adds a 7th signal, `RS`, alongside the other 6:
+does the ticker's own return over the trailing 20 trading days beat SPY's
+return over the same window?
+
+**Free** — SPY's data was already being fetched for the Market Regime
+check; this reuses it, no new API calls. **Deliberately not folded into the
+0-6 score**, same reasoning as everything else added after the original
+six: surfaced as a `conditions.RS` flag and a continuous `excessReturnVsSpy`
+value in each history row, ready for `condition_breakdown.mjs` (which
+already picks it up automatically — no new analysis code needed) once
+enough data has accumulated to say anything about it.
+
+**No-lookahead, verified the same way as the rest of `backfill.mjs`**: SPY's
+own series is sliced to "up to and including this day" independently for
+every day evaluated, proven with the same truncated-vs-full-series test
+used for the original walk-forward logic.
+
+**To get this retroactively across your full price history**, delete
+`data/history.jsonl` and re-run `scripts/backfill.mjs` once more (same
+command as always — it recomputes everything, this time including `RS`).
+
 ## Short-squeeze scores (optional)
 
 `scripts/fetch_squeeze_scores.mjs` pulls a composite short-squeeze score

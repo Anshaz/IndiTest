@@ -88,47 +88,80 @@ async function main() {
   const estMinutes = Math.ceil((tickers.length * MIN_DELAY_MS) / 60000);
   console.log(`Estimated time: ~${estMinutes} minute(s)`);
 
+  // SPY is fetched FIRST, unconditionally, before any other ticker --
+  // regardless of whether it's even in the watchlist. It's needed as a
+  // baseline for two things: market regime (computed once, after the loop,
+  // same as before) AND every other ticker's relative-strength-vs-SPY
+  // calculation (computed per-ticker, DURING the loop). The old approach
+  // of "capture SPY whenever its turn comes up alphabetically" was fine
+  // for regime alone, but breaks for relative strength: many tickers sort
+  // ahead of SPY, so they'd have no baseline yet when their own turn came.
+  console.log('Fetching SPY baseline first (for regime + relative strength)...');
+  let spyNormalized = null;
+  const spyStart = Date.now();
+  const spyFetched = await fetchOne('SPY');
+  if (spyFetched.error) {
+    console.warn(`  SPY: ${spyFetched.error} — regime and relative-strength will be unavailable this run`);
+  } else {
+    const norm = normalizeAndSplit(spyFetched.values);
+    if (norm.error) {
+      console.warn(`  SPY: ${norm.error} — regime and relative-strength will be unavailable this run`);
+    } else {
+      spyNormalized = norm;
+    }
+  }
+  const spyElapsed = Date.now() - spyStart;
+  if (MIN_DELAY_MS - spyElapsed > 0) await sleep(MIN_DELAY_MS - spyElapsed);
+
   const results = [];
   const errors = [];
-  let spyDailyBars = null; // captured in-loop if SPY is in the watchlist — reused for regime, no extra fetch
 
   for (let i = 0; i < tickers.length; i++) {
     const ticker = tickers[i];
     const started = Date.now();
+    const isSpy = ticker === 'SPY';
 
-    const fetched = await fetchOne(ticker);
+    // SPY was already fetched above -- reuse it here rather than spending
+    // a second credit and a second round-trip on the same symbol.
+    const fetched = isSpy
+      ? (spyNormalized ? { values: 'reuse' } : { error: 'SPY baseline fetch failed above' })
+      : await fetchOne(ticker);
+
     if (fetched.error) {
       console.warn(`  ${ticker}: ${fetched.error}`);
       errors.push({ ticker, message: fetched.error });
     } else {
-      const normalized = normalizeAndSplit(fetched.values);
+      const normalized = isSpy ? spyNormalized : normalizeAndSplit(fetched.values);
       if (normalized.error) {
         console.warn(`  ${ticker}: ${normalized.error}`);
         errors.push({ ticker, message: normalized.error });
       } else {
-        if (ticker === 'SPY') spyDailyBars = normalized.dailyBars;
-
         const hasExplicitProfile = Object.prototype.hasOwnProperty.call(profiles, ticker);
         const profileKey = hasExplicitProfile ? profiles[ticker] : Engine.classifyVolatility(normalized.dailyBars);
         const cfg = Engine.getProfileConfig(profileKey);
 
         const dailyResult = Engine.evaluateTicker(normalized.dailyBars, cfg, normalized.volumeReliable);
         const weeklyResult = Engine.evaluateWeekly(normalized.weeklyBars, cfg);
+        const relativeStrength = spyNormalized
+          ? Engine.relativeStrength(normalized.dailyBars, spyNormalized.dailyBars, 20)
+          : { insufficient: true };
 
         results.push({
           ticker,
           cfg: { name: cfg.name },
           autoClassified: !hasExplicitProfile,
           daily: dailyResult,
-          weekly: weeklyResult
+          weekly: weeklyResult,
+          relativeStrength
         });
         console.log(`  ${ticker}: ${dailyResult.score}/${dailyResult.maxScore} (${cfg.name}${!hasExplicitProfile ? ', auto' : ''})`);
       }
     }
 
     // Pace to stay under the per-minute credit budget, but don't sleep
-    // after the very last request or if a retry-wait already ate the gap.
-    if (i < tickers.length - 1) {
+    // after the very last request, after SPY's reused (no-fetch) turn, or
+    // if a retry-wait already ate the gap.
+    if (i < tickers.length - 1 && !isSpy) {
       const elapsed = Date.now() - started;
       const remaining = MIN_DELAY_MS - elapsed;
       if (remaining > 0) await sleep(remaining);
@@ -141,23 +174,14 @@ async function main() {
 
   // Market regime: is the broad market itself trending up or down? Surfaced
   // separately from individual ticker scores — doesn't change what a score
-  // means, just adds context alongside it. Falls back to a dedicated fetch
-  // only if SPY somehow isn't in the watchlist.
+  // means, just adds context alongside it.
   let regime = null;
-  if (spyDailyBars) {
-    regime = Engine.evaluateMarketRegime(spyDailyBars, 50);
+  if (spyNormalized) {
+    regime = Engine.evaluateMarketRegime(spyNormalized.dailyBars, 50);
     console.log(`\nMarket regime (SPY, 50-day): ${regime.bullish === null ? 'insufficient data' : regime.bullish ? 'BULLISH' : 'BEARISH'}` +
       (regime.pctFromSma !== null ? ` (${regime.pctFromSma > 0 ? '+' : ''}${regime.pctFromSma.toFixed(1)}% from SMA)` : ''));
   } else {
-    console.log('\nSPY not found in watchlist results — fetching separately for market regime...');
-    const spyFetch = await fetchOne('SPY');
-    if (!spyFetch.error) {
-      const spyNormalized = normalizeAndSplit(spyFetch.values);
-      if (!spyNormalized.error) {
-        regime = Engine.evaluateMarketRegime(spyNormalized.dailyBars, 50);
-      }
-    }
-    if (!regime) console.warn('Could not compute market regime — SPY fetch failed.');
+    console.warn('\nCould not compute market regime — SPY baseline fetch failed.');
   }
 
   const output = {
@@ -223,7 +247,11 @@ async function writeHistory(output) {
     higherLowPrice: r.daily.higherLow ? r.daily.higherLow.price : null,
     atrPct: r.daily.details ? r.daily.details.atrPct : null,
     volumeReliable: r.daily.volumeReliable,
-    conditions: Engine.conditionFlags(r.daily.conditions)
+    conditions: {
+      ...Engine.conditionFlags(r.daily.conditions),
+      RS: (r.relativeStrength && !r.relativeStrength.insufficient) ? r.relativeStrength.outperforming : null
+    },
+    excessReturnVsSpy: (r.relativeStrength && !r.relativeStrength.insufficient) ? r.relativeStrength.excessReturn : null
   }));
   const newKeys = new Set(newRows.map(r => `${r.date}|${r.ticker}`));
 
