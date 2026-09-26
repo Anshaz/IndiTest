@@ -1,0 +1,5 @@
+# For scripts/train_long_signal.py only -- nothing else in this project needs Python.
+# Install with: pip install -r scripts/requirements.txt --break-system-packages
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3

@@ -119,6 +119,13 @@ export function walkForward(ticker, dailyBars, volumeReliable, profiles, spyBars
       relativeStrength = Engine.relativeStrength(slice, spySlice, 20);
     }
 
+    // These three only look backward within the ticker's own already-sliced
+    // series, so no additional no-lookahead handling is needed beyond the
+    // slice itself.
+    const high52w = Engine.fiftyTwoWeekHighProximity(slice);
+    const momentum = Engine.momentum12Minus1(slice);
+    const trend = Engine.trendStack(slice);
+
     const bar = dailyBars[i];
     rows.push({
       date: bar.t,
@@ -136,9 +143,14 @@ export function walkForward(ticker, dailyBars, volumeReliable, profiles, spyBars
       volumeReliable,
       conditions: {
         ...Engine.conditionFlags(dailyResult.conditions),
-        RS: !relativeStrength.insufficient ? relativeStrength.outperforming : null
+        RS: !relativeStrength.insufficient ? relativeStrength.outperforming : null,
+        NH52: !high52w.insufficient ? high52w.nearHigh : null,
+        MOM: !momentum.insufficient ? momentum.positive : null,
+        TREND: !trend.insufficient ? trend.passes : null
       },
       excessReturnVsSpy: !relativeStrength.insufficient ? relativeStrength.excessReturn : null,
+      pctFrom52wHigh: !high52w.insufficient ? high52w.pctFromHigh : null,
+      return12m1: !momentum.insufficient ? momentum.return12m1 : null,
       source: 'backfill'
     });
   }

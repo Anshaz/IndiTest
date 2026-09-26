@@ -25,11 +25,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
 
 const MIN_SAMPLES_FOR_STATS = 20;
-const CONDITION_KEYS = ['VWAP', 'RSI', 'MACD', 'VOL', 'HL', 'ATR', 'RS'];
+const CONDITION_KEYS = ['VWAP', 'RSI', 'MACD', 'VOL', 'HL', 'ATR', 'RS', 'NH52', 'MOM', 'TREND'];
 const CONDITION_LABELS = {
   VWAP: 'VWAP Bias', RSI: 'RSI Momentum', MACD: 'MACD Momentum',
   VOL: 'Volume vs SMA', HL: 'Higher Low', ATR: 'ATR Expanded',
-  RS: 'Relative Strength vs SPY'
+  RS: 'Relative Strength vs SPY',
+  NH52: 'Near 52-Week High', MOM: '12-1 Month Momentum', TREND: 'MA Trend Stack'
 };
 
 // Deliberately duplicated (not imported) from backtest.mjs — same rationale

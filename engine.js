@@ -652,12 +652,96 @@
     return flags;
   }
 
+  // ===================== 52-WEEK HIGH PROXIMITY (new, additive) =====================
+  // George & Hwang (2004): nearness to the 52-week high is one of the more
+  // replicated findings in momentum research, and mechanically distinct
+  // from RSI -- it's about anchoring near a salient reference price, not
+  // an overbought/oversold oscillator reading. Same "surfaced separately,
+  // validated later" treatment as every condition added after the
+  // original six.
+  function fiftyTwoWeekHighProximity(ohlcv, lookback = 252, nearThreshold = 0.90) {
+    if (!ohlcv || ohlcv.length < lookback) {
+      return { high52w: null, price: null, pctFromHigh: null, nearHigh: null, insufficient: true };
+    }
+    const window = ohlcv.slice(ohlcv.length - lookback);
+    const high52w = Math.max(...window.map(b => b.h !== undefined ? b.h : b.c));
+    const price = ohlcv[ohlcv.length - 1].c;
+    if (!high52w || high52w <= 0) {
+      return { high52w: null, price, pctFromHigh: null, nearHigh: null, insufficient: true };
+    }
+    const pctFromHigh = (price - high52w) / high52w; // <= 0, 0 means at the high
+    const nearHigh = price >= high52w * nearThreshold;
+    return { high52w, price, pctFromHigh, nearHigh, insufficient: false };
+  }
+
+  // ===================== 12-1 MONTH MOMENTUM (new, additive) =====================
+  // Jegadeesh & Titman (1993): the classic cross-sectional momentum
+  // factor. Trailing ~12-month return EXCLUDING the most recent ~1 month,
+  // deliberately, to avoid the well-documented short-term reversal effect
+  // that contaminates a plain 12-month return. Genuinely different
+  // timeframe from anything else here -- everything else looks at 20
+  // trading days or less.
+  function momentum12Minus1(ohlcv, longLookback = 252, skipRecent = 21) {
+    if (!ohlcv || ohlcv.length < longLookback + 1) {
+      return { return12m1: null, positive: null, insufficient: true };
+    }
+    const endIdx = ohlcv.length - 1 - skipRecent; // "1 month ago", not today
+    const startIdx = ohlcv.length - 1 - longLookback; // "12 months before that"
+    if (endIdx < 0 || startIdx < 0 || endIdx <= startIdx) {
+      return { return12m1: null, positive: null, insufficient: true };
+    }
+    const startPrice = ohlcv[startIdx].c;
+    const endPrice = ohlcv[endIdx].c;
+    if (!startPrice || startPrice <= 0) {
+      return { return12m1: null, positive: null, insufficient: true };
+    }
+    const return12m1 = (endPrice - startPrice) / startPrice;
+    return { return12m1, positive: return12m1 > 0, insufficient: false };
+  }
+
+  // ===================== MOVING-AVERAGE TREND STACK (new, additive) =====================
+  // Structural trend alignment across three timeframes (price > 50d > 150d
+  // > 200d, with the 200d itself still rising) -- a genuinely different
+  // KIND of signal from a single oscillator's momentary reading, closer
+  // to the "stage analysis" / trend-template style used by trend-following
+  // practitioners, though (like everything else added after the original
+  // six) unvalidated here until it's actually been tested.
+  function trendStack(ohlcv, risingLookback = 20) {
+    if (!ohlcv || ohlcv.length < 200 + risingLookback) {
+      return { above50: null, above150: null, above200: null, stacked: null, sma200Rising: null, passes: null, insufficient: true };
+    }
+    const closes = ohlcv.map(d => d.c);
+    const sma50Vals = sma(closes, 50);
+    const sma150Vals = sma(closes, 150);
+    const sma200Vals = sma(closes, 200);
+
+    const price = closes[closes.length - 1];
+    const sma50Now = sma50Vals[sma50Vals.length - 1];
+    const sma150Now = sma150Vals[sma150Vals.length - 1];
+    const sma200Now = sma200Vals[sma200Vals.length - 1];
+    const sma200Then = sma200Vals[sma200Vals.length - 1 - risingLookback];
+
+    if ([sma50Now, sma150Now, sma200Now, sma200Then].some(v => v === null || v === undefined)) {
+      return { above50: null, above150: null, above200: null, stacked: null, sma200Rising: null, passes: null, insufficient: true };
+    }
+
+    const above50 = price > sma50Now;
+    const above150 = price > sma150Now;
+    const above200 = price > sma200Now;
+    const stacked = sma50Now > sma150Now && sma150Now > sma200Now;
+    const sma200Rising = sma200Now > sma200Then;
+    const passes = above50 && above150 && above200 && stacked && sma200Rising;
+
+    return { above50, above150, above200, stacked, sma200Rising, passes, insufficient: false };
+  }
+
   return {
     DEFAULT_PROFILES,
     ema, sma, rsi, emaFromIndex, macd, vwap, volumeProfileHVN, atr,
     findSwingLows, findHigherLow, findRSIDivergence, findRSIOversoldBounce, findRSISlope,
     atrPercentile, getProfileConfig, classifyVolatility,
     evaluateMACD, evaluateTicker, evaluateWeekly, sanitizeOHLCV, resampleToWeekly,
-    evaluateMarketRegime, conditionFlags, relativeStrength
+    evaluateMarketRegime, conditionFlags, relativeStrength,
+    fiftyTwoWeekHighProximity, momentum12Minus1, trendStack
   };
 });

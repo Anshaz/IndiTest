@@ -40,7 +40,7 @@ if (!API_KEY) {
 // number of requests needed per ticker: 1 instead of 2.
 const REQUESTS_PER_MINUTE = Number(process.env.TWELVEDATA_REQUESTS_PER_MINUTE || 6); // buffer under the observed 8/min cap
 const MIN_DELAY_MS = Math.ceil(60000 / REQUESTS_PER_MINUTE);
-const DAILY_OUTPUTSIZE = 260; // ~1 trading year — resamples to ~50 weekly bars, comfortably above MACD's ~35-bar need
+const DAILY_OUTPUTSIZE = 300; // ~14 months — comfortable margin above the 12-1 momentum and 52wk-high signals' 252/253-bar minimums (260 left almost no buffer against occasional data gaps during cleaning); same 1-credit/symbol cost regardless of size
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
@@ -145,6 +145,9 @@ async function main() {
         const relativeStrength = spyNormalized
           ? Engine.relativeStrength(normalized.dailyBars, spyNormalized.dailyBars, 20)
           : { insufficient: true };
+        const high52w = Engine.fiftyTwoWeekHighProximity(normalized.dailyBars);
+        const momentum = Engine.momentum12Minus1(normalized.dailyBars);
+        const trend = Engine.trendStack(normalized.dailyBars);
 
         results.push({
           ticker,
@@ -152,7 +155,10 @@ async function main() {
           autoClassified: !hasExplicitProfile,
           daily: dailyResult,
           weekly: weeklyResult,
-          relativeStrength
+          relativeStrength,
+          high52w,
+          momentum,
+          trend
         });
         console.log(`  ${ticker}: ${dailyResult.score}/${dailyResult.maxScore} (${cfg.name}${!hasExplicitProfile ? ', auto' : ''})`);
       }
@@ -249,9 +255,14 @@ async function writeHistory(output) {
     volumeReliable: r.daily.volumeReliable,
     conditions: {
       ...Engine.conditionFlags(r.daily.conditions),
-      RS: (r.relativeStrength && !r.relativeStrength.insufficient) ? r.relativeStrength.outperforming : null
+      RS: (r.relativeStrength && !r.relativeStrength.insufficient) ? r.relativeStrength.outperforming : null,
+      NH52: (r.high52w && !r.high52w.insufficient) ? r.high52w.nearHigh : null,
+      MOM: (r.momentum && !r.momentum.insufficient) ? r.momentum.positive : null,
+      TREND: (r.trend && !r.trend.insufficient) ? r.trend.passes : null
     },
-    excessReturnVsSpy: (r.relativeStrength && !r.relativeStrength.insufficient) ? r.relativeStrength.excessReturn : null
+    excessReturnVsSpy: (r.relativeStrength && !r.relativeStrength.insufficient) ? r.relativeStrength.excessReturn : null,
+    pctFrom52wHigh: (r.high52w && !r.high52w.insufficient) ? r.high52w.pctFromHigh : null,
+    return12m1: (r.momentum && !r.momentum.insufficient) ? r.momentum.return12m1 : null
   }));
   const newKeys = new Set(newRows.map(r => `${r.date}|${r.ticker}`));
 

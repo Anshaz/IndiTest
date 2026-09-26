@@ -226,6 +226,188 @@ needed for this one. Exit checks use daily close prices only (no intrabar
 highs/lows are logged), so treat this as a reasonable approximation of real
 fills, not an exact replay.
 
+### Comparing combinations of conditions
+
+Once an individual condition has survived a `condition_breakdown.mjs
+--split` check, the natural next question is whether combining it with
+another surviving condition adds real value, or whether they're just
+redundant with each other. `--compare KEY1,KEY2,...` runs the trade
+simulation four ways: no filter (baseline), each key alone, and all keys
+combined (every one must be true that day) — so you can see directly
+whether the combination beats either individual condition, or whether it's
+no better than the stronger of the two alone.
+
+```
+node scripts/trade_simulation.mjs 20 --compare ATR,RS
+node scripts/trade_simulation.mjs 20 --compare ATR,RS --split 2024-10-01
+```
+
+Validated against synthetic data with a deliberately real interaction
+effect (a combined boost well beyond either condition's individual effect)
+— the comparison correctly recovered it: baseline and each condition alone
+showed a modest edge, the combined filter showed roughly double either
+individual one, matching the injected ground truth.
+
+## Three more signals: different mechanisms, not more oscillators
+
+Every condition tested so far (VWAP, RSI, MACD, Volume, Higher Low, ATR,
+Relative Strength) is a variation on "read something from the last ~20-50
+days of price/volume." Rather than keep recombining the same kind of
+input, these three come from a genuinely different place — chosen for
+having a stronger evidence base than trader folklore, not because they're
+popular:
+
+- **`NH52` — Near 52-week high** (George & Hwang, 2004): is price within
+  10% of its trailing-252-day high? One of the more-replicated findings in
+  momentum research, and mechanically distinct from RSI — this is about
+  anchoring near a salient reference price, not an overbought/oversold
+  oscillator reading.
+- **`MOM` — 12-1 month momentum** (Jegadeesh & Titman, 1993): the classic
+  academic momentum factor — trailing ~12-month return, deliberately
+  *excluding* the most recent ~1 month to dodge the well-documented
+  short-term reversal effect. A genuinely different timeframe from
+  anything else tested here (everything else looks at 20 trading days or
+  less).
+- **`TREND` — moving-average trend stack**: price above its 50-day average,
+  which is above the 150-day, which is above the 200-day, with the 200-day
+  itself still rising. Structural trend alignment across three timeframes
+  at once, not a single oscillator's momentary reading.
+
+**Same treatment as everything added after the original six**: surfaced as
+new `conditions` keys, not folded into the 0-6 score, unvalidated until
+they've actually been tested. `condition_breakdown.mjs` and
+`train_long_signal.py` already know about all three — no new analysis code
+needed, same as when `RS` was added.
+
+Unit-tested with exact hand-computed values for all three (including a
+specific check that `MOM`'s "skip the most recent month" window genuinely
+excludes a huge injected price spike in that window, not just labels it),
+and no-lookahead verified in `backfill.mjs` the same way as everything
+else — a day's result is proven identical whether the series ends there or
+continues 100 days further.
+
+**To pick these up historically**, delete `data/history.jsonl` and re-run
+`scripts/backfill.mjs` once more (same command as every time this has come
+up before). Note that `DAILY_OUTPUTSIZE` in `scan.mjs` also increased from
+260 to 300 days to give these comfortable margin above their 252/253-day
+minimums — this costs nothing extra (Twelve Data charges 1 credit/symbol
+regardless of size).
+
+## A trained LONG-entry signal (regression, strict train/test discipline)
+
+Testing conditions one at a time or in a handful of hand-picked combinations
+(`--compare`) doesn't answer "which combination of conditions, weighted
+correctly, gives the best entry rule." That needs a real model — but a
+model is *more* prone to finding a convincing-looking pattern that isn't
+real, not less, so the discipline matters even more here than everywhere
+else in this project.
+
+**The rule, stated once, applied everywhere below**: everything — which
+regularization strength to use, which probability threshold counts as
+"LONG," even that the threshold gets picked via cross-validation at all —
+is decided using only the training period (before 2024-10-01). The test
+period (on/after 2024-10-01) is touched exactly once, at the very end,
+with a model and threshold that were already frozen before it was looked
+at. If a result doesn't hold up there, that's the answer — not a cue to go
+back and pick a different threshold.
+
+This is Python (`scikit-learn`), not Node — the only part of this project
+that is. Fitting a regularized logistic regression by hand in JavaScript
+would mean either an unproven custom implementation or reinventing a
+solved problem badly; `scikit-learn`'s implementation is well-tested and
+what any real quant workflow would actually use. It never touches the live
+app — this is a standalone analysis, same as `backtest.mjs` or
+`condition_breakdown.mjs`, just in a different language for this one step.
+
+```
+pip install -r scripts/requirements.txt --break-system-packages
+
+node scripts/export_trade_dataset.mjs 20 data/trade_dataset.jsonl
+python3 scripts/train_long_signal.py data/trade_dataset.jsonl
+```
+
+**Step 1 — export**: `export_trade_dataset.mjs` reuses `trade_simulation.mjs`'s
+own `simulateTicker` (the same tested target/stop/timeout/no-overlap logic
+already used everywhere else) to produce one labeled row per simulated
+trade — the 10 entry-day condition flags as features, and `favorable`
+(`exitR > 0`, the same definition `trade_simulation.mjs` already uses for
+its own win-rate) as the label. Trade logic itself is never reimplemented
+in Python — only exported.
+
+**Feature handling — uniform drop-on-null for all 10 conditions.** A row is
+excluded if any of the 10 condition flags is null that day (e.g. volume
+excluded, or one of the 3 newer signals hasn't warmed up yet — they need
+220-253 days of price history to exist at all).
+
+**This wasn't the first design, and the one before it is worth knowing
+about.** An earlier version gave the 3 slower-warming signals (near 52-week
+high, 12-1 month momentum, MA trend stack) a separate `_known` indicator
+column instead of dropping the row, specifically to avoid discarding the
+first year of every ticker's history during their warmup. It backfired:
+because all three warm up at nearly the same point in every ticker's
+history, `_known` ended up acting as a disguised marker for "which
+calendar stretch is this" rather than a genuine per-observation feature —
+and since the entire test period necessarily has `_known=1` for all three,
+a large fitted coefficient on it (which is exactly what happened — one
+came out 4-6x larger than any real feature) applied almost the same fixed
+penalty to every test prediction, regardless of the actual signal values.
+It produced a model that flagged next to none of the test period as LONG,
+which looked like "no signal" but was actually a broken rule. Plain
+drop-on-null is slower to accumulate usable data but doesn't have this
+failure mode. `train_long_signal.py` now also automatically flags any
+feature that's nearly constant in the test period combined with a large
+coefficient — the exact signature of this bug — so a repeat of it (or
+something like it) surfaces immediately instead of silently producing a
+degenerate result again.
+
+**Step 2 — fit and test**: `train_long_signal.py` splits by date (frozen,
+matching every other split in this project), selects the L1 strength and
+decision threshold via `TimeSeriesSplit` cross-validation *within the
+training data only*, fits the final model on the full training period,
+then applies it — unchanged — to the untouched test period exactly once.
+Reports L1-shrunk coefficients (a condition shrunk to zero contributed no
+information beyond the others), and whether the model-selected LONG trades
+actually beat just taking every setup, on data the model never saw.
+
+**A threshold needs a majority of cross-validation folds to back it, not
+just two.** With a small training set, a threshold can "win" the selection
+in Step 1 purely because it happened to look good on 1-2 folds' worth of
+noisy data — not because it's actually a better rule. A real run of this
+script hit exactly that: a threshold with only 2 of 5 folds' support beat
+one with full 5-fold support on raw average score, got frozen, and then
+selected **zero** test trades — not evidence of "no signal," a broken rule
+that looked like one. `MIN_FOLDS_FOR_THRESHOLD` (default 3, a majority of
+`N_CV_FOLDS`) now excludes thin-evidence thresholds from winning at all,
+regardless of how good their raw average looks.
+
+**Validated three ways before trusting any of this on real data**:
+- **Leakage check**: ran the full pipeline once with test-period rows
+  present in the file, and once with them stripped out entirely before the
+  file was even read. The frozen regularization strength, threshold, and
+  every coefficient came out identical both times — proof the test period
+  has zero influence on any tuning decision, not just an assumption from
+  reading the code. (This check also caught a real, separate reproducibility
+  gap: `LogisticRegression`'s `liblinear` solver has internal randomness
+  that isn't seeded by default, so re-fitting identical data in separate
+  process runs could yield tiny coefficient differences from solver noise
+  alone — now fixed with a pinned `random_state`, confirmed by re-running
+  the same file three times and getting byte-identical output every time.)
+- **Positive control**: synthetic data with a real, consistent relationship
+  running through both periods — correctly recovered, and correctly beat
+  baseline on the (synthetic) test period.
+- **Negative control**: synthetic data where a real relationship exists
+  only in the training period and is deliberately absent from the test
+  period — the frozen model's *training* performance looked genuinely
+  strong (which is exactly the trap: it would tempt anyone judging by that
+  number alone), but applied to the untouched test period, it correctly
+  and honestly reported no edge over baseline. That's the overfitting trap
+  this whole discipline exists to catch, demonstrated working.
+
+If your real data comes back the way the negative control did — solid-
+looking training performance, no edge on the frozen test period — that is
+the honest, useful answer this exercise was built to be capable of giving,
+not a sign anything went wrong.
+
 ## Relative strength vs SPY
 
 A stock going up isn't informative on its own if the whole market went up
@@ -318,6 +500,8 @@ discipline already applied to everything else here.
 | `scripts/backfill.mjs` | One-time bulk historical fill of `data/history.jsonl`, no lookahead |
 | `scripts/condition_breakdown.mjs` | Tests each of the 6 conditions independently for real signal |
 | `scripts/trade_simulation.mjs` | Simulates actual entry/stop/target outcomes in R-multiples |
+| `scripts/export_trade_dataset.mjs` | Exports labeled trade data for the Python model below |
+| `scripts/train_long_signal.py` | Trained LONG-entry signal, strict train/test discipline |
 | `scripts/fetch_squeeze_scores.mjs` | Optional: pulls Equibles' short-squeeze score per ticker |
 | `scripts/serve.mjs` | Zero-dependency local server — use this instead of opening `index.html` directly |
 | `watchlist.config.json` | Editable ticker list + profile overrides for the auto scan |
