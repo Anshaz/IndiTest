@@ -387,9 +387,22 @@
     const hl = findHigherLow(ohlcv);
     const hasHigherLow = hl !== null;
 
-    // 6. Volatility — ATR compressed
+    // 6. Volatility — ATR expanded (NOT compressed — see note below)
+    //
+    // Originally scored ATR compression ("coiled spring": low volatility
+    // now means a bigger move is coming). A per-condition backtest against
+    // ~4 years of real data found the opposite: compressed-ATR episodes
+    // underperformed expanded-ATR episodes at every horizon tested (5/10/20
+    // days), consistently, across thousands of independent episodes each —
+    // roughly -0.35pp to -0.5pp average return, not huge, but the only one
+    // of the 6 conditions whose edge held sign across all three horizons
+    // rather than flipping sign like noise. See condition_breakdown.mjs.
+    // Flipped to test whether inverting this one condition improves the
+    // combined score; re-run backtest.mjs after regenerating history to
+    // check. If this doesn't hold up under more data, dropping the
+    // condition entirely is the fallback, not reverting to compression.
     const atrPct = atrPercentile(ohlcv, cfg);
-    const atrCompressed = atrPct.compressed;
+    const atrExpanded = atrPct.expanded;
 
     const conditions = [
       { name: 'VWAP Bias', on: vwapSignal, detail: aboveVWAP ? 'Above' : reclaimingVWAP ? 'Reclaiming' : nearVWAP ? 'Near & rising' : 'Below' },
@@ -399,7 +412,7 @@
         ? { name: 'Volume > ' + cfg.volMultiplier + '×SMA', on: volAbove, detail: volSmaNow ? Math.round(volSmaNow).toLocaleString() : '-' }
         : { name: 'Volume (unavailable)', on: false, excluded: true, detail: 'Feed has no reliable volume for this symbol' },
       { name: 'Higher Low', on: hasHigherLow, detail: hl ? '$' + hl.price.toFixed(2) + (hl.confirmed ? '' : ' (early)') : 'None' },
-      { name: 'ATR Compressed', on: atrCompressed, detail: Math.round(atrPct.percentile) + 'pct' }
+      { name: 'ATR Expanded', on: atrExpanded, detail: Math.round(atrPct.percentile) + 'pct' }
     ];
 
     const scored = conditions.filter(c => !c.excluded);
@@ -413,8 +426,8 @@
     if (score <= 1) action = 'No setup. Wait for momentum and liquidity to align.';
     else if (ratio < 0.4) action = 'Weak signal. One layer alone is not enough.';
     else if (ratio < 0.55) action = 'Building — watchlist. Divergence or structure forming. Set alerts.';
-    else if (ratio < 0.7) action = 'Building — plan entry. Momentum aligning above VWAP. Watch for ATR compression.';
-    else if (ratio < 0.85) action = 'Setup active. Strong momentum. Enter if ATR compressed.';
+    else if (ratio < 0.7) action = 'Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.';
+    else if (ratio < 0.85) action = 'Setup active. Strong momentum. Enter if ATR expanded.';
     else if (score < maxScore) action = 'High conviction — execute. Most layers aligned. Stop below higher low.';
     else action = 'Max confluence — execute. All layers aligned. Stop below higher low.';
 
@@ -572,12 +585,37 @@
     return { bullish, price: priceNow, sma: smaNow, pctFromSma, insufficient: false };
   }
 
+  // ===================== CONDITION FLAGS (new, additive) =====================
+  // evaluateTicker() returns a `conditions` array with dynamic name strings
+  // (e.g. "Volume > 1.1×SMA") that aren't stable keys to log or aggregate
+  // by over time. This maps that array to a fixed set of 6 short keys, each
+  // true/false/null (null = excluded for this row, e.g. volume unavailable
+  // for that symbol that day) — the canonical shape history logging and any
+  // per-condition analysis should use, so there's one place this mapping
+  // lives instead of duplicated string-matching in multiple scripts.
+  function conditionFlags(conditions) {
+    const flags = { VWAP: null, RSI: null, MACD: null, VOL: null, HL: null, ATR: null };
+    if (!conditions) return flags;
+    for (const c of conditions) {
+      let key = null;
+      if (c.name.includes('VWAP')) key = 'VWAP';
+      else if (c.name.includes('RSI')) key = 'RSI';
+      else if (c.name.includes('MACD')) key = 'MACD';
+      else if (c.name.includes('Volume')) key = 'VOL';
+      else if (c.name.includes('Higher Low')) key = 'HL';
+      else if (c.name.includes('ATR')) key = 'ATR';
+      if (!key) continue;
+      flags[key] = c.excluded ? null : !!c.on;
+    }
+    return flags;
+  }
+
   return {
     DEFAULT_PROFILES,
     ema, sma, rsi, emaFromIndex, macd, vwap, volumeProfileHVN, atr,
     findSwingLows, findHigherLow, findRSIDivergence, findRSIOversoldBounce, findRSISlope,
     atrPercentile, getProfileConfig, classifyVolatility,
     evaluateMACD, evaluateTicker, evaluateWeekly, sanitizeOHLCV, resampleToWeekly,
-    evaluateMarketRegime
+    evaluateMarketRegime, conditionFlags
   };
 });

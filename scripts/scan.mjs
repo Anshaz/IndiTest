@@ -222,7 +222,8 @@ async function writeHistory(output) {
     stop: r.daily.stop,
     higherLowPrice: r.daily.higherLow ? r.daily.higherLow.price : null,
     atrPct: r.daily.details ? r.daily.details.atrPct : null,
-    volumeReliable: r.daily.volumeReliable
+    volumeReliable: r.daily.volumeReliable,
+    conditions: Engine.conditionFlags(r.daily.conditions)
   }));
   const newKeys = new Set(newRows.map(r => `${r.date}|${r.ticker}`));
 

@@ -29,11 +29,18 @@ jobs:
           TWELVEDATA_API_KEY: ${{ secrets.TWELVEDATA_API_KEY }}
         run: node scripts/scan.mjs
 
+      - name: Fetch short-squeeze scores (optional, non-blocking)
+        env:
+          EQUIBLES_API_KEY: ${{ secrets.EQUIBLES_API_KEY }}
+        run: node scripts/fetch_squeeze_scores.mjs || echo "Squeeze score fetch failed or key not set — continuing without it"
+
       - name: Commit updated results
         run: |
           git config user.name "confluence-scan-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/latest.json data/history.jsonl data/history/
+          [ -f data/squeeze_scores.json ] && git add data/squeeze_scores.json
+          [ -f data/squeeze_history.jsonl ] && git add data/squeeze_history.jsonl
           git diff --staged --quiet && echo "No changes to commit" && exit 0
           git commit -m "Auto scan: $(date -u +'%Y-%m-%d %H:%M UTC')"
           git push

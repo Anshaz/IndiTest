@@ -388,6 +388,7 @@
 <div class="card" id="autoPanel">
   <h2>Auto Scan</h2>
   <p class="hint">Runs automatically once a day after market close via a scheduled job — no API key needed here, no per-visit rate limit. This reads <code>data/latest.json</code>, committed by <code>.github/workflows/scan.yml</code>. Edit <code>watchlist.config.json</code> to change which tickers get scanned.</p>
+  <p class="hint">The <strong>Squeeze</strong> column (Equibles short-squeeze score, 0–100) is separate context, not part of the confluence score — it hasn't been backtested yet, unlike the other six conditions. Treat it as something to look into, not a signal to act on.</p>
   <div class="form-row" style="margin-top:10px; align-items:center;">
     <div class="form-group" style="flex:0 0 auto;">
       <label>Show</label>
@@ -518,11 +519,12 @@
           <th>Conditions</th>
           <th data-sort="stop" class="num">Stop</th>
           <th data-sort="target" class="num">Target</th>
+          <th data-sort="squeeze" class="num" title="Equibles short-squeeze score (0-100). Separate from the confluence score, not yet validated -- see hint below the table.">Squeeze</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody id="autoTableBody">
-        <tr><td colspan="9" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
+        <tr><td colspan="10" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
       </tbody>
     </table>
   </div>
@@ -566,7 +568,7 @@
       <div class="sg-item">
         <div class="sg-num" style="color:var(--accent)">4</div>
         <div class="sg-label" style="color:var(--accent)">Setup active</div>
-        <div class="sg-desc">Strong signal. Enter only if ATR is compressed (room to run).</div>
+        <div class="sg-desc">Strong signal. Enter only if ATR is expanded (momentum already moving).</div>
       </div>
       <div class="sg-item">
         <div class="sg-num" style="color:var(--positive)">5</div>
@@ -654,13 +656,13 @@
       <div class="lesson-card">
         <h4>
           <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:color-mix(in srgb,var(--accent)20%,transparent);color:var(--accent);text-align:center;line-height:22px;font-size:12px;">6</span>
-          ATR Compression — the coiled spring
+          ATR Expansion — momentum already moving
         </h4>
-        <p><strong>What it measures:</strong> Average True Range tells you how much a stock typically moves per day. When ATR drops into the bottom 30% of its recent range, the stock is "coiled." Breakouts from compression have much higher follow-through.</p>
+        <p><strong>What it measures:</strong> Average True Range tells you how much a stock typically moves per day. This condition scores when ATR is in the top 30% of its recent range — meaning the stock is already in an actively moving state, not sitting quiet.</p>
         <div class="example">
-          <strong>Example:</strong> BBAI's daily range is usually $0.40 (ATR = 0.40). For the last 5 days, it has only moved $0.15 per day. ATR has compressed. When the next move comes — up or down — it is likely to be a <em>big</em> move because the energy has built up. Entering a long when ATR is compressed and the other 4 layers align means you catch the expansion, not the contraction.
+          <strong>Note on this condition's history:</strong> this used to score the opposite — ATR <em>compression</em> ("coiled spring," the idea that quiet price action precedes a big breakout). A backtest against ~4 years of this app's own watchlist data found compression consistently underperformed expansion at every horizon tested (5, 10, and 20 days), across thousands of independent episodes — the only one of the 6 conditions whose edge held a consistent direction rather than flipping sign like noise. It was flipped to match what the data actually showed, not what the original theory assumed.
         </div>
-        <p style="margin-top:8px;"><strong>What to look for:</strong> ATR(14) in the bottom 30% of its 50-day range. The app marks this as "compressed." Avoid entries when ATR is already expanded (top 30%) — that is when whipsaws happen.</p>
+        <p style="margin-top:8px;"><strong>What to look for:</strong> ATR(14) in the top 30% of its 50-day range. The app marks this as "expanded." Treat this the same as every other condition here: one data point among six, backtested once on one watchlist over one multi-year window — not a settled rule.</p>
       </div>
 
     </div>
@@ -790,6 +792,48 @@
   </div>
 </div>
 
+<!-- ===================== ACADEMY: SQUEEZE SCORE ===================== -->
+<div class="card">
+  <div class="collapsible-header" onclick="toggleSection('squeezeGuide')">
+    <h2>What does my Squeeze score mean?</h2>
+    <span class="chevron" id="chevron-squeezeGuide">▼</span>
+  </div>
+  <div class="collapsible-body hidden" id="body-squeezeGuide">
+    <p class="hint" style="margin-bottom:12px;">This is a <strong>separate number from your 0-6 score</strong>, sourced from a third party (Equibles), not computed by this app. It measures short-selling pressure, not the technical setup. Short version of the honest answer up front: <strong>no, it doesn't give you confidence to enter on its own</strong> — read on for why.</p>
+
+    <div class="academy-grid">
+      <div class="lesson-card">
+        <h4>What a short squeeze actually is</h4>
+        <p>When traders short a stock, they've borrowed and sold shares they don't own, betting the price falls so they can buy them back cheaper later. If the price rises instead, every short seller is losing money — and at some point, enough of them are forced to buy shares back (to cover losses, meet a margin call, or just cut the pain) that <em>their own buying</em> pushes the price up further. That extra push can force more shorts to cover, which pushes price up more. That feedback loop is a squeeze.</p>
+        <div class="example">
+          <strong>Why this matters mechanically:</strong> a heavily-shorted stock has a pool of "must eventually buy" demand sitting on the sidelines that an ordinary stock doesn't have. That's a real, well-documented market dynamic — not a made-up pattern.
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <h4>What the six inputs behind the score mean</h4>
+        <ul style="font-size:13px;color:var(--text-secondary);padding-left:18px;line-height:1.8;">
+          <li><strong>Short interest % of shares</strong> — how much of the whole company is currently sold short. Higher = more potential "must eventually buy" demand.</li>
+          <li><strong>Days to cover</strong> — at average daily volume, how many trading days it would take for every short seller to buy back their position. Higher = that demand is large relative to how liquid the stock is, so a rush to cover moves the price more.</li>
+          <li><strong>Short-volume trend</strong> — whether shorting activity has been increasing or decreasing lately.</li>
+          <li><strong>Price vs. VWAP</strong> — whether the stock is already trending up, which is often what starts forcing shorts to cover in the first place.</li>
+          <li><strong>Fails-to-deliver pressure</strong> — shares that were sold short but not actually delivered on time; persistent fails can indicate unusually aggressive or constrained short positioning.</li>
+          <li><strong>Catalyst boosts</strong> — a recent price spike, a volume surge, or an approaching earnings date, any of which can be the spark that starts a squeeze.</li>
+        </ul>
+      </div>
+
+      <div class="lesson-card">
+        <h4 style="color:var(--warning)">Why a high score still isn't a green light</h4>
+        <p><strong>It tells you potential, not timing.</strong> A stock can sit at a squeeze score of 90 for months with nothing happening — short sellers can be right for a long time before (or instead of) ever being forced out. The score describes a loaded spring, not when or whether it fires.</p>
+        <div class="example">
+          <strong>The most important caveat, specific to this app:</strong> every one of the six conditions in your main 0-6 score went through real backtesting in this project — thousands of historical trades, tested on data that couldn't have influenced the result. Most showed no edge; one looked promising and then failed that same test. The Squeeze score hasn't been through any of that yet. It's a third party's own proprietary model, not a plain calculation you can audit the way you can with VWAP or RSI here — which means it deserves <em>more</em> skepticism than the six conditions that already disappointed under testing, not less, until it's actually been checked the same way.
+        </div>
+        <p style="margin-top:8px;"><strong>What to actually do with it for now:</strong> treat a high score as a prompt to go look closer — read the news, understand why it's shorted, see if the catalyst is real — not as a reason to size up or enter sooner. Once <code>data/squeeze_history.jsonl</code> has enough days logged (realistically weeks to months), the same <code>backtest.mjs</code>-style analysis already used on the rest of this tool can check whether it actually predicts anything here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===================== FOOTER HINTS ===================== -->
 <div class="card">
   <h2>Quick reference</h2>
@@ -797,7 +841,7 @@
     <strong>Before every trade, answer these 4 questions:</strong><br>
     1. What is the weekly trend telling me? (Trade with it, not against it)<br>
     2. What is my daily score? (5+ for entry, 2 or less for exit)<br>
-    3. Is ATR compressed? (Bottom 30% = room to run. Top 30% = avoid)<br>
+    3. Is ATR expanded? (Top 30% = momentum already moving. Bottom 30% = avoid)<br>
     4. Where is my stop? (Below the higher low — the app suggests one)<br><br>
     <strong>Rate limits:</strong> Each ticker uses 2 API calls (weekly + daily). 10 tickers = 20 calls per run. Free tier = 800/day.<br>
     <strong>Data source:</strong> Twelve Data (daily + weekly OHLCV). All indicators computed client-side in your browser.
@@ -904,6 +948,7 @@ loadProfiles();
 
 let currentMode = 'auto';
 let autoScanData = null; // raw payload from data/latest.json
+let squeezeScoreData = null; // raw payload from data/squeeze_scores.json (optional, best-effort)
 
 // ===================== MODE SWITCHING (Auto Scan <-> Manual Lookup) =====================
 function switchMode(mode) {
@@ -924,9 +969,32 @@ function switchMode(mode) {
 // Fetches the precomputed results the scheduled GitHub Action wrote to
 // data/latest.json. No API key involved, no rate limit — this is just a
 // static file read.
+// Shared by both modes. Deliberately re-fetches every time it's called
+// rather than caching the result for the page's lifetime: this reads a
+// small static JSON file (not the live, rate-limited Equibles API), so
+// there's no real cost to a fresh read. Caching used to mean that if the
+// file didn't exist yet on the very first page load (e.g. you hadn't run
+// fetch_squeeze_scores.mjs yet), that "no data" result stuck for the rest
+// of the browser session even after the file was generated -- neither
+// reloading the results nor a fresh Manual Lookup run would ever pick it
+// up without a full page refresh. Re-fetching on every call fixes that.
+async function loadSqueezeScores() {
+  try {
+    const squeezeRes = await fetch('./data/squeeze_scores.json', { cache: 'no-store' });
+    if (squeezeRes.ok) squeezeScoreData = await squeezeRes.json();
+  } catch (e) { /* silently absent -- Squeeze column/line just shows "–" or is omitted */ }
+}
+
 async function loadAutoScan() {
   document.getElementById('autoStatusDot').className = 'dot active';
   document.getElementById('autoStatusText').textContent = 'Loading last scan…';
+
+  // Best-effort, separate from the main scan load: squeeze-score data is
+  // optional context, not part of the confluence score, and its absence
+  // (e.g. GitHub Action not yet run, or Equibles quota exhausted for the
+  // day) must never block or break the main results display.
+  await loadSqueezeScores();
+
   try {
     const res = await fetch('./data/latest.json', { cache: 'no-store' });
     if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -997,6 +1065,10 @@ function tableSortValue(r, key) {
     case 'atr': return r.daily.details ? r.daily.details.atrPct : 0;
     case 'stop': return r.daily.stop ? parseFloat(r.daily.stop) : -Infinity;
     case 'target': return r.daily.target ? parseFloat(r.daily.target) : -Infinity;
+    case 'squeeze': {
+      const sq = squeezeScoreData && squeezeScoreData.scores ? squeezeScoreData.scores[r.ticker] : null;
+      return sq ? sq.score : -Infinity;
+    }
     default: return 0;
   }
 }
@@ -1032,7 +1104,7 @@ function renderAutoTable(results) {
   });
 
   if (!results.length) {
-    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
     return;
   }
 
@@ -1044,7 +1116,7 @@ function renderAutoTable(results) {
 
   tbody.innerHTML = sorted.map(r => {
     if (r.daily.action && r.daily.action.startsWith('Error:')) {
-      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="8" class="t-error">${r.daily.action}</td></tr>`;
+      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="9" class="t-error">${r.daily.action}</td></tr>`;
     }
 
     const maxScore = r.daily.maxScore || 6;
@@ -1076,6 +1148,20 @@ function renderAutoTable(results) {
       : 'No target available (no stop reference)';
     const target = r.daily.target ? `<span title="${rrTitle}">$${r.daily.target}</span>` : '–';
 
+    const squeezeInfo = squeezeScoreData && squeezeScoreData.scores ? squeezeScoreData.scores[r.ticker] : null;
+    let squeeze = '–';
+    if (squeezeInfo) {
+      const sqColor = squeezeInfo.score >= 70 ? 'var(--warning)' : squeezeInfo.score >= 40 ? 'var(--text-secondary)' : 'var(--text-tertiary)';
+      const catalysts = [
+        squeezeInfo.hasPriceSpikeCatalyst ? 'price spike' : null,
+        squeezeInfo.hasVolumeSurgeCatalyst ? 'volume surge' : null,
+        squeezeInfo.hasEarningsProximityCatalyst ? 'earnings near' : null
+      ].filter(Boolean).join(', ') || 'none';
+      const sqTitle = `Equibles composite score (not part of the confluence score, not yet validated). ` +
+        `Rank #${squeezeInfo.rank} · Days to cover: ${squeezeInfo.daysToCover ?? 'n/a'} · Catalysts: ${catalysts}`;
+      squeeze = `<span style="color:${sqColor}" title="${sqTitle}">${Math.round(squeezeInfo.score)}</span>`;
+    }
+
     return `
       <tr>
         <td class="t-ticker">${r.ticker} ${profileBadge}${autoBadge}</td>
@@ -1086,6 +1172,7 @@ function renderAutoTable(results) {
         <td><span class="t-conditions">${conditionsHtml}</span></td>
         <td class="num">${stop}</td>
         <td class="num">${target}</td>
+        <td class="num">${squeeze}</td>
         <td class="t-action">${r.daily.action}</td>
       </tr>`;
   }).join('');
@@ -1224,6 +1311,17 @@ function renderGrid(results) {
     const atrColor = r.daily.atr.compressed ? 'var(--positive)' : r.daily.atr.expanded ? 'var(--danger)' : 'var(--text-tertiary)';
     const stopHtml = r.daily.stop ? `<div class="stop-line">Suggested stop: <strong>$${r.daily.stop}</strong> (below higher low${r.daily.higherLow ? ' at $' + r.daily.higherLow.price.toFixed(2) : ''})</div>` : '';
     const targetHtml = r.daily.target ? `<div class="stop-line">Suggested target: <strong>$${r.daily.target}</strong> (1:${r.daily.rewardMultiplier} reward:risk${r.daily.riskPerShare ? ', $' + r.daily.riskPerShare + ' risk/share' : ''})</div>` : '';
+    const squeezeInfo = squeezeScoreData && squeezeScoreData.scores ? squeezeScoreData.scores[r.ticker] : null;
+    const squeezeHtml = squeezeInfo ? (() => {
+      const catalysts = [
+        squeezeInfo.hasPriceSpikeCatalyst ? 'price spike' : null,
+        squeezeInfo.hasVolumeSurgeCatalyst ? 'volume surge' : null,
+        squeezeInfo.hasEarningsProximityCatalyst ? 'earnings near' : null
+      ].filter(Boolean).join(', ') || 'none';
+      return `<div class="stop-line">Squeeze score: <strong>${Math.round(squeezeInfo.score)}/100</strong> ` +
+        `(rank #${squeezeInfo.rank}, days to cover: ${squeezeInfo.daysToCover ?? 'n/a'}, catalysts: ${catalysts}) — ` +
+        `<span style="color:var(--text-tertiary)">separate context, not part of the score above, not yet validated</span></div>`;
+    })() : '';
     const profileBadge = r.cfg.name === 'Speculative'
       ? '<span class="profile-badge profile-spec">Spec</span>'
       : '<span class="profile-badge profile-stable">Stable</span>';
@@ -1257,6 +1355,7 @@ function renderGrid(results) {
         <div class="action-text ${actionClass}">${r.daily.action}</div>
         ${stopHtml}
         ${targetHtml}
+        ${squeezeHtml}
       </div>
     `;
   }).join('');
@@ -1272,6 +1371,7 @@ async function runAnalysis() {
   const key = document.getElementById('apiKey').value.trim();
   if (!key) { log('Enter your Twelve Data API key'); return; }
   localStorage.setItem('td_api_key', key);
+  await loadSqueezeScores(); // always fresh -- picks up newly-generated data even if an earlier attempt this session found nothing
 
   const select = document.getElementById('watchlist');
   const watchlistTickers = Array.from(select.selectedOptions).map(o => o.value.trim().toUpperCase()).filter(t => t);
