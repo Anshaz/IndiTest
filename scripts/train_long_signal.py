@@ -41,7 +41,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import TimeSeriesSplit
 
 TRAIN_TEST_SPLIT_DATE = '2024-10-01'
-CONDITION_KEYS = ['VWAP', 'RSI', 'MACD', 'VOL', 'HL', 'ATR', 'RS', 'NH52', 'MOM', 'TREND']
+CONDITION_KEYS = ['VWAP', 'RSI', 'MACD', 'VOL', 'HL', 'ATR', 'RS', 'NH52', 'MOM', 'TREND', 'EARN']
 # NOTE ON A REJECTED DESIGN: an earlier version of this script gave NH52,
 # MOM, and TREND a separate "_known" indicator column instead of dropping
 # rows where they were null, to avoid discarding a year of otherwise-valid
@@ -184,9 +184,29 @@ def main():
     )
     df_test, X_test = df[~train_mask].reset_index(drop=True), X[~train_mask].reset_index(drop=True)
 
-    print(f"TRAIN: {len(df_train)} trades, {df_train['date'].min()} -> {df_train['date'].max()}")
-    print(f"TEST:  {len(df_test)} trades, {df_test['date'].min()} -> {df_test['date'].max()} "
+    print(f"TRAIN: {len(df_train)} trades, {df_train['date'].min() if len(df_train) else 'n/a'} -> "
+          f"{df_train['date'].max() if len(df_train) else 'n/a'}")
+    print(f"TEST:  {len(df_test)} trades, {df_test['date'].min() if len(df_test) else 'n/a'} -> "
+          f"{df_test['date'].max() if len(df_test) else 'n/a'} "
           f"(frozen -- not touched again until the final report)\n")
+
+    if len(df_train) < N_CV_FOLDS + 1:
+        print(f"ERROR: only {len(df_train)} training row(s) survived requiring every condition to be")
+        print(f"non-null -- not enough for {N_CV_FOLDS}-fold cross-validation (need at least {N_CV_FOLDS + 1}).")
+        print(f"\nThis usually means one feature has much thinner coverage than the others WITHIN THE TRAINING")
+        print(f"PERIOD specifically -- e.g. a data source whose free tier only covers a recent window that")
+        print(f"barely or doesn't overlap the pre-{TRAIN_TEST_SPLIT_DATE} training period at all, even though")
+        print(f"it looks fine averaged across the whole dataset. Coverage per feature in the training window")
+        print(f"alone, before any row was dropped for having ANY null feature:")
+        train_raw = df_raw[df_raw['date'] < TRAIN_TEST_SPLIT_DATE]
+        for key in CONDITION_KEYS:
+            col = train_raw['conditions'].apply(lambda c: c.get(key) if isinstance(c, dict) else None)
+            known_pct = (col.notna().mean() * 100) if len(col) else 0.0
+            flag = '  <-- likely the culprit' if known_pct < 50 else ''
+            print(f"  {key:6s}: {known_pct:5.1f}% of training-period rows have a value{flag}")
+        print(f"\nEither drop the thin feature from CONDITION_KEYS for now and re-run, or wait for more")
+        print(f"real-time data to accumulate before including it.")
+        return
 
     order = df_train['date'].argsort().values
     X_train_s = X_train.iloc[order].reset_index(drop=True)

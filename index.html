@@ -520,11 +520,12 @@
           <th data-sort="stop" class="num">Stop</th>
           <th data-sort="target" class="num">Target</th>
           <th data-sort="squeeze" class="num" title="Equibles short-squeeze score (0-100). Separate from the confluence score, not yet validated -- see hint below the table.">Squeeze</th>
+          <th data-sort="momentum" class="num" title="12-1 month momentum: trailing 12-month return, excluding the most recent month. The one signal in this app that has actually survived independent testing -- still a small, unconfirmed edge, not a green light. See the Momentum lesson card below.">12-1 Mom</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody id="autoTableBody">
-        <tr><td colspan="10" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
+        <tr><td colspan="11" style="text-align:center; color:var(--text-tertiary); padding:20px;">Loading…</td></tr>
       </tbody>
     </table>
   </div>
@@ -834,6 +835,44 @@
   </div>
 </div>
 
+<!-- ===================== ACADEMY: MOMENTUM ===================== -->
+<div class="card">
+  <div class="collapsible-header" onclick="toggleSection('momentumGuide')">
+    <h2>What does the 12-1 Momentum number mean?</h2>
+    <span class="chevron" id="chevron-momentumGuide">▼</span>
+  </div>
+  <div class="collapsible-body hidden" id="body-momentumGuide">
+    <p class="hint" style="margin-bottom:12px;">This is the one signal in this app with real, independently-checked evidence behind it — and it's still a small, unconfirmed edge, not a green light. Both things are true at once; read on for exactly what was tested and what wasn't.</p>
+
+    <div class="academy-grid">
+      <div class="lesson-card">
+        <h4>What it measures</h4>
+        <p>The stock's own return over the trailing 12 months, <strong>deliberately excluding the most recent month</strong>. That's not an arbitrary choice — it comes from Jegadeesh &amp; Titman (1993), one of the most-replicated findings in academic finance, which found that skipping the most recent month specifically avoids a separate, well-documented short-term reversal effect that contaminates a plain 12-month return.</p>
+        <div class="example">
+          <strong>Why exclude the last month specifically:</strong> stocks that just moved sharply often give some of it back in the following few weeks (short-term reversal) before any longer momentum trend reasserts itself. Including that recent month would mix two different, sometimes opposite effects together.
+        </div>
+      </div>
+
+      <div class="lesson-card">
+        <h4>What was actually tested, and what it found</h4>
+        <p>Unlike every other condition added after the original six, this one was checked two separate ways, using the same 2024-10-01 train/test split as everything else in this project:</p>
+        <ul style="font-size:13px;color:var(--text-secondary);padding-left:18px;line-height:1.8;">
+          <li><strong>Raw forward return</strong>, split-tested: same direction, same rough size, in both the earlier and later time periods, at every horizon checked (5/10/20 days).</li>
+          <li><strong>Actual trade simulation</strong> (real entry/stop/target mechanics, not just "was the stock up later"): the edge survived here too, though it shrank to roughly <strong>+0.01R to +0.04R per trade</strong> — small relative to how much any single trade's outcome naturally varies.</li>
+        </ul>
+      </div>
+
+      <div class="lesson-card" style="color:var(--warning)">
+        <h4 style="color:var(--warning)">What still hasn't been checked</h4>
+        <p>An edge that small needs a real statistical test to know if it's distinguishable from noise, rather than just "positive in two periods by chance." <code>scripts/significance_test.py</code> exists specifically to answer that — a bootstrap test comparing momentum-on vs momentum-off trades in each period independently. If you've run it, its printed verdict is the actual final word on this, more current than this paragraph.</p>
+        <div class="example">
+          <strong>The honest comparison worth remembering:</strong> the ATR condition in this app also once looked consistent and well-evidenced — consistent direction across every horizon, in the full dataset — and it still failed a proper split test. Momentum has cleared a bar ATR didn't, which is real progress, but "survived two checks" and "proven" are not the same thing. Treat this as the most credible lead in the app, not as a signal to trade on by itself.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ===================== FOOTER HINTS ===================== -->
 <div class="card">
   <h2>Quick reference</h2>
@@ -1069,6 +1108,10 @@ function tableSortValue(r, key) {
       const sq = squeezeScoreData && squeezeScoreData.scores ? squeezeScoreData.scores[r.ticker] : null;
       return sq ? sq.score : -Infinity;
     }
+    case 'momentum': {
+      const m = r.momentum;
+      return (m && !m.insufficient) ? m.return12m1 : -Infinity;
+    }
     default: return 0;
   }
 }
@@ -1104,7 +1147,7 @@ function renderAutoTable(results) {
   });
 
   if (!results.length) {
-    tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; color:var(--text-tertiary); padding:20px;">No tickers match this filter</td></tr>';
     return;
   }
 
@@ -1116,7 +1159,7 @@ function renderAutoTable(results) {
 
   tbody.innerHTML = sorted.map(r => {
     if (r.daily.action && r.daily.action.startsWith('Error:')) {
-      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="9" class="t-error">${r.daily.action}</td></tr>`;
+      return `<tr><td class="t-ticker">${r.ticker}</td><td colspan="10" class="t-error">${r.daily.action}</td></tr>`;
     }
 
     const maxScore = r.daily.maxScore || 6;
@@ -1162,6 +1205,18 @@ function renderAutoTable(results) {
       squeeze = `<span style="color:${sqColor}" title="${sqTitle}">${Math.round(squeezeInfo.score)}</span>`;
     }
 
+    let momentumCell = '–';
+    if (r.momentum && !r.momentum.insufficient) {
+      const m = r.momentum;
+      const pct = (m.return12m1 * 100).toFixed(1);
+      const arrow = m.positive ? '▲' : '▼';
+      const color = m.positive ? 'var(--positive)' : 'var(--text-tertiary)';
+      const momTitle = `12-month return excluding the most recent month: ${pct >= 0 ? '+' : ''}${pct}%. ` +
+        `The one signal in this app that has survived independent split-testing -- still a small, ` +
+        `unconfirmed edge (see the Momentum lesson card), not a reason to enter alone.`;
+      momentumCell = `<span style="color:${color}" title="${momTitle}">${arrow} ${pct >= 0 ? '+' : ''}${pct}%</span>`;
+    }
+
     return `
       <tr>
         <td class="t-ticker">${r.ticker} ${profileBadge}${autoBadge}</td>
@@ -1173,6 +1228,7 @@ function renderAutoTable(results) {
         <td class="num">${stop}</td>
         <td class="num">${target}</td>
         <td class="num">${squeeze}</td>
+        <td class="num">${momentumCell}</td>
         <td class="t-action">${r.daily.action}</td>
       </tr>`;
   }).join('');
@@ -1261,7 +1317,7 @@ async function fetchData(ticker, interval, key, { useCache = true } = {}) {
     const cached = readCache(ticker, interval);
     if (cached) return cached;
   }
-  const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(ticker)}&interval=${interval}&outputsize=100&apikey=${encodeURIComponent(key)}`;
+  const url = `https://api.twelvedata.com/time_series?symbol=${encodeURIComponent(ticker)}&interval=${interval}&outputsize=300&apikey=${encodeURIComponent(key)}`;
   const data = await fetchWithRetry(url);
   if (!data.values || !data.values.length) throw new Error('No data returned');
   const { bars, volumeReliable } = sanitizeOHLCV(data.values.reverse());
@@ -1322,6 +1378,14 @@ function renderGrid(results) {
         `(rank #${squeezeInfo.rank}, days to cover: ${squeezeInfo.daysToCover ?? 'n/a'}, catalysts: ${catalysts}) — ` +
         `<span style="color:var(--text-tertiary)">separate context, not part of the score above, not yet validated</span></div>`;
     })() : '';
+    const momentumHtml = (r.momentum && !r.momentum.insufficient) ? (() => {
+      const m = r.momentum;
+      const pct = (m.return12m1 * 100).toFixed(1);
+      const label = m.positive ? 'positive' : 'negative';
+      return `<div class="stop-line">12-1 month momentum: <strong>${pct >= 0 ? '+' : ''}${pct}% (${label})</strong> — ` +
+        `<span style="color:var(--text-tertiary)">separate context; the one signal here with real evidence behind it, ` +
+        `still a small, unconfirmed edge — see the Momentum lesson card below</span></div>`;
+    })() : '';
     const profileBadge = r.cfg.name === 'Speculative'
       ? '<span class="profile-badge profile-spec">Spec</span>'
       : '<span class="profile-badge profile-stable">Stable</span>';
@@ -1356,6 +1420,7 @@ function renderGrid(results) {
         ${stopHtml}
         ${targetHtml}
         ${squeezeHtml}
+        ${momentumHtml}
       </div>
     `;
   }).join('');
@@ -1403,7 +1468,8 @@ async function runAnalysis() {
 
       const weekly = evaluateWeekly(weeklyRes.bars, cfg);
       const daily = evaluateTicker(dailyRes.bars, cfg, dailyRes.volumeReliable);
-      return { ticker, weekly, daily, cfg, autoClassified };
+      const momentum = momentum12Minus1(dailyRes.bars);
+      return { ticker, weekly, daily, cfg, autoClassified, momentum };
     } catch (e) {
       log(`${ticker}: Error — ${e.message}`);
       return {
@@ -1415,7 +1481,8 @@ async function runAnalysis() {
           stop: null, divergence: false, atr: { compressed: false, expanded: false }, higherLow: null, volumeReliable: false
         },
         cfg: getProfileConfigForTicker(ticker),
-        autoClassified: false
+        autoClassified: false,
+        momentum: { insufficient: true }
       };
     }
   }, 3);

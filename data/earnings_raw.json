@@ -1,0 +1,995 @@
+{
+  "AAPL": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -0.8873
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 1.0863
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 4.1934
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2.3513
+    }
+  ],
+  "ADBE": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": -1.2628
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 0.362
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 1.1703
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -0.0436
+    }
+  ],
+  "AMAT": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": 1.0801
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 5.2399
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 5.8625
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 1.6298
+    }
+  ],
+  "AMD": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 1.7593
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 4.7881
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 14.8304
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2.1277
+    }
+  ],
+  "AMZN": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 6.1251
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -3.4714
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -3.6101
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 21.4953
+    }
+  ],
+  "ANET": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 13.0069
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 5.7879
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 6.2314
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2.9937
+    }
+  ],
+  "ASML": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 9.4379
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 7.1257
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -4.8088
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -1.4388
+    }
+  ],
+  "AVGO": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": 0.5664
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -0.2371
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -0.8704
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 2.6532
+    }
+  ],
+  "BABA": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -20.6896
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -89.5008
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -38.4693
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -22.0914
+    }
+  ],
+  "BBAI": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -8.9325
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -47.0588
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 83.6601
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 113.369
+    }
+  ],
+  "BTC/USD": [],
+  "CAT": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 30.5216
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 18.8357
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 9.2688
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 8.3459
+    }
+  ],
+  "CDNS": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 0.6727
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 1.224
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 1.9833
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 5.8578
+    }
+  ],
+  "COIN": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -574.3516
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -559.7346
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -519.828
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 39.0692
+    }
+  ],
+  "COST": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": -0.8428
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -1.8984
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -1.5393
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 3.2797
+    }
+  ],
+  "CRCL": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 4.3478
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 4.6859
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 43.4263
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -12.1651
+    }
+  ],
+  "CRWD": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": 3.8178
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 1.0287
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -0.3559
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 0.0417
+    }
+  ],
+  "CVX": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 7.9252
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 46.524
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 3.9103
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 8.926
+    }
+  ],
+  "DIS": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 9.7905
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 4.3744
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 2.7613
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 5.1535
+    }
+  ],
+  "GOOGL": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -4.356
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -3.1459
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 4.2013
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 29.4147
+    }
+  ],
+  "GS": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 40.7081
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 3.3119
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 16.5315
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 8.1401
+    }
+  ],
+  "HIMS": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -2487.4126
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -529.8643
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 71.3062
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -43.556
+    }
+  ],
+  "INTC": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 92.926
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 1971.4286
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 80.9409
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2200
+    }
+  ],
+  "IONQ": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -13.3242
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 5.3716
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 679.5796
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 49.2991
+    }
+  ],
+  "JNJ": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 0.8871
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 0.3195
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -0.134
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 0.5458
+    }
+  ],
+  "JPM": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 3.9621
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 7.9529
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 3.4844
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 3.8105
+    }
+  ],
+  "KO": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 1.0101
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 2.8954
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -0.0517
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2.3593
+    }
+  ],
+  "LCID": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -31.726
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -27.7932
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -36.0544
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -15.4231
+    }
+  ],
+  "LLY": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 38.1448
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 27.0431
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 11.9159
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 22.0466
+    }
+  ],
+  "LRCX": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 5.9865
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 4.9303
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 6.4097
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 1.0911
+    }
+  ],
+  "MA": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 2.6769
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 1.4803
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 8.7851
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -1.5553
+    }
+  ],
+  "MARA": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -916.0083
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -50.708
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -3425.741
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -31.5068
+    }
+  ],
+  "MELI": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 4.0864
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -6.8372
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -5.6999
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -12.6381
+    }
+  ],
+  "META": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -16.0258
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 5.5901
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 5.7244
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 6.2349
+    }
+  ],
+  "MRNA": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 7.281
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 15.8458
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 21.7156
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 76.2724
+    }
+  ],
+  "MSFT": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 9.5346
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 3.0604
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 2.6149
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 10.4544
+    }
+  ],
+  "MU": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 17.326
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 27.2835
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 17.387
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2.8478
+    }
+  ],
+  "NFLX": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -0.5223
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -10.1527
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -0.4975
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -17.3938
+    }
+  ],
+  "NIO": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 104.7081
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 105.618
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 5187.7193
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 31.5767
+    }
+  ],
+  "NOW": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 4.3478
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -0.3391
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 3.1737
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 11.8459
+    }
+  ],
+  "NVDA": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": 3.8159
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 4.341
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 3.6203
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 1.9928
+    }
+  ],
+  "ORCL": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": 8.2422
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 1.4087
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 3.0809
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 35.2403
+    }
+  ],
+  "PG": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -1.4744
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -0.7676
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -1.6273
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 1.9467
+    }
+  ],
+  "PLTR": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 15.6885
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 15.8301
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 6.4736
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 22.2352
+    }
+  ],
+  "QCOM": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -2.746
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 1.4238
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 0.5747
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2.2669
+    }
+  ],
+  "QQQ": [],
+  "RIOT": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -151.0151
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -138.2134
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -607.4176
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 280.6735
+    }
+  ],
+  "RIVN": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 28.4603
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 9.4232
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 22.179
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 11.3112
+    }
+  ],
+  "RKLB": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -4.5752
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 14.1104
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 4.4586
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 71.8045
+    }
+  ],
+  "SNDK": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 11.6977
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 57.8834
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 76.2766
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 27.8424
+    }
+  ],
+  "SOFI": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 6.8566
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -1.1532
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 9.7046
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 32.5301
+    }
+  ],
+  "SPY": [],
+  "TSLA": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -36.4284
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 8.6668
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 10.1079
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -10.4905
+    }
+  ],
+  "TTD": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -15.0637
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": -13.259
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 0.306
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 1.0555
+    }
+  ],
+  "UNH": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 28.803
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 8.8757
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -0.5749
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 3.48
+    }
+  ],
+  "V": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": 0.8414
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 4.8165
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": -1.0179
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": -1.5104
+    }
+  ],
+  "WMT": [
+    {
+      "period": "2026-09-30",
+      "surprisePercent": 8.1875
+    },
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -0.5725
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 0.8999
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 2.1753
+    }
+  ],
+  "XOM": [
+    {
+      "period": "2026-06-30",
+      "surprisePercent": -1.8569
+    },
+    {
+      "period": "2026-03-31",
+      "surprisePercent": 14.2857
+    },
+    {
+      "period": "2025-12-31",
+      "surprisePercent": 0.4937
+    },
+    {
+      "period": "2025-09-30",
+      "surprisePercent": 2.4412
+    }
+  ]
+}

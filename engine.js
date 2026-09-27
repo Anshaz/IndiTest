@@ -735,6 +735,47 @@
     return { above50, above150, above200, stacked, sma200Rising, passes, insufficient: false };
   }
 
+  // ===================== POST-EARNINGS SURPRISE SIGNAL (new, additive) =====================
+  // Post-earnings-announcement drift (Bernard & Thomas, 1989, and a large
+  // body of replication since): stocks that beat earnings estimates tend
+  // to keep drifting in that direction for weeks afterward. Genuinely
+  // different data source from everything else here (fundamentals/
+  // estimates, not price/volume history).
+  //
+  // earningsHistory: array of past reports, each with a `period` (report
+  // date, "YYYY-MM-DD") and a `surprisePercent`. No-lookahead by
+  // construction: only reports dated ON OR BEFORE asOfDate are ever
+  // considered -- there's no separate slicing step to get wrong, unlike
+  // the price-based signals, because the filter is baked into the one
+  // line that selects "the most recent report."
+  function postEarningsSignal(earningsHistory, asOfDate, driftWindowDays = 60) {
+    if (!earningsHistory || earningsHistory.length === 0 || !asOfDate) {
+      return { recentPositiveSurprise: null, daysSinceReport: null, surprisePercent: null, insufficient: true };
+    }
+    const pastReports = earningsHistory.filter(r => r && r.period && r.period <= asOfDate && typeof r.surprisePercent === 'number');
+    if (pastReports.length === 0) {
+      return { recentPositiveSurprise: null, daysSinceReport: null, surprisePercent: null, insufficient: true };
+    }
+    pastReports.sort((a, b) => a.period.localeCompare(b.period));
+    const mostRecent = pastReports[pastReports.length - 1];
+    const daysSince = Math.round((new Date(asOfDate) - new Date(mostRecent.period)) / 86400000);
+    if (daysSince < 0) {
+      // Defensive: a "past" report that's somehow after asOfDate shouldn't
+      // be possible given the filter above, but never let a negative gap
+      // silently produce a bogus "recent" reading.
+      return { recentPositiveSurprise: null, daysSinceReport: null, surprisePercent: null, insufficient: true };
+    }
+    if (daysSince > driftWindowDays) {
+      return { recentPositiveSurprise: false, daysSinceReport: daysSince, surprisePercent: mostRecent.surprisePercent, insufficient: false };
+    }
+    return {
+      recentPositiveSurprise: mostRecent.surprisePercent > 0,
+      daysSinceReport: daysSince,
+      surprisePercent: mostRecent.surprisePercent,
+      insufficient: false
+    };
+  }
+
   return {
     DEFAULT_PROFILES,
     ema, sma, rsi, emaFromIndex, macd, vwap, volumeProfileHVN, atr,
@@ -742,6 +783,6 @@
     atrPercentile, getProfileConfig, classifyVolatility,
     evaluateMACD, evaluateTicker, evaluateWeekly, sanitizeOHLCV, resampleToWeekly,
     evaluateMarketRegime, conditionFlags, relativeStrength,
-    fiftyTwoWeekHighProximity, momentum12Minus1, trendStack
+    fiftyTwoWeekHighProximity, momentum12Minus1, trendStack, postEarningsSignal
   };
 });

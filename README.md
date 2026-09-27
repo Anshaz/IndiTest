@@ -1,5 +1,14 @@
 # IndiTest — Confluence Scorer
 
+📖 **New here, or just want to use the thing?** → [`USAGE.md`](./USAGE.md)
+📖 **Want to know what was built and what was actually learned/proven?** → [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md)
+
+This README is the detailed technical reference for every script and
+setting — useful once you know what you're looking for, not the place to
+start.
+
+---
+
 Two ways to use it:
 
 - **Auto Scan** (default tab) — reads `data/latest.json`, produced once a day
@@ -286,6 +295,28 @@ and no-lookahead verified in `backfill.mjs` the same way as everything
 else — a day's result is proven identical whether the series ends there or
 continues 100 days further.
 
+### MOM is now shown in the app — the others still aren't
+
+After surviving a real per-condition split test *and* a real trade-
+simulation split test (see `PROJECT_OVERVIEW.md`'s Key Findings), `MOM` is
+the one addition promoted to the actual UI: a **12-1 Mom** column in Auto
+Scan, a line in Manual Lookup's cards, and its own honestly-caveated
+lesson card. `NH52`, `RS`, and `TREND` remain background-only — they
+haven't earned it.
+
+Getting `MOM` into Manual Lookup required more than a display change:
+Manual Lookup's live Twelve Data fetch only pulled 100 daily bars, well
+short of the 253-day minimum `momentum12Minus1()` needs, so its outputsize
+was bumped to 300 (matching `scan.mjs`'s own bump for the same reason) and
+the calculation wired into `runAnalysis()`. Same 1-credit-per-symbol cost
+regardless of size, so this doesn't change your API usage.
+
+Tested end-to-end, not just as isolated functions: a full run through the
+real `runAnalysis()` fetch-and-render path (with mocked Twelve Data
+responses shaped like the real API) confirming real momentum data
+actually reaches the rendered card — not just that the display logic
+works when handed data directly.
+
 **To pick these up historically**, delete `data/history.jsonl` and re-run
 `scripts/backfill.mjs` once more (same command as every time this has come
 up before). Note that `DAILY_OUTPUTSIZE` in `scan.mjs` also increased from
@@ -408,6 +439,98 @@ looking training performance, no edge on the frozen test period — that is
 the honest, useful answer this exercise was built to be capable of giving,
 not a sign anything went wrong.
 
+## Is an edge statistically real, or noise? (bootstrap significance test)
+
+Surviving a train/test split (everything above) proves a pattern isn't an
+artifact of the specific data it was found on. It doesn't by itself say
+whether a *small* edge — like 12-1 Momentum's real-but-modest +0.01R to
++0.04R per trade in actual simulated trading — is large enough to be
+distinguishable from noise, given the natural spread of individual trade
+outcomes. That's what this checks.
+
+```
+python3 scripts/significance_test.py data/trade_dataset.jsonl MOM
+python3 scripts/significance_test.py data/trade_dataset.jsonl MOM --split 2024-06-01
+```
+
+Uses `data/trade_dataset.jsonl`, the same file `train_long_signal.py`
+consumes (from `export_trade_dataset.mjs`) — no separate export step
+needed if you've already generated it.
+
+**Bootstrap, not a t-test, deliberately**: R-multiples aren't a smooth
+continuous distribution — every stop-out is exactly -1.0, every target hit
+is exactly the reward multiplier, so a t-test's normality assumption
+doesn't really describe individual trades. A bootstrap resamples the
+actual observed trades directly (10,000 times by default) and makes no
+distributional assumption about the underlying shape.
+
+Run independently on both sides of the same 2024-10-01 split used
+everywhere else — a real edge should be statistically significant in
+*both* halves, in the same direction. Significant in only one, or
+opposite directions, is treated as a fail — the exact same failure
+signature that sank the original ATR finding, and the script says so
+explicitly if it happens.
+
+**Validated with synthetic data before trusting it on anything real**:
+a dataset with a genuine, consistent edge (correctly flagged significant
+in both halves), one with pure noise unrelated to the condition
+(correctly flagged not significant in either), and one where a real edge
+existed before the split and vanished after (correctly flagged
+"significant in one period only" — the ATR pattern, caught).
+
+## Post-earnings-drift signal (Finnhub, free tier)
+
+A genuinely different kind of data from everything else here: fundamentals
+(actual vs. estimated EPS), not price/volume history. Post-earnings-
+announcement drift (Bernard & Thomas, 1989, replicated widely since) is
+the finding that stocks beating earnings estimates tend to keep drifting
+in that direction for weeks afterward.
+
+```
+FINNHUB_API_KEY=xxx node scripts/fetch_earnings_surprises.mjs
+node scripts/enrich_earnings_signal.mjs        # 60-day drift window by default
+```
+
+**Free** — Finnhub's free tier is 60 calls/min with no card required; one
+request per ticker fits comfortably. Get a key at finnhub.io. One real
+license caveat: free-tier use is personal/non-commercial only.
+
+**Honest caveat on this one specifically**: I verified the endpoint
+(`GET /stock/earnings?symbol=X&token=Y`) and its general shape (a flat
+array, one row per reported quarter) directly from Finnhub's own official
+client SDKs (Go/Python/JS/PHP/Elixir all wrap this same call) — but
+couldn't confirm the *exact* field names against a live response, since
+that needs a real account this environment doesn't have. The parser is
+written defensively: an unexpected shape produces a clear per-ticker error
+(`Unexpected response shape...` or `no record matched the expected
+fields...`) rather than silently misreading the data. **If your first real
+run shows these errors, paste one raw response back and the field names
+can be corrected precisely** — the same way the Equibles integration got
+refined after its first real use.
+
+**No separate backfill walk needed, unlike the price-based signals.**
+Finnhub's endpoint already returns each ticker's full reporting history in
+one call, so `enrich_earnings_signal.mjs` just adds the `EARN` condition
+(and a continuous `earningsSurprisePercent`) to every row *already* in
+`data/history.jsonl` — computed no-lookahead (only reports dated on or
+before that row's date ever count) directly by `engine.js`'s
+`postEarningsSignal()`. 8 unit tests, including one specifically proving a
+date sitting between two reports only ever sees the earlier one, never the
+one that hasn't happened yet as of that date.
+
+Same treatment as everything since the original six: a new `EARN` key,
+not folded into the 0-6 score, already picked up automatically by
+`condition_breakdown.mjs` and `train_long_signal.py` (confirmed against a
+synthetic dataset with a known injected `EARN` signal — correctly
+identified as the largest edge while the noise conditions stayed near
+zero) — unvalidated on real data until it's actually been tested the same
+way.
+
+**Scope note**: this enriches your existing historical log for testing.
+Wiring this into the live daily scan (`scan.mjs`) and the UI, the way the
+squeeze score was, would follow the identical pattern already established
+there — not built yet, to keep this addition focused.
+
 ## Relative strength vs SPY
 
 A stock going up isn't informative on its own if the whole market went up
@@ -502,7 +625,10 @@ discipline already applied to everything else here.
 | `scripts/trade_simulation.mjs` | Simulates actual entry/stop/target outcomes in R-multiples |
 | `scripts/export_trade_dataset.mjs` | Exports labeled trade data for the Python model below |
 | `scripts/train_long_signal.py` | Trained LONG-entry signal, strict train/test discipline |
+| `scripts/significance_test.py` | Bootstrap test for whether a condition's R-multiple edge is real or noise |
 | `scripts/fetch_squeeze_scores.mjs` | Optional: pulls Equibles' short-squeeze score per ticker |
+| `scripts/fetch_earnings_surprises.mjs` | Optional: pulls Finnhub earnings-surprise history per ticker |
+| `scripts/enrich_earnings_signal.mjs` | Adds the no-lookahead EARN signal to existing history rows |
 | `scripts/serve.mjs` | Zero-dependency local server — use this instead of opening `index.html` directly |
 | `watchlist.config.json` | Editable ticker list + profile overrides for the auto scan |
 | `.github/workflows/scan.yml` | The schedule + secret wiring |
