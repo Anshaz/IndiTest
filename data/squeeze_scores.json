@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-26T11:06:31.804Z",
+  "generatedAt": "2026-09-29T01:11:31.444Z",
   "tickerCount": 58,
   "coveredCount": 55,
   "notCoveredCount": 3,
@@ -7,8 +7,8 @@
   "scores": {
     "AAPL": {
       "rank": 4174,
-      "score": 46.69,
-      "baseScore": 46.69,
+      "score": 46.72,
+      "baseScore": 46.72,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.008822221734965581,
       "daysToCover": 2.85,
@@ -22,9 +22,9 @@
       "settlementDate": "2026-09-15"
     },
     "ADBE": {
-      "rank": 2541,
-      "score": 57.92,
-      "baseScore": 57.92,
+      "rank": 2537,
+      "score": 57.97,
+      "baseScore": 57.97,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.04752486382322713,
       "daysToCover": 3.17,
@@ -38,9 +38,9 @@
       "settlementDate": "2026-09-15"
     },
     "AMAT": {
-      "rank": 5268,
-      "score": 38.05,
-      "baseScore": 38.05,
+      "rank": 5267,
+      "score": 38.1,
+      "baseScore": 38.1,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.017777762673562444,
       "daysToCover": 2.44,
@@ -54,9 +54,9 @@
       "settlementDate": "2026-09-15"
     },
     "AMD": {
-      "rank": 2749,
-      "score": 56.51,
-      "baseScore": 56.51,
+      "rank": 2742,
+      "score": 56.57,
+      "baseScore": 56.57,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.02448778386897997,
       "daysToCover": 2.13,
@@ -70,9 +70,9 @@
       "settlementDate": "2026-09-15"
     },
     "AMZN": {
-      "rank": 4882,
-      "score": 41.42,
-      "baseScore": 41.42,
+      "rank": 4886,
+      "score": 41.47,
+      "baseScore": 41.47,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.0075503473412278435,
       "daysToCover": 2.77,
@@ -86,9 +86,9 @@
       "settlementDate": "2026-09-15"
     },
     "ANET": {
-      "rank": 4232,
-      "score": 46.23,
-      "baseScore": 46.23,
+      "rank": 4229,
+      "score": 46.27,
+      "baseScore": 46.27,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.01050195381211738,
       "daysToCover": 3.04,
@@ -102,9 +102,9 @@
       "settlementDate": "2026-09-15"
     },
     "ASML": {
-      "rank": 5171,
-      "score": 38.78,
-      "baseScore": 38.78,
+      "rank": 5168,
+      "score": 38.84,
+      "baseScore": 38.84,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.0038469747461598544,
       "daysToCover": 1.2,
@@ -118,9 +118,9 @@
       "settlementDate": "2026-09-15"
     },
     "AVGO": {
-      "rank": 4376,
-      "score": 45.19,
-      "baseScore": 45.19,
+      "rank": 4373,
+      "score": 45.23,
+      "baseScore": 45.23,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.010876874929221183,
       "daysToCover": 1.7,
@@ -134,9 +134,9 @@
       "settlementDate": "2026-09-15"
     },
     "BABA": {
-      "rank": 3961,
-      "score": 48.39,
-      "baseScore": 48.39,
+      "rank": 3955,
+      "score": 48.45,
+      "baseScore": 48.45,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.016512652902197344,
       "daysToCover": 5.41,
@@ -151,8 +151,8 @@
     },
     "BBAI": {
       "rank": 192,
-      "score": 77.89,
-      "baseScore": 77.89,
+      "score": 77.91,
+      "baseScore": 77.91,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.31308920163135223,
       "daysToCover": 9.98,
@@ -166,9 +166,9 @@
       "settlementDate": "2026-09-15"
     },
     "CAT": {
-      "rank": 3044,
-      "score": 54.62,
-      "baseScore": 54.62,
+      "rank": 3038,
+      "score": 54.67,
+      "baseScore": 54.67,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.018223982211044817,
       "daysToCover": 3.7,
@@ -182,9 +182,9 @@
       "settlementDate": "2026-09-15"
     },
     "CDNS": {
-      "rank": 3586,
-      "score": 51.1,
-      "baseScore": 41.1,
+      "rank": 3585,
+      "score": 51.15,
+      "baseScore": 41.15,
       "catalystBoost": 10,
       "shortInterestPercentOfShares": 0.01576271137279926,
       "daysToCover": 1.62,
@@ -198,9 +198,9 @@
       "settlementDate": "2026-09-15"
     },
     "COIN": {
-      "rank": 1176,
-      "score": 66.86,
-      "baseScore": 66.86,
+      "rank": 1172,
+      "score": 66.89,
+      "baseScore": 66.89,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.09564416804542554,
       "daysToCover": 2.78,
@@ -214,9 +214,9 @@
       "settlementDate": "2026-09-15"
     },
     "COST": {
-      "rank": 2457,
-      "score": 58.39,
-      "baseScore": 48.39,
+      "rank": 2451,
+      "score": 58.44,
+      "baseScore": 48.44,
       "catalystBoost": 10,
       "shortInterestPercentOfShares": 0.0165973524182229,
       "daysToCover": 3.67,
@@ -230,9 +230,9 @@
       "settlementDate": "2026-09-15"
     },
     "CRCL": {
-      "rank": 1153,
-      "score": 67.03,
-      "baseScore": 67.03,
+      "rank": 1148,
+      "score": 67.06,
+      "baseScore": 67.06,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.08680980214894853,
       "daysToCover": 1.55,
@@ -246,9 +246,9 @@
       "settlementDate": "2026-09-15"
     },
     "CRWD": {
-      "rank": 1839,
-      "score": 62.12,
-      "baseScore": 62.12,
+      "rank": 1833,
+      "score": 62.17,
+      "baseScore": 62.17,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.027276688764146968,
       "daysToCover": 2.42,
@@ -262,9 +262,9 @@
       "settlementDate": "2026-09-15"
     },
     "CVX": {
-      "rank": 2810,
-      "score": 56.15,
-      "baseScore": 56.15,
+      "rank": 2800,
+      "score": 56.21,
+      "baseScore": 56.21,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.010509857731639437,
       "daysToCover": 2.61,
@@ -278,9 +278,9 @@
       "settlementDate": "2026-09-15"
     },
     "DIS": {
-      "rank": 3483,
-      "score": 51.82,
-      "baseScore": 51.82,
+      "rank": 3481,
+      "score": 51.87,
+      "baseScore": 51.87,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.011372589308029627,
       "daysToCover": 2.71,
@@ -294,9 +294,9 @@
       "settlementDate": "2026-09-15"
     },
     "GOOGL": {
-      "rank": 4466,
-      "score": 44.5,
-      "baseScore": 44.5,
+      "rank": 4463,
+      "score": 44.56,
+      "baseScore": 44.56,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.00714582207686018,
       "daysToCover": 3.5,
@@ -310,9 +310,9 @@
       "settlementDate": "2026-09-15"
     },
     "GS": {
-      "rank": 4214,
-      "score": 46.35,
-      "baseScore": 46.35,
+      "rank": 4210,
+      "score": 46.4,
+      "baseScore": 46.4,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.023769837318642222,
       "daysToCover": 3.91,
@@ -326,9 +326,9 @@
       "settlementDate": "2026-09-15"
     },
     "HIMS": {
-      "rank": 818,
-      "score": 69.61,
-      "baseScore": 69.61,
+      "rank": 816,
+      "score": 69.63,
+      "baseScore": 69.63,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.22682126295070743,
       "daysToCover": 6.13,
@@ -342,9 +342,9 @@
       "settlementDate": "2026-09-15"
     },
     "INTC": {
-      "rank": 3121,
-      "score": 54.11,
-      "baseScore": 54.11,
+      "rank": 3119,
+      "score": 54.16,
+      "baseScore": 54.16,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.0314846847739889,
       "daysToCover": 1.76,
@@ -358,9 +358,9 @@
       "settlementDate": "2026-09-15"
     },
     "IONQ": {
-      "rank": 1121,
-      "score": 67.26,
-      "baseScore": 67.26,
+      "rank": 1114,
+      "score": 67.3,
+      "baseScore": 67.3,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.10626198454007289,
       "daysToCover": 2.19,
@@ -374,9 +374,9 @@
       "settlementDate": "2026-09-15"
     },
     "JNJ": {
-      "rank": 3998,
-      "score": 48.06,
-      "baseScore": 48.06,
+      "rank": 3997,
+      "score": 48.09,
+      "baseScore": 48.09,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.008792287786040817,
       "daysToCover": 3.65,
@@ -390,9 +390,9 @@
       "settlementDate": "2026-09-15"
     },
     "JPM": {
-      "rank": 4471,
-      "score": 44.46,
-      "baseScore": 44.46,
+      "rank": 4474,
+      "score": 44.49,
+      "baseScore": 44.49,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.009025161986442412,
       "daysToCover": 3.64,
@@ -406,9 +406,9 @@
       "settlementDate": "2026-09-15"
     },
     "KO": {
-      "rank": 3937,
-      "score": 48.53,
-      "baseScore": 48.53,
+      "rank": 3938,
+      "score": 48.56,
+      "baseScore": 48.56,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.009432710016480536,
       "daysToCover": 2.79,
@@ -422,9 +422,9 @@
       "settlementDate": "2026-09-15"
     },
     "LCID": {
-      "rank": 658,
-      "score": 71.03,
-      "baseScore": 71.03,
+      "rank": 653,
+      "score": 71.06,
+      "baseScore": 71.06,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.22777848329227535,
       "daysToCover": 8.12,
@@ -438,9 +438,9 @@
       "settlementDate": "2026-09-15"
     },
     "LLY": {
-      "rank": 4770,
-      "score": 42.17,
-      "baseScore": 42.17,
+      "rank": 4768,
+      "score": 42.22,
+      "baseScore": 42.22,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.007988380052153748,
       "daysToCover": 3.41,
@@ -454,9 +454,9 @@
       "settlementDate": "2026-09-15"
     },
     "LRCX": {
-      "rank": 4252,
-      "score": 46.08,
-      "baseScore": 46.08,
+      "rank": 4247,
+      "score": 46.13,
+      "baseScore": 46.13,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.020842838088707853,
       "daysToCover": 3.08,
@@ -470,9 +470,9 @@
       "settlementDate": "2026-09-15"
     },
     "MA": {
-      "rank": 4877,
-      "score": 41.46,
-      "baseScore": 41.46,
+      "rank": 4883,
+      "score": 41.49,
+      "baseScore": 41.49,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.008220432978192006,
       "daysToCover": 3.17,
@@ -486,9 +486,9 @@
       "settlementDate": "2026-09-15"
     },
     "MARA": {
-      "rank": 954,
-      "score": 68.53,
-      "baseScore": 68.53,
+      "rank": 951,
+      "score": 68.56,
+      "baseScore": 68.56,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.2707722867018316,
       "daysToCover": 2.38,
@@ -502,9 +502,9 @@
       "settlementDate": "2026-09-15"
     },
     "MELI": {
-      "rank": 4910,
-      "score": 41.22,
-      "baseScore": 41.22,
+      "rank": 4912,
+      "score": 41.27,
+      "baseScore": 41.27,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.0162917179667467,
       "daysToCover": 2.01,
@@ -518,9 +518,9 @@
       "settlementDate": "2026-09-15"
     },
     "META": {
-      "rank": 348,
-      "score": 75.02,
-      "baseScore": 55.02,
+      "rank": 347,
+      "score": 75.06,
+      "baseScore": 55.06,
       "catalystBoost": 20,
       "shortInterestPercentOfShares": 0.012164879793375187,
       "daysToCover": 1.57,
@@ -534,9 +534,9 @@
       "settlementDate": "2026-09-15"
     },
     "MRNA": {
-      "rank": 1383,
-      "score": 65.47,
-      "baseScore": 65.47,
+      "rank": 1379,
+      "score": 65.5,
+      "baseScore": 65.5,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.08233925833255938,
       "daysToCover": 2.53,
@@ -551,8 +551,8 @@
     },
     "MSFT": {
       "rank": 4453,
-      "score": 44.58,
-      "baseScore": 44.58,
+      "score": 44.62,
+      "baseScore": 44.62,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.009069557796343181,
       "daysToCover": 3.73,
@@ -566,9 +566,9 @@
       "settlementDate": "2026-09-15"
     },
     "MU": {
-      "rank": 4261,
-      "score": 46,
-      "baseScore": 46,
+      "rank": 4255,
+      "score": 46.06,
+      "baseScore": 46.06,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.02446781262621629,
       "daysToCover": 1.1,
@@ -582,9 +582,9 @@
       "settlementDate": "2026-09-15"
     },
     "NFLX": {
-      "rank": 4077,
-      "score": 47.44,
-      "baseScore": 47.44,
+      "rank": 4070,
+      "score": 47.5,
+      "baseScore": 47.5,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.022619715540758954,
       "daysToCover": 3.6,
@@ -598,9 +598,9 @@
       "settlementDate": "2026-09-15"
     },
     "NIO": {
-      "rank": 2887,
-      "score": 55.64,
-      "baseScore": 55.64,
+      "rank": 2882,
+      "score": 55.67,
+      "baseScore": 55.67,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.05543281600487138,
       "daysToCover": 2.72,
@@ -614,9 +614,9 @@
       "settlementDate": "2026-09-15"
     },
     "NOW": {
-      "rank": 3072,
-      "score": 54.44,
-      "baseScore": 54.44,
+      "rank": 3066,
+      "score": 54.51,
+      "baseScore": 54.51,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.027820460348162476,
       "daysToCover": 1.99,
@@ -630,9 +630,9 @@
       "settlementDate": "2026-09-15"
     },
     "NVDA": {
-      "rank": 4165,
-      "score": 46.78,
-      "baseScore": 46.78,
+      "rank": 4163,
+      "score": 46.82,
+      "baseScore": 46.82,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.012208539543568465,
       "daysToCover": 2.55,
@@ -646,9 +646,9 @@
       "settlementDate": "2026-09-15"
     },
     "ORCL": {
-      "rank": 3907,
-      "score": 48.78,
-      "baseScore": 48.78,
+      "rank": 3904,
+      "score": 48.84,
+      "baseScore": 48.84,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.016813781361864923,
       "daysToCover": 1.36,
@@ -662,9 +662,9 @@
       "settlementDate": "2026-09-15"
     },
     "PG": {
-      "rank": 4346,
-      "score": 45.43,
-      "baseScore": 45.43,
+      "rank": 4343,
+      "score": 45.48,
+      "baseScore": 45.48,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.010416861821781179,
       "daysToCover": 2.84,
@@ -678,9 +678,9 @@
       "settlementDate": "2026-09-15"
     },
     "PLTR": {
-      "rank": 3869,
-      "score": 49.06,
-      "baseScore": 49.06,
+      "rank": 3863,
+      "score": 49.12,
+      "baseScore": 49.12,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.025045126242620612,
       "daysToCover": 2.24,
@@ -694,9 +694,9 @@
       "settlementDate": "2026-09-15"
     },
     "QCOM": {
-      "rank": 210,
-      "score": 77.56,
-      "baseScore": 67.56,
+      "rank": 209,
+      "score": 77.61,
+      "baseScore": 67.61,
       "catalystBoost": 10,
       "shortInterestPercentOfShares": 0.036492040952380955,
       "daysToCover": 3.06,
@@ -710,9 +710,9 @@
       "settlementDate": "2026-09-15"
     },
     "RIOT": {
-      "rank": 967,
-      "score": 68.43,
-      "baseScore": 68.43,
+      "rank": 962,
+      "score": 68.47,
+      "baseScore": 68.47,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.136186236311735,
       "daysToCover": 3.6,
@@ -726,9 +726,9 @@
       "settlementDate": "2026-09-15"
     },
     "RIVN": {
-      "rank": 1006,
-      "score": 68.15,
-      "baseScore": 68.15,
+      "rank": 1003,
+      "score": 68.18,
+      "baseScore": 68.18,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.10650697505325496,
       "daysToCover": 9.13,
@@ -742,9 +742,9 @@
       "settlementDate": "2026-09-15"
     },
     "RKLB": {
-      "rank": 2778,
-      "score": 56.35,
-      "baseScore": 56.35,
+      "rank": 2772,
+      "score": 56.4,
+      "baseScore": 56.4,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.07267141467766045,
       "daysToCover": 2.39,
@@ -758,9 +758,9 @@
       "settlementDate": "2026-09-15"
     },
     "SNDK": {
-      "rank": 2584,
-      "score": 57.64,
-      "baseScore": 57.64,
+      "rank": 2577,
+      "score": 57.68,
+      "baseScore": 57.68,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.038370791779954845,
       "daysToCover": 1,
@@ -774,9 +774,9 @@
       "settlementDate": "2026-09-15"
     },
     "SOFI": {
-      "rank": 1479,
-      "score": 64.74,
-      "baseScore": 64.74,
+      "rank": 1475,
+      "score": 64.78,
+      "baseScore": 64.78,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.1463202463608168,
       "daysToCover": 5.23,
@@ -790,9 +790,9 @@
       "settlementDate": "2026-09-15"
     },
     "TSLA": {
-      "rank": 4143,
-      "score": 46.93,
-      "baseScore": 46.93,
+      "rank": 4142,
+      "score": 46.97,
+      "baseScore": 46.97,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.017435505927745804,
       "daysToCover": 1.72,
@@ -806,9 +806,9 @@
       "settlementDate": "2026-09-15"
     },
     "TTD": {
-      "rank": 1558,
-      "score": 64.08,
-      "baseScore": 64.08,
+      "rank": 1553,
+      "score": 64.1,
+      "baseScore": 64.1,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.18840490859250816,
       "daysToCover": 4.82,
@@ -822,9 +822,9 @@
       "settlementDate": "2026-09-15"
     },
     "UNH": {
-      "rank": 5123,
-      "score": 39.18,
-      "baseScore": 39.18,
+      "rank": 5124,
+      "score": 39.22,
+      "baseScore": 39.22,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.014723930339141085,
       "daysToCover": 2.47,
@@ -838,9 +838,9 @@
       "settlementDate": "2026-09-15"
     },
     "V": {
-      "rank": 4264,
-      "score": 45.98,
-      "baseScore": 45.98,
+      "rank": 4262,
+      "score": 46.03,
+      "baseScore": 46.03,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.010385529398847867,
       "daysToCover": 3.87,
@@ -854,9 +854,9 @@
       "settlementDate": "2026-09-15"
     },
     "WMT": {
-      "rank": 5275,
-      "score": 38.02,
-      "baseScore": 38.02,
+      "rank": 5277,
+      "score": 38.07,
+      "baseScore": 38.07,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.010157883621677584,
       "daysToCover": 3.89,
@@ -870,9 +870,9 @@
       "settlementDate": "2026-09-15"
     },
     "XOM": {
-      "rank": 4263,
-      "score": 45.99,
-      "baseScore": 45.99,
+      "rank": 4260,
+      "score": 46.04,
+      "baseScore": 46.04,
       "catalystBoost": 0,
       "shortInterestPercentOfShares": 0.009657630899276355,
       "daysToCover": 2.99,
