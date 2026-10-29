@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-28T00:41:30.619Z",
+  "generatedAt": "2026-10-29T01:09:23.919Z",
   "tickerCount": 58,
   "successCount": 58,
   "errors": [],
   "regime": {
     "bullish": true,
-    "price": 769.65997,
-    "sma": 767.5287948999998,
-    "pctFromSma": 0.27766712000400706,
+    "price": 772.31,
+    "sma": 767.6259946999998,
+    "pctFromSma": 0.6101936792579278,
     "insufficient": false
   },
   "results": [
     {
-      "ticker": "CDNS",
+      "ticker": "ORCL",
       "cfg": {
         "name": "Stable"
       },
@@ -29,55 +29,55 @@
           {
             "name": "RSI Momentum",
             "on": true,
-            "detail": "Rising 45-70"
+            "detail": "Oversold bounce"
           },
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-1.404"
+            "detail": "0.732"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "2,798,810"
+            "detail": "33,260,545"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$315.91"
+            "detail": "$123.75 (early)"
           },
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "98pct"
+            "detail": "84pct"
           }
         ],
         "action": "Max confluence — execute. All layers aligned. Stop below higher low.",
         "divergence": false,
         "atr": {
-          "percentile": 98,
+          "percentile": 84,
           "compressed": false,
           "expanded": true
         },
         "higherLow": {
-          "price": 315.91,
-          "prevPrice": 273.070007,
-          "confirmed": true
+          "price": 123.75,
+          "prevPrice": 122.76,
+          "confirmed": false
         },
-        "stop": "309.36",
-        "target": "410.52",
+        "stop": "120.07",
+        "target": "193.48",
         "rewardMultiplier": 2,
-        "riskPerShare": "33.72",
+        "riskPerShare": "24.47",
         "volumeReliable": true,
         "details": {
-          "price": 343.079987,
-          "vwap": 334.0152705677178,
-          "rsi": "58.1",
-          "macdHist": "-1.404",
-          "volume": 4627993,
-          "volSMA": 2798810,
-          "hvn": "328.17",
-          "atrPct": 98
+          "price": 144.53999,
+          "vwap": 135.33064555373164,
+          "rsi": "57.6",
+          "macdHist": "0.732",
+          "volume": 81527008,
+          "volSMA": 33260545,
+          "hvn": "143.40",
+          "atrPct": 84
         }
       },
       "weekly": {
@@ -86,131 +86,28 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.05833351765019851,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.05118884357462499,
+        "tickerReturn": 0.05273117261471214,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.040038254685965634,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 416.69,
-        "price": 343.079987,
-        "pctFromHigh": -0.17665413856824014,
+        "high52w": 285.45999,
+        "price": 144.53999,
+        "pctFromHigh": -0.4936593741210459,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.053317877330690246,
+        "return12m1": -0.5103411695217189,
         "positive": false,
         "insufficient": false
       },
       "trend": {
         "above50": true,
-        "above150": true,
-        "above200": true,
-        "stacked": false,
-        "sma200Rising": true,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "TSLA",
-      "cfg": {
-        "name": "Speculative"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 6,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": true,
-            "detail": "Above"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Rising 45-70"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "2.596"
-          },
-          {
-            "name": "Volume > 1×SMA",
-            "on": true,
-            "detail": "43,677,305"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$349.33"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": true,
-            "detail": "78pct"
-          }
-        ],
-        "action": "Max confluence — execute. All layers aligned. Stop below higher low.",
-        "divergence": false,
-        "atr": {
-          "percentile": 78,
-          "compressed": false,
-          "expanded": true
-        },
-        "higherLow": {
-          "price": 349.32999,
-          "prevPrice": 345.88,
-          "confirmed": true
-        },
-        "stop": "335.62",
-        "target": "587.06",
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "71.84",
-        "volumeReliable": true,
-        "details": {
-          "price": 407.45999,
-          "vwap": 374.0211528584841,
-          "rsi": "65.5",
-          "macdHist": "2.596",
-          "volume": 45019044,
-          "volSMA": 43677305,
-          "hvn": "433.36",
-          "atrPct": 78
-        }
-      },
-      "weekly": {
-        "score": 2,
-        "trend": "Bullish",
-        "bullish": true
-      },
-      "relativeStrength": {
-        "tickerReturn": 0.15480101462419235,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.14765634054861884,
-        "outperforming": true,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 498.82999,
-        "price": 407.45999,
-        "pctFromHigh": -0.18316861823003064,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": -0.1758507562482708,
-        "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": true,
-        "above150": true,
-        "above200": true,
+        "above150": false,
+        "above200": false,
         "stacked": false,
         "sma200Rising": false,
         "passes": false,
@@ -218,7 +115,7 @@
       }
     },
     {
-      "ticker": "CRWD",
+      "ticker": "BBAI",
       "cfg": {
         "name": "Speculative"
       },
@@ -235,55 +132,158 @@
           {
             "name": "RSI Momentum",
             "on": true,
-            "detail": "Rising 45-70"
+            "detail": "Oversold bounce"
           },
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-0.082"
+            "detail": "0.032"
           },
           {
             "name": "Volume > 1×SMA",
-            "on": false,
-            "detail": "9,962,279"
+            "on": true,
+            "detail": "17,680,479"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$234.79 (early)"
+            "detail": "$2.08 (early)"
           },
           {
             "name": "ATR Expanded",
-            "on": true,
-            "detail": "74pct"
+            "on": false,
+            "detail": "62pct"
           }
         ],
         "action": "Setup active. Strong momentum. Enter if ATR expanded.",
         "divergence": false,
         "atr": {
-          "percentile": 74,
+          "percentile": 62,
           "compressed": false,
-          "expanded": true
+          "expanded": false
         },
         "higherLow": {
-          "price": 234.78799,
-          "prevPrice": 221.36,
+          "price": 2.08,
+          "prevPrice": 2.07,
           "confirmed": false
         },
-        "stop": "222.21",
-        "target": "382.54",
+        "stop": "1.93",
+        "target": "3.79",
         "rewardMultiplier": 2.5,
-        "riskPerShare": "45.81",
+        "riskPerShare": "0.53",
         "volumeReliable": true,
         "details": {
-          "price": 268.019989,
-          "vwap": 254.0250949874539,
-          "rsi": "60.3",
-          "macdHist": "-0.082",
-          "volume": 7289308,
-          "volSMA": 9962279,
-          "hvn": "110.84",
-          "atrPct": 74
+          "price": 2.46,
+          "vwap": 2.3806442807083945,
+          "rsi": "51.5",
+          "macdHist": "0.032",
+          "volume": 31069207,
+          "volSMA": 17680479,
+          "hvn": "5.91",
+          "atrPct": 62
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Bearish, improving",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.07169811320754715,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.08439103113629366,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 7.4,
+        "price": 2.46,
+        "pctFromHigh": -0.6675675675675676,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.6267605633802816,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": false,
+        "stacked": false,
+        "sma200Rising": false,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "HIMS",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 5,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": true,
+            "detail": "Above"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Divergence"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-0.052"
+          },
+          {
+            "name": "Volume > 1×SMA",
+            "on": true,
+            "detail": "8,764,176"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$27.22 (early)"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "26pct"
+          }
+        ],
+        "action": "Setup active. Strong momentum. Enter if ATR expanded.",
+        "divergence": true,
+        "atr": {
+          "percentile": 26,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 27.22,
+          "prevPrice": 26.33,
+          "confirmed": false
+        },
+        "stop": "25.50",
+        "target": "38.87",
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "3.82",
+        "volumeReliable": true,
+        "details": {
+          "price": 29.32,
+          "vwap": 28.983987196775125,
+          "rsi": "52.0",
+          "macdHist": "-0.052",
+          "volume": 12264885,
+          "volSMA": 8764176,
+          "hvn": "30.50",
+          "atrPct": 26
         }
       },
       "weekly": {
@@ -292,22 +292,22 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.020095909267561565,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.012951235191988047,
-        "outperforming": true,
+        "tickerReturn": -0.015777106411547462,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.02847002434029397,
+        "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 286.98999,
-        "price": 268.019989,
-        "pctFromHigh": -0.06609986989441677,
-        "nearHigh": true,
+        "high52w": 49.17,
+        "price": 29.32,
+        "pctFromHigh": -0.4037014439699004,
+        "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.9665478267465674,
-        "positive": true,
+        "return12m1": -0.40493468795355586,
+        "positive": false,
         "insufficient": false
       },
       "trend": {
@@ -315,8 +315,8 @@
         "above150": true,
         "above200": true,
         "stacked": true,
-        "sma200Rising": true,
-        "passes": true,
+        "sma200Rising": false,
+        "passes": false,
         "insufficient": false
       }
     },
@@ -343,12 +343,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "1.668"
+            "detail": "1.908"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "7,317,940"
+            "detail": "6,999,367"
           },
           {
             "name": "Higher Low",
@@ -358,13 +358,13 @@
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "90pct"
+            "detail": "96pct"
           }
         ],
         "action": "Setup active. Strong momentum. Enter if ATR expanded.",
         "divergence": false,
         "atr": {
-          "percentile": 90,
+          "percentile": 96,
           "compressed": false,
           "expanded": true
         },
@@ -373,20 +373,20 @@
           "prevPrice": 251.5,
           "confirmed": false
         },
-        "stop": "251.39",
-        "target": "303.41",
+        "stop": "251.31",
+        "target": "310.50",
         "rewardMultiplier": 2,
-        "riskPerShare": "17.34",
+        "riskPerShare": "19.73",
         "volumeReliable": true,
         "details": {
-          "price": 268.73001,
-          "vwap": 257.8078338162975,
-          "rsi": "57.5",
-          "macdHist": "1.668",
-          "volume": 5762160,
-          "volSMA": 7317940,
+          "price": 271.040009,
+          "vwap": 257.95091192599983,
+          "rsi": "59.6",
+          "macdHist": "1.908",
+          "volume": 6395104,
+          "volSMA": 6999367,
           "hvn": "240.67",
-          "atrPct": 90
+          "atrPct": 96
         }
       },
       "weekly": {
@@ -395,21 +395,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.004335313961381427,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.002809360114192091,
-        "outperforming": false,
+        "tickerReturn": 0.02379700550717714,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.011104087578430632,
+        "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 281.070007,
-        "price": 268.73001,
-        "pctFromHigh": -0.04390364212713733,
+        "price": 271.040009,
+        "pctFromHigh": -0.03568505265664998,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.4283089510666467,
+        "return12m1": 0.4060431424067263,
         "positive": true,
         "insufficient": false
       },
@@ -424,9 +424,9 @@
       }
     },
     {
-      "ticker": "QCOM",
+      "ticker": "MRNA",
       "cfg": {
-        "name": "Stable"
+        "name": "Speculative"
       },
       "autoClassified": false,
       "daily": {
@@ -446,73 +446,73 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "0.387"
+            "detail": "-4.563"
           },
           {
-            "name": "Volume > 1.1×SMA",
-            "on": true,
-            "detail": "10,356,528"
+            "name": "Volume > 1×SMA",
+            "on": false,
+            "detail": "21,257,139"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$171.48 (early)"
+            "detail": "$182.50"
           },
           {
             "name": "ATR Expanded",
-            "on": false,
-            "detail": "18pct"
+            "on": true,
+            "detail": "96pct"
           }
         ],
         "action": "Setup active. Strong momentum. Enter if ATR expanded.",
         "divergence": false,
         "atr": {
-          "percentile": 18,
-          "compressed": true,
-          "expanded": false
+          "percentile": 96,
+          "compressed": false,
+          "expanded": true
         },
         "higherLow": {
-          "price": 171.48,
-          "prevPrice": 171.13,
-          "confirmed": false
+          "price": 182.5,
+          "prevPrice": 130.38,
+          "confirmed": true
         },
-        "stop": "168.19",
-        "target": "216.13",
-        "rewardMultiplier": 2,
-        "riskPerShare": "15.98",
+        "stop": "161.05",
+        "target": "346.95",
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "53.11",
         "volumeReliable": true,
         "details": {
-          "price": 184.17,
-          "vwap": 177.7186166837701,
-          "rsi": "56.2",
-          "macdHist": "0.387",
-          "volume": 12242748,
-          "volSMA": 10356528,
-          "hvn": "173.71",
-          "atrPct": 18
+          "price": 214.16499,
+          "vwap": 209.64115413071613,
+          "rsi": "55.0",
+          "macdHist": "-4.563",
+          "volume": 11992751,
+          "volSMA": 21257139,
+          "hvn": "28.09",
+          "atrPct": 96
         }
       },
       "weekly": {
-        "score": 2,
-        "trend": "Bullish",
+        "score": 1,
+        "trend": "Cautiously bullish",
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.0003801737979264097,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.006764500277647108,
-        "outperforming": false,
+        "tickerReturn": 0.11214092994023313,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.09944801201148662,
+        "outperforming": true,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 259.92001,
-        "price": 184.17,
-        "pctFromHigh": -0.2914358536689807,
+        "high52w": 254.48,
+        "price": 214.16499,
+        "pctFromHigh": -0.1584211332914178,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.10974310406061319,
+        "return12m1": 6.6316582895723934,
         "positive": true,
         "insufficient": false
       },
@@ -520,9 +520,9 @@
         "above50": true,
         "above150": true,
         "above200": true,
-        "stacked": false,
+        "stacked": true,
         "sma200Rising": true,
-        "passes": false,
+        "passes": true,
         "insufficient": false
       }
     },
@@ -549,12 +549,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "0.141"
+            "detail": "0.268"
           },
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "58,316,321"
+            "detail": "60,461,451"
           },
           {
             "name": "Higher Low",
@@ -564,13 +564,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "54pct"
+            "detail": "60pct"
           }
         ],
         "action": "Setup active. Strong momentum. Enter if ATR expanded.",
         "divergence": false,
         "atr": {
-          "percentile": 54,
+          "percentile": 60,
           "compressed": false,
           "expanded": false
         },
@@ -579,20 +579,20 @@
           "prevPrice": 14.18,
           "confirmed": false
         },
-        "stop": "13.50",
-        "target": "23.65",
+        "stop": "13.49",
+        "target": "26.27",
         "rewardMultiplier": 2.5,
-        "riskPerShare": "2.90",
+        "riskPerShare": "3.65",
         "volumeReliable": true,
         "details": {
-          "price": 16.4,
-          "vwap": 15.300598580619754,
-          "rsi": "57.4",
-          "macdHist": "0.141",
-          "volume": 160513593,
-          "volSMA": 58316321,
+          "price": 17.14,
+          "vwap": 15.408927186070146,
+          "rsi": "62.4",
+          "macdHist": "0.268",
+          "volume": 81771257,
+          "volSMA": 60461451,
           "hvn": "18.11",
-          "atrPct": 54
+          "atrPct": 60
         }
       },
       "weekly": {
@@ -601,233 +601,27 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.030798240100565585,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.023653566024992065,
+        "tickerReturn": 0.09033078880407124,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.07763787087532473,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 32.73,
-        "price": 16.4,
-        "pctFromHigh": -0.49893064466849985,
+        "price": 17.14,
+        "pctFromHigh": -0.4763214176596394,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.4508790072388832,
+        "return12m1": -0.4696666666666667,
         "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
-        "sma200Rising": false,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "SPY",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 5,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": true,
-            "detail": "Above"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Rising 45-70"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "-0.948"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "40,074,237"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$760.64"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": true,
-            "detail": "90pct"
-          }
-        ],
-        "action": "Setup active. Strong momentum. Enter if ATR expanded.",
-        "divergence": false,
-        "atr": {
-          "percentile": 90,
-          "compressed": false,
-          "expanded": true
-        },
-        "higherLow": {
-          "price": 760.64001,
-          "prevPrice": 758.78998,
-          "confirmed": true
-        },
-        "stop": "757.06",
-        "target": "794.86",
-        "rewardMultiplier": 2,
-        "riskPerShare": "12.60",
-        "volumeReliable": true,
-        "details": {
-          "price": 769.65997,
-          "vwap": 769.4626283871414,
-          "rsi": "51.1",
-          "macdHist": "-0.948",
-          "volume": 28071532,
-          "volSMA": 40074237,
-          "hvn": "686.41",
-          "atrPct": 90
-        }
-      },
-      "weekly": {
-        "score": 2,
-        "trend": "Bullish",
-        "bullish": true
-      },
-      "relativeStrength": {
-        "tickerReturn": 0.007144674075573518,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 781.62,
-        "price": 769.65997,
-        "pctFromHigh": -0.015301591566234181,
-        "nearHigh": true,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 0.1304687929125139,
-        "positive": true,
         "insufficient": false
       },
       "trend": {
         "above50": true,
         "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": true,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "BBAI",
-      "cfg": {
-        "name": "Speculative"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 4,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "0.012"
-          },
-          {
-            "name": "Volume > 1×SMA",
-            "on": true,
-            "detail": "15,793,941"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$2.08 (early)"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "46pct"
-          }
-        ],
-        "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
-        "divergence": false,
-        "atr": {
-          "percentile": 46,
-          "compressed": false,
-          "expanded": false
-        },
-        "higherLow": {
-          "price": 2.08,
-          "prevPrice": 2.07,
-          "confirmed": false
-        },
-        "stop": "1.93",
-        "target": "3.40",
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "0.42",
-        "volumeReliable": true,
-        "details": {
-          "price": 2.35,
-          "vwap": 2.3901279120317227,
-          "rsi": "46.3",
-          "macdHist": "0.012",
-          "volume": 39485071,
-          "volSMA": 15793941,
-          "hvn": "5.91",
-          "atrPct": 46
-        }
-      },
-      "weekly": {
-        "score": 1,
-        "trend": "Bearish, improving",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.11320754716981125,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.12035222124538478,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 7.4,
-        "price": 2.35,
-        "pctFromHigh": -0.6824324324324325,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": -0.6226950354609929,
-        "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
         "above200": false,
         "stacked": false,
         "sma200Rising": false,
@@ -858,12 +652,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "6.072"
+            "detail": "7.765"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "2,188,809"
+            "detail": "2,123,409"
           },
           {
             "name": "Higher Low",
@@ -873,13 +667,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "22pct"
+            "detail": "16pct"
           }
         ],
         "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
         "divergence": true,
         "atr": {
-          "percentile": 22,
+          "percentile": 16,
           "compressed": true,
           "expanded": false
         },
@@ -888,20 +682,20 @@
           "prevPrice": 864.12,
           "confirmed": false
         },
-        "stop": "858.68",
-        "target": "1017.95",
+        "stop": "858.91",
+        "target": "1057.69",
         "rewardMultiplier": 2,
-        "riskPerShare": "53.09",
+        "riskPerShare": "66.26",
         "volumeReliable": true,
         "details": {
-          "price": 911.77002,
-          "vwap": 891.929301923407,
-          "rsi": "50.2",
-          "macdHist": "6.072",
-          "volume": 1850185,
-          "volSMA": 2188809,
+          "price": 925.16998,
+          "vwap": 892.6526479949872,
+          "rsi": "54.1",
+          "macdHist": "7.765",
+          "volume": 1897281,
+          "volSMA": 2123409,
           "hvn": "940.98",
-          "atrPct": 22
+          "atrPct": 16
         }
       },
       "weekly": {
@@ -910,21 +704,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.004878601729662541,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.012023275805236058,
-        "outperforming": false,
+        "tickerReturn": 0.027555633608285914,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.014862715679539406,
+        "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 1153.98999,
-        "price": 911.77002,
-        "pctFromHigh": -0.20989780855898063,
+        "price": 925.16998,
+        "pctFromHigh": -0.19828595740245547,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.1689034418533449,
+        "return12m1": 0.15981215154384423,
         "positive": true,
         "insufficient": false
       },
@@ -961,17 +755,17 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "0.797"
+            "detail": "1.057"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "6,416,080"
+            "detail": "6,045,398"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$326.40"
+            "detail": "$330.40"
           },
           {
             "name": "ATR Expanded",
@@ -987,22 +781,22 @@
           "expanded": false
         },
         "higherLow": {
-          "price": 326.39999,
-          "prevPrice": 325.070007,
+          "price": 330.39999,
+          "prevPrice": 326.39999,
           "confirmed": true
         },
-        "stop": "323.38",
-        "target": "360.61",
+        "stop": "327.39",
+        "target": "363.12",
         "rewardMultiplier": 2,
-        "riskPerShare": "12.41",
+        "riskPerShare": "11.91",
         "volumeReliable": true,
         "details": {
-          "price": 335.79001,
-          "vwap": 333.7604313440889,
-          "rsi": "47.8",
-          "macdHist": "0.797",
-          "volume": 4584920,
-          "volSMA": 6416080,
+          "price": 339.29999,
+          "vwap": 334.00956571635294,
+          "rsi": "52.8",
+          "macdHist": "1.057",
+          "volume": 5224381,
+          "volSMA": 6045398,
           "hvn": "307.51",
           "atrPct": 30
         }
@@ -1013,21 +807,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": 0.0024180547370573017,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.004726619338516216,
-        "outperforming": false,
+        "tickerReturn": 0.025602273844641383,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.012909355915894875,
+        "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 366.5,
-        "price": 335.79001,
-        "pctFromHigh": -0.08379260572987723,
+        "price": 339.29999,
+        "pctFromHigh": -0.07421557980900415,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.12032352549593922,
+        "return12m1": 0.10136452741622641,
         "positive": true,
         "insufficient": false
       },
@@ -1059,17 +853,17 @@
           {
             "name": "RSI Momentum",
             "on": true,
-            "detail": "Oversold bounce"
+            "detail": "Divergence"
           },
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-0.172"
+            "detail": "-0.104"
           },
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "35,798,289"
+            "detail": "35,734,722"
           },
           {
             "name": "Higher Low",
@@ -1083,7 +877,7 @@
           }
         ],
         "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
-        "divergence": false,
+        "divergence": true,
         "atr": {
           "percentile": 0,
           "compressed": true,
@@ -1094,18 +888,18 @@
           "prevPrice": 9.99,
           "confirmed": true
         },
-        "stop": "10.09",
+        "stop": "10.11",
         "target": null,
         "rewardMultiplier": 2.5,
-        "riskPerShare": "-3.00",
+        "riskPerShare": "-2.76",
         "volumeReliable": true,
         "details": {
-          "price": 7.09,
-          "vwap": 9.052706989649797,
-          "rsi": "27.4",
-          "macdHist": "-0.172",
-          "volume": 37204401,
-          "volSMA": 35798289,
+          "price": 7.35,
+          "vwap": 8.796734616241434,
+          "rsi": "31.3",
+          "macdHist": "-0.104",
+          "volume": 40762599,
+          "volSMA": 35734722,
           "hvn": "11.25",
           "atrPct": 0
         }
@@ -1116,21 +910,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.40867389491242706,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.41581856898800057,
+        "tickerReturn": -0.3512797881729921,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.3639727061017386,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 20.47,
-        "price": 7.09,
-        "pctFromHigh": -0.6536394723986322,
+        "high52w": 20.29,
+        "price": 7.35,
+        "pctFromHigh": -0.637752587481518,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.38024564994882293,
+        "return12m1": -0.3870143149284253,
         "positive": false,
         "insufficient": false
       },
@@ -1145,112 +939,9 @@
       }
     },
     {
-      "ticker": "MELI",
+      "ticker": "MU",
       "cfg": {
-        "name": "Speculative"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 4,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": false,
-            "detail": "-16.242"
-          },
-          {
-            "name": "Volume > 1×SMA",
-            "on": true,
-            "detail": "676,688"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$1810.32"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": true,
-            "detail": "80pct"
-          }
-        ],
-        "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
-        "divergence": false,
-        "atr": {
-          "percentile": 80,
-          "compressed": false,
-          "expanded": true
-        },
-        "higherLow": {
-          "price": 1810.31995,
-          "prevPrice": 1668.43994,
-          "confirmed": true
-        },
-        "stop": "1744.20",
-        "target": null,
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "-63.69",
-        "volumeReliable": true,
-        "details": {
-          "price": 1680.51001,
-          "vwap": 1772.9435390881047,
-          "rsi": "34.2",
-          "macdHist": "-16.242",
-          "volume": 861995,
-          "volSMA": 676688,
-          "hvn": "1837.39",
-          "atrPct": 80
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.02573483070630382,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.03287950478187734,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 2428,
-        "price": 1680.51001,
-        "pctFromHigh": -0.3078624341021417,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": -0.20762481186115966,
-        "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
-        "sma200Rising": false,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "PLTR",
-      "cfg": {
-        "name": "Speculative"
+        "name": "Stable"
       },
       "autoClassified": false,
       "daily": {
@@ -1264,79 +955,75 @@
           },
           {
             "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
+            "on": true,
+            "detail": "Divergence"
           },
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-0.964"
+            "detail": "-0.810"
           },
           {
-            "name": "Volume > 1×SMA",
-            "on": false,
-            "detail": "21,635,321"
+            "name": "Volume > 1.1×SMA",
+            "on": true,
+            "detail": "25,244,357"
           },
           {
             "name": "Higher Low",
-            "on": true,
-            "detail": "$190.57 (early)"
+            "on": false,
+            "detail": "None"
           },
           {
             "name": "ATR Expanded",
-            "on": true,
-            "detail": "72pct"
+            "on": false,
+            "detail": "24pct"
           }
         ],
         "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
-        "divergence": false,
+        "divergence": true,
         "atr": {
-          "percentile": 72,
-          "compressed": false,
-          "expanded": true
+          "percentile": 24,
+          "compressed": true,
+          "expanded": false
         },
-        "higherLow": {
-          "price": 190.57001,
-          "prevPrice": 184.45,
-          "confirmed": false
-        },
-        "stop": "182.73",
-        "target": "238.73",
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "16.00",
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2,
+        "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 198.73,
-          "vwap": 197.30497022333338,
-          "rsi": "56.0",
-          "macdHist": "-0.964",
-          "volume": 19170693,
-          "volSMA": 21635321,
-          "hvn": "178.30",
-          "atrPct": 72
+          "price": 983.22998,
+          "vwap": 969.567615328575,
+          "rsi": "53.2",
+          "macdHist": "-0.810",
+          "volume": 30135209,
+          "volSMA": 25244357,
+          "hvn": "427.38",
+          "atrPct": 24
         }
       },
       "weekly": {
         "score": 1,
-        "trend": "Cautiously bullish",
-        "bullish": true
+        "trend": "Bearish, improving",
+        "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": 0.06289779108947954,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.05575311701390603,
-        "outperforming": true,
+        "tickerReturn": -0.07687469910971352,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.08956761703846003,
+        "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 212.94,
-        "price": 198.73,
-        "pctFromHigh": -0.06673241288625908,
-        "nearHigh": true,
+        "high52w": 1255,
+        "price": 983.22998,
+        "pctFromHigh": -0.21654981673306775,
+        "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.015436277961328031,
+        "return12m1": 3.8390727288017845,
         "positive": true,
         "insufficient": false
       },
@@ -1373,12 +1060,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-3.263"
+            "detail": "-2.027"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "41,659,419"
+            "detail": "39,433,883"
           },
           {
             "name": "Higher Low",
@@ -1388,13 +1075,13 @@
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "86pct"
+            "detail": "80pct"
           }
         ],
         "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
         "divergence": true,
         "atr": {
-          "percentile": 86,
+          "percentile": 80,
           "compressed": false,
           "expanded": true
         },
@@ -1405,54 +1092,54 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 721.25,
-          "vwap": 730.4585775839191,
-          "rsi": "47.2",
-          "macdHist": "-3.263",
-          "volume": 30099074,
-          "volSMA": 41659419,
+          "price": 725.60999,
+          "vwap": 729.7409169916027,
+          "rsi": "49.6",
+          "macdHist": "-2.027",
+          "volume": 28955146,
+          "volSMA": 39433883,
           "hvn": "602.23",
-          "atrPct": 86
+          "atrPct": 80
         }
       },
       "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
+        "score": 2,
+        "trend": "Bullish",
+        "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": -0.022603756760177177,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.029748430835750697,
+        "tickerReturn": -0.019141124426750904,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.031834042355497416,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 762.85999,
-        "price": 721.25,
-        "pctFromHigh": -0.05454472713924876,
+        "price": 725.60999,
+        "pctFromHigh": -0.048829405773397554,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.19353436824635373,
+        "return12m1": 0.17487932983849147,
         "positive": true,
         "insufficient": false
       },
       "trend": {
-        "above50": false,
+        "above50": true,
         "above150": true,
         "above200": true,
         "stacked": true,
         "sma200Rising": true,
-        "passes": false,
+        "passes": true,
         "insufficient": false
       }
     },
     {
-      "ticker": "RKLB",
+      "ticker": "SPY",
       "cfg": {
-        "name": "Speculative"
+        "name": "Stable"
       },
       "autoClassified": false,
       "daily": {
@@ -1461,101 +1148,97 @@
         "conditions": [
           {
             "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
+            "on": true,
+            "detail": "Above"
           },
           {
             "name": "RSI Momentum",
             "on": true,
-            "detail": "Oversold bounce"
+            "detail": "Rising 45-70"
           },
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-0.472"
+            "detail": "-0.469"
           },
           {
-            "name": "Volume > 1×SMA",
-            "on": true,
-            "detail": "20,942,758"
+            "name": "Volume > 1.1×SMA",
+            "on": false,
+            "detail": "38,666,736"
           },
           {
             "name": "Higher Low",
-            "on": true,
-            "detail": "$49.52 (early)"
+            "on": false,
+            "detail": "None"
           },
           {
             "name": "ATR Expanded",
-            "on": false,
-            "detail": "46pct"
+            "on": true,
+            "detail": "76pct"
           }
         ],
         "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
         "divergence": false,
         "atr": {
-          "percentile": 46,
+          "percentile": 76,
           "compressed": false,
-          "expanded": false
+          "expanded": true
         },
-        "higherLow": {
-          "price": 49.522,
-          "prevPrice": 49.25,
-          "confirmed": false
-        },
-        "stop": "45.49",
-        "target": "90.36",
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "12.82",
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2,
+        "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 58.31,
-          "vwap": 62.29570361762301,
-          "rsi": "45.1",
-          "macdHist": "-0.472",
-          "volume": 21203618,
-          "volSMA": 20942758,
-          "hvn": "68.76",
-          "atrPct": 46
+          "price": 772.31,
+          "vwap": 769.9337273783801,
+          "rsi": "53.3",
+          "macdHist": "-0.469",
+          "volume": 30033924,
+          "volSMA": 38666736,
+          "hvn": "686.41",
+          "atrPct": 76
         }
       },
       "weekly": {
-        "score": 1,
-        "trend": "Bearish, improving",
-        "bullish": false
+        "score": 2,
+        "trend": "Bullish",
+        "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": -0.16341463414634147,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.17055930822191498,
+        "tickerReturn": 0.012692917928746508,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 151,
-        "price": 58.31,
-        "pctFromHigh": -0.613841059602649,
-        "nearHigh": false,
+        "high52w": 781.62,
+        "price": 772.31,
+        "pctFromHigh": -0.011911158875156801,
+        "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.1181846344485749,
+        "return12m1": 0.11522973141132639,
         "positive": true,
         "insufficient": false
       },
       "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
-        "sma200Rising": false,
-        "passes": false,
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": true,
+        "sma200Rising": true,
+        "passes": true,
         "insufficient": false
       }
     },
     {
-      "ticker": "XOM",
+      "ticker": "TSLA",
       "cfg": {
-        "name": "Stable"
+        "name": "Speculative"
       },
       "autoClassified": false,
       "daily": {
@@ -1574,291 +1257,84 @@
           },
           {
             "name": "MACD Momentum",
-            "on": false,
-            "detail": "0.712"
+            "on": true,
+            "detail": "3.238"
           },
           {
-            "name": "Volume > 1.1×SMA",
-            "on": true,
-            "detail": "12,032,202"
+            "name": "Volume > 1×SMA",
+            "on": false,
+            "detail": "44,640,236"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$174.63"
+            "detail": "$349.33"
           },
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "96pct"
+            "detail": "76pct"
           }
         ],
         "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
         "divergence": false,
         "atr": {
-          "percentile": 96,
+          "percentile": 76,
           "compressed": false,
           "expanded": true
         },
         "higherLow": {
-          "price": 174.63,
-          "prevPrice": 159.27,
+          "price": 349.32999,
+          "prevPrice": 345.88,
           "confirmed": true
         },
-        "stop": "172.67",
-        "target": "194.39",
-        "rewardMultiplier": 2,
-        "riskPerShare": "7.24",
+        "stop": "335.62",
+        "target": "575.72",
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "68.60",
         "volumeReliable": true,
         "details": {
-          "price": 179.91,
-          "vwap": 172.88903089368992,
-          "rsi": "64.5",
-          "macdHist": "0.712",
-          "volume": 14020214,
-          "volSMA": 12032202,
-          "hvn": "115.99",
-          "atrPct": 96
+          "price": 404.22,
+          "vwap": 376.6020902436792,
+          "rsi": "63.6",
+          "macdHist": "3.238",
+          "volume": 35080523,
+          "volSMA": 44640236,
+          "hvn": "433.36",
+          "atrPct": 76
         }
       },
       "weekly": {
-        "score": 1,
-        "trend": "Cautiously bullish",
+        "score": 2,
+        "trend": "Bullish",
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.11502937000127858,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.10788469592570506,
+        "tickerReturn": 0.13925763084467752,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.12656471291593102,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 184.88,
-        "price": 179.91,
-        "pctFromHigh": -0.026882302033751616,
-        "nearHigh": true,
+        "high52w": 498.82999,
+        "price": 404.22,
+        "pctFromHigh": -0.18966379707843944,
+        "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.408440939422827,
-        "positive": true,
+        "return12m1": -0.22010522920946848,
+        "positive": false,
         "insufficient": false
       },
       "trend": {
         "above50": true,
-        "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": true,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "BTC/USD",
-      "cfg": {
-        "name": "Speculative"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 3,
-        "maxScore": 5,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": true,
-            "detail": "Above"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "-261.901"
-          },
-          {
-            "name": "Volume (unavailable)",
-            "on": false,
-            "excluded": true,
-            "detail": "Feed has no reliable volume for this symbol"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$79368.67 (early)"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "0pct"
-          }
-        ],
-        "action": "Building — plan entry. Momentum aligning above VWAP. Watch for ATR expansion.",
-        "divergence": false,
-        "atr": {
-          "percentile": 0,
-          "compressed": true,
-          "expanded": false
-        },
-        "higherLow": {
-          "price": 79368.67,
-          "prevPrice": 79220.74,
-          "confirmed": false
-        },
-        "stop": "77491.19",
-        "target": "89121.06",
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "3322.82",
-        "volumeReliable": false,
-        "details": {
-          "price": 80814.01,
-          "vwap": 80810.28666666667,
-          "rsi": "45.1",
-          "macdHist": "-261.901",
-          "volume": 0,
-          "volSMA": "-",
-          "hvn": "58803.30",
-          "atrPct": 0
-        }
-      },
-      "weekly": {
-        "score": 1,
-        "trend": "Cautiously bullish",
-        "bullish": true
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.011503227041463827,
-        "spyReturn": -0.005517320759207084,
-        "excessReturn": -0.005985906282256742,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 87395.67,
-        "price": 80814.01,
-        "pctFromHigh": -0.07530876529695354,
-        "nearHigh": true,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 0.2536947984532282,
-        "positive": true,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
         "above150": true,
         "above200": true,
         "stacked": false,
-        "sma200Rising": true,
+        "sma200Rising": false,
         "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "AAPL",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 3,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": true,
-            "detail": "Above"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "0.096"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "41,554,039"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$338.70"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "0pct"
-          }
-        ],
-        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
-        "divergence": false,
-        "atr": {
-          "percentile": 0,
-          "compressed": true,
-          "expanded": false
-        },
-        "higherLow": {
-          "price": 338.70001,
-          "prevPrice": 325.81,
-          "confirmed": true
-        },
-        "stop": "335.52",
-        "target": "370.26",
-        "rewardMultiplier": 2,
-        "riskPerShare": "11.58",
-        "volumeReliable": true,
-        "details": {
-          "price": 347.10001,
-          "vwap": 340.3651466934571,
-          "rsi": "61.1",
-          "macdHist": "0.096",
-          "volume": 39051747,
-          "volSMA": 41554039,
-          "hvn": "271.76",
-          "atrPct": 0
-        }
-      },
-      "weekly": {
-        "score": 1,
-        "trend": "Cautiously bullish",
-        "bullish": true
-      },
-      "relativeStrength": {
-        "tickerReturn": 0.05373412427851013,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.046589450202936616,
-        "outperforming": true,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 351.73001,
-        "price": 347.10001,
-        "pctFromHigh": -0.01316350572417746,
-        "nearHigh": true,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 0.28757315700581537,
-        "positive": true,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": true,
-        "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": true,
         "insufficient": false
       }
     },
@@ -1874,8 +1350,8 @@
         "conditions": [
           {
             "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
+            "on": true,
+            "detail": "Above"
           },
           {
             "name": "RSI Momentum",
@@ -1885,12 +1361,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-8.316"
+            "detail": "-4.399"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "20,585,057"
+            "detail": "19,455,582"
           },
           {
             "name": "Higher Low",
@@ -1899,16 +1375,16 @@
           },
           {
             "name": "ATR Expanded",
-            "on": true,
-            "detail": "80pct"
+            "on": false,
+            "detail": "70pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 80,
+          "percentile": 70,
           "compressed": false,
-          "expanded": true
+          "expanded": false
         },
         "higherLow": null,
         "stop": null,
@@ -1917,37 +1393,37 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 560.26001,
-          "vwap": 578.6837671715808,
-          "rsi": "49.8",
-          "macdHist": "-8.316",
-          "volume": 20488014,
-          "volSMA": 20585057,
+          "price": 578.44,
+          "vwap": 577.0905652892827,
+          "rsi": "53.6",
+          "macdHist": "-4.399",
+          "volume": 18557439,
+          "volSMA": 19455582,
           "hvn": "212.88",
-          "atrPct": 80
+          "atrPct": 70
         }
       },
       "weekly": {
-        "score": 1,
-        "trend": "Cautiously bullish",
+        "score": 2,
+        "trend": "Bullish",
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": -0.07786756953326261,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.08501224360883614,
+        "tickerReturn": -0.054465819039070426,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.06715873696781693,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 658.52002,
-        "price": 560.26001,
-        "pctFromHigh": -0.1492133982502158,
+        "price": 578.44,
+        "pctFromHigh": -0.12160605231105956,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 1.4034081923137753,
+        "return12m1": 1.3397773581939634,
         "positive": true,
         "insufficient": false
       },
@@ -1983,51 +1459,47 @@
           },
           {
             "name": "MACD Momentum",
-            "on": false,
-            "detail": "-0.651"
+            "on": true,
+            "detail": "-0.466"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "37,597,485"
+            "detail": "37,566,527"
           },
           {
             "name": "Higher Low",
-            "on": true,
-            "detail": "$248.60"
+            "on": false,
+            "detail": "None"
           },
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "58pct"
+            "detail": "46pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 57.99999999999999,
+          "percentile": 46,
           "compressed": false,
           "expanded": false
         },
-        "higherLow": {
-          "price": 248.60001,
-          "prevPrice": 244.73,
-          "confirmed": true
-        },
-        "stop": "245.40",
-        "target": "268.50",
+        "higherLow": null,
+        "stop": null,
+        "target": null,
         "rewardMultiplier": 2,
-        "riskPerShare": "7.70",
+        "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 253.10001,
-          "vwap": 254.87851325322686,
-          "rsi": "48.6",
-          "macdHist": "-0.651",
-          "volume": 33975762,
-          "volSMA": 37597485,
+          "price": 254.60001,
+          "vwap": 255.16821351298412,
+          "rsi": "50.1",
+          "macdHist": "-0.466",
+          "volume": 33783543,
+          "volSMA": 37566527,
           "hvn": "230.20",
-          "atrPct": 58
+          "atrPct": 46
         }
       },
       "weekly": {
@@ -2036,21 +1508,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": 0.02606725584789399,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.018922581772320472,
+        "tickerReturn": 0.02187445401864152,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.009181536089895012,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 287.20001,
-        "price": 253.10001,
-        "pctFromHigh": -0.118732586395105,
+        "price": 254.60001,
+        "pctFromHigh": -0.11350974535133206,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.09785459623323682,
+        "return12m1": 0.08679561175485742,
         "positive": true,
         "insufficient": false
       },
@@ -2087,12 +1559,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-2.282"
+            "detail": "-1.397"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "6,606,439"
+            "detail": "6,015,167"
           },
           {
             "name": "Higher Low",
@@ -2102,13 +1574,13 @@
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "80pct"
+            "detail": "76pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": true,
         "atr": {
-          "percentile": 80,
+          "percentile": 76,
           "compressed": false,
           "expanded": true
         },
@@ -2119,14 +1591,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 187,
-          "vwap": 193.4852265333411,
-          "rsi": "46.5",
-          "macdHist": "-2.282",
-          "volume": 5647650,
-          "volSMA": 6606439,
+          "price": 186.72,
+          "vwap": 192.74470639109697,
+          "rsi": "46.3",
+          "macdHist": "-1.397",
+          "volume": 4994807,
+          "volSMA": 6015167,
           "hvn": "142.81",
-          "atrPct": 80
+          "atrPct": 76
         }
       },
       "weekly": {
@@ -2135,130 +1607,27 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.07818199743665588,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.0853266715122294,
+        "tickerReturn": -0.08286261604204531,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.09555553397079182,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 217.41,
-        "price": 187,
-        "pctFromHigh": -0.1398739708385079,
+        "price": 186.72,
+        "pctFromHigh": -0.14116186008003312,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.33220638849262846,
+        "return12m1": 0.29366749569542766,
         "positive": true,
         "insufficient": false
       },
       "trend": {
         "above50": false,
         "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "ASML",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 3,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "-13.765"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "1,518,306"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$1594.03"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "42pct"
-          }
-        ],
-        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
-        "divergence": false,
-        "atr": {
-          "percentile": 42,
-          "compressed": false,
-          "expanded": false
-        },
-        "higherLow": {
-          "price": 1594.030029,
-          "prevPrice": 1572.83997,
-          "confirmed": true
-        },
-        "stop": "1566.69",
-        "target": "1773.33",
-        "rewardMultiplier": 2,
-        "riskPerShare": "68.88",
-        "volumeReliable": true,
-        "details": {
-          "price": 1635.56995,
-          "vwap": 1711.7724787521302,
-          "rsi": "44.0",
-          "macdHist": "-13.765",
-          "volume": 1328652,
-          "volSMA": 1518306,
-          "hvn": "1775.30",
-          "atrPct": 42
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.10838483578527557,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.11552950986084909,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 1999.95996,
-        "price": 1635.56995,
-        "pctFromHigh": -0.18219865261702534,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 0.714654990951234,
-        "positive": true,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
         "above200": true,
         "stacked": true,
         "sma200Rising": true,
@@ -2278,6 +1647,105 @@
         "conditions": [
           {
             "name": "VWAP Bias",
+            "on": true,
+            "detail": "Above"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Oversold bounce"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "0.476"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": false,
+            "detail": "21,198,111"
+          },
+          {
+            "name": "Higher Low",
+            "on": false,
+            "detail": "None"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "36pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 36,
+          "compressed": false,
+          "expanded": false
+        },
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2,
+        "riskPerShare": null,
+        "volumeReliable": true,
+        "details": {
+          "price": 351.81,
+          "vwap": 347.4738799969057,
+          "rsi": "52.6",
+          "macdHist": "0.476",
+          "volume": 22140399,
+          "volSMA": 21198111,
+          "hvn": "340.48",
+          "atrPct": 36
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Bearish, improving",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": 0.0017654261226117047,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.010927491806134804,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 495,
+        "price": 351.81,
+        "pctFromHigh": -0.2892727272727273,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.019196183483922633,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": false,
+        "stacked": false,
+        "sma200Rising": true,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "BABA",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
             "on": false,
             "detail": "Below"
           },
@@ -2289,12 +1757,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-1.099"
+            "detail": "-0.764"
           },
           {
-            "name": "Volume > 1.1×SMA",
+            "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "21,890,197"
+            "detail": "8,248,342"
           },
           {
             "name": "Higher Low",
@@ -2304,13 +1772,112 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "44pct"
+            "detail": "0pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 44,
+          "percentile": 0,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2.5,
+        "riskPerShare": null,
+        "volumeReliable": true,
+        "details": {
+          "price": 100.96,
+          "vwap": 106.59567492586675,
+          "rsi": "34.1",
+          "macdHist": "-0.764",
+          "volume": 8387181,
+          "volSMA": 8248342,
+          "hvn": "164.98",
+          "atrPct": 0
+        }
+      },
+      "weekly": {
+        "score": 0,
+        "trend": "Bearish",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.061186535242700506,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.07387945317144701,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 182.5,
+        "price": 100.96,
+        "pctFromHigh": -0.4467945205479452,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.39960991919754807,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": false,
+        "stacked": false,
+        "sma200Rising": false,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "CAT",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Oversold bounce"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-4.928"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": true,
+            "detail": "2,736,742"
+          },
+          {
+            "name": "Higher Low",
+            "on": false,
+            "detail": "None"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "40pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 40,
           "compressed": false,
           "expanded": false
         },
@@ -2321,14 +1888,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 342.32999,
-          "vwap": 347.6397457272984,
-          "rsi": "47.7",
-          "macdHist": "-1.099",
-          "volume": 25480570,
-          "volSMA": 21890197,
-          "hvn": "340.48",
-          "atrPct": 44
+          "price": 713.38,
+          "vwap": 759.3979964251774,
+          "rsi": "36.3",
+          "macdHist": "-4.928",
+          "volume": 3414875,
+          "volSMA": 2736742,
+          "hvn": "891.15",
+          "atrPct": 40
         }
       },
       "weekly": {
@@ -2337,22 +1904,22 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.03596175623875648,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.043106430314329994,
+        "tickerReturn": -0.12014206194309408,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.1328349798718406,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 495,
-        "price": 342.32999,
-        "pctFromHigh": -0.3084242626262626,
+        "high52w": 1073.45996,
+        "price": 713.38,
+        "pctFromHigh": -0.3354386501756432,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.012876598989071727,
-        "positive": false,
+        "return12m1": 0.568368526042879,
+        "positive": true,
         "insufficient": false
       },
       "trend": {
@@ -2362,6 +1929,208 @@
         "stacked": false,
         "sma200Rising": true,
         "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "CDNS",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": true,
+            "detail": "Above"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-0.221"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": false,
+            "detail": "2,817,554"
+          },
+          {
+            "name": "Higher Low",
+            "on": false,
+            "detail": "None"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": true,
+            "detail": "98pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 98,
+          "compressed": false,
+          "expanded": true
+        },
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2,
+        "riskPerShare": null,
+        "volumeReliable": true,
+        "details": {
+          "price": 342.45999,
+          "vwap": 334.76787581809924,
+          "rsi": "57.7",
+          "macdHist": "-0.221",
+          "volume": 2723589,
+          "volSMA": 2817554,
+          "hvn": "328.17",
+          "atrPct": 98
+        }
+      },
+      "weekly": {
+        "score": 2,
+        "trend": "Bullish",
+        "bullish": true
+      },
+      "relativeStrength": {
+        "tickerReturn": 0.03716039250128716,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.02446747457254065,
+        "outperforming": true,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 416.69,
+        "price": 342.45999,
+        "pctFromHigh": -0.17814204804530945,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.07748998513061998,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": false,
+        "sma200Rising": true,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "CRWD",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": true,
+            "detail": "Above"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "0.730"
+          },
+          {
+            "name": "Volume > 1×SMA",
+            "on": false,
+            "detail": "9,589,490"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$234.79 (early)"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "62pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 62,
+          "compressed": false,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 234.78799,
+          "prevPrice": 221.36,
+          "confirmed": false
+        },
+        "stop": "222.49",
+        "target": "377.09",
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "44.17",
+        "volumeReliable": true,
+        "details": {
+          "price": 266.66,
+          "vwap": 254.04214369621246,
+          "rsi": "59.5",
+          "macdHist": "0.730",
+          "volume": 7415713,
+          "volSMA": 9589490,
+          "hvn": "110.84",
+          "atrPct": 62
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Cautiously bullish",
+        "bullish": true
+      },
+      "relativeStrength": {
+        "tickerReturn": 0.007214353163361756,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.005478564765384752,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 286.98999,
+        "price": 266.66,
+        "pctFromHigh": -0.07083867280527782,
+        "nearHigh": true,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": 0.9840663771946382,
+        "positive": true,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": true,
+        "sma200Rising": true,
+        "passes": true,
         "insufficient": false
       }
     },
@@ -2388,73 +2157,73 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "1.169"
+            "detail": "0.865"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "7,740,748"
+            "detail": "7,657,183"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$222.86 (early)"
+            "detail": "$227.63 (early)"
           },
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "94pct"
+            "detail": "86pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 94,
+          "percentile": 86,
           "compressed": false,
           "expanded": true
         },
         "higherLow": {
-          "price": 222.86,
-          "prevPrice": 221.56,
+          "price": 227.63,
+          "prevPrice": 222.86,
           "confirmed": false
         },
-        "stop": "220.52",
-        "target": "243.65",
+        "stop": "225.33",
+        "target": "236.94",
         "rewardMultiplier": 2,
-        "riskPerShare": "7.71",
+        "riskPerShare": "3.87",
         "volumeReliable": true,
         "details": {
-          "price": 228.23,
-          "vwap": 218.38501572981815,
-          "rsi": "66.0",
-          "macdHist": "1.169",
-          "volume": 6431130,
-          "volSMA": 7740748,
+          "price": 229.2,
+          "vwap": 219.46299242832447,
+          "rsi": "67.0",
+          "macdHist": "0.865",
+          "volume": 6345447,
+          "volSMA": 7657183,
           "hvn": "188.10",
-          "atrPct": 94
+          "atrPct": 86
         }
       },
       "weekly": {
-        "score": 1,
-        "trend": "Cautiously bullish",
+        "score": 2,
+        "trend": "Bullish",
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.1166943927977297,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.10954971872215617,
+        "tickerReturn": 0.12237397177542852,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.10968105384668202,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 234.080002,
-        "price": 228.23,
-        "pctFromHigh": -0.024991464243066853,
+        "price": 229.2,
+        "pctFromHigh": -0.020847581845116436,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.3266263821033685,
+        "return12m1": 0.3162029881504379,
         "positive": true,
         "insufficient": false
       },
@@ -2465,6 +2234,105 @@
         "stacked": true,
         "sma200Rising": true,
         "passes": true,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "GOOGL",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Oversold bounce"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-2.859"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": true,
+            "detail": "27,542,993"
+          },
+          {
+            "name": "Higher Low",
+            "on": false,
+            "detail": "None"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "4pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 4,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2,
+        "riskPerShare": null,
+        "volumeReliable": true,
+        "details": {
+          "price": 324.89001,
+          "vwap": 339.0765648782395,
+          "rsi": "38.7",
+          "macdHist": "-2.859",
+          "volume": 54011739,
+          "volSMA": 27542993,
+          "hvn": "318.51",
+          "atrPct": 4
+        }
+      },
+      "weekly": {
+        "score": 0,
+        "trend": "Bearish",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.05577184877073364,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.06846476669948015,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 408.60999,
+        "price": 324.89001,
+        "pctFromHigh": -0.20488970423850864,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": 0.2660898825004598,
+        "positive": true,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": false,
+        "stacked": false,
+        "sma200Rising": true,
+        "passes": false,
         "insufficient": false
       }
     },
@@ -2491,50 +2359,50 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "0.039"
+            "detail": "0.046"
           },
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "11,207,774"
+            "detail": "11,079,507"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$3.16 (early)"
+            "detail": "$3.23 (early)"
           },
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "16pct"
+            "detail": "10pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 16,
+          "percentile": 10,
           "compressed": true,
           "expanded": false
         },
         "higherLow": {
-          "price": 3.16,
-          "prevPrice": 2.85,
+          "price": 3.23,
+          "prevPrice": 3.16,
           "confirmed": false
         },
-        "stop": "2.89",
-        "target": "4.36",
+        "stop": "2.96",
+        "target": "4.54",
         "rewardMultiplier": 2.5,
-        "riskPerShare": "0.42",
+        "riskPerShare": "0.45",
         "volumeReliable": true,
         "details": {
-          "price": 3.31,
-          "vwap": 3.5565554192791433,
-          "rsi": "37.7",
-          "macdHist": "0.039",
-          "volume": 10841262,
-          "volSMA": 11207774,
+          "price": 3.41,
+          "vwap": 3.527699600663314,
+          "rsi": "41.1",
+          "macdHist": "0.046",
+          "volume": 8483565,
+          "volSMA": 11079507,
           "hvn": "6.37",
-          "atrPct": 16
+          "atrPct": 10
         }
       },
       "weekly": {
@@ -2543,21 +2411,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.18673218673218678,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.1938768608077603,
+        "tickerReturn": -0.1621621621621622,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.17485508009090872,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 19.475,
-        "price": 3.31,
-        "pctFromHigh": -0.830038510911425,
+        "price": 3.41,
+        "pctFromHigh": -0.8249037227214377,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.788961038961039,
+        "return12m1": -0.7751381215469614,
         "positive": false,
         "insufficient": false
       },
@@ -2568,109 +2436,6 @@
         "stacked": false,
         "sma200Rising": false,
         "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "MRNA",
-      "cfg": {
-        "name": "Speculative"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 3,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": true,
-            "detail": "Near & rising"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": false,
-            "detail": "-4.978"
-          },
-          {
-            "name": "Volume > 1×SMA",
-            "on": false,
-            "detail": "21,840,015"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$182.50"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": true,
-            "detail": "98pct"
-          }
-        ],
-        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
-        "divergence": false,
-        "atr": {
-          "percentile": 98,
-          "compressed": false,
-          "expanded": true
-        },
-        "higherLow": {
-          "price": 182.5,
-          "prevPrice": 130.38,
-          "confirmed": true
-        },
-        "stop": "160.60",
-        "target": "326.39",
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "47.37",
-        "volumeReliable": true,
-        "details": {
-          "price": 207.97,
-          "vwap": 208.64973909324388,
-          "rsi": "52.9",
-          "macdHist": "-4.978",
-          "volume": 17563333,
-          "volSMA": 21840015,
-          "hvn": "28.09",
-          "atrPct": 98
-        }
-      },
-      "weekly": {
-        "score": 1,
-        "trend": "Cautiously bullish",
-        "bullish": true
-      },
-      "relativeStrength": {
-        "tickerReturn": 0.022166468978351016,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.015021794902777498,
-        "outperforming": true,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 254.48,
-        "price": 207.97,
-        "pctFromHigh": -0.18276485381955357,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 6.377711293941661,
-        "positive": true,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": true,
-        "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": true,
         "insufficient": false
       }
     },
@@ -2697,50 +2462,46 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-1.862"
+            "detail": "-1.779"
           },
           {
             "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "18,765,189"
+            "on": true,
+            "detail": "18,886,294"
           },
           {
             "name": "Higher Low",
-            "on": true,
-            "detail": "$524.43"
+            "on": false,
+            "detail": "None"
           },
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "16pct"
+            "detail": "6pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 16,
+          "percentile": 6,
           "compressed": true,
           "expanded": false
         },
-        "higherLow": {
-          "price": 524.42999,
-          "prevPrice": 518.78998,
-          "confirmed": true
-        },
-        "stop": "518.96",
-        "target": "556.07",
+        "higherLow": null,
+        "stop": null,
+        "target": null,
         "rewardMultiplier": 2,
-        "riskPerShare": "12.37",
+        "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 531.33002,
-          "vwap": 529.3843984597728,
-          "rsi": "56.3",
-          "macdHist": "-1.862",
-          "volume": 19419705,
-          "volSMA": 18765189,
+          "price": 531.01001,
+          "vwap": 530.4846710044478,
+          "rsi": "56.1",
+          "macdHist": "-1.779",
+          "volume": 25128542,
+          "volSMA": 18886294,
           "hvn": "395.22",
-          "atrPct": 16
+          "atrPct": 6
         }
       },
       "weekly": {
@@ -2749,21 +2510,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.04395243327476485,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.03680775919919133,
+        "tickerReturn": 0.03530900622698343,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.02261608829823692,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 553.71997,
-        "price": 531.33002,
-        "pctFromHigh": -0.04043551111223242,
+        "price": 531.01001,
+        "pctFromHigh": -0.0410134386159127,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.02748226786123773,
+        "return12m1": -0.0424443655010399,
         "positive": false,
         "insufficient": false
       },
@@ -2778,7 +2539,7 @@
       }
     },
     {
-      "ticker": "NVDA",
+      "ticker": "NOW",
       "cfg": {
         "name": "Stable"
       },
@@ -2789,195 +2550,92 @@
         "conditions": [
           {
             "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
+            "on": true,
+            "detail": "Above"
           },
           {
             "name": "RSI Momentum",
-            "on": true,
-            "detail": "Divergence"
+            "on": false,
+            "detail": "Weak"
           },
           {
             "name": "MACD Momentum",
-            "on": true,
-            "detail": "-1.325"
+            "on": false,
+            "detail": "0.782"
           },
           {
             "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "99,383,797"
+            "on": true,
+            "detail": "14,877,325"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$221.09"
+            "detail": "$138.16 (early)"
           },
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "28pct"
-          }
-        ],
-        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
-        "divergence": true,
-        "atr": {
-          "percentile": 28.000000000000004,
-          "compressed": false,
-          "expanded": false
-        },
-        "higherLow": {
-          "price": 221.089996,
-          "prevPrice": 208.92999,
-          "confirmed": true
-        },
-        "stop": "218.12",
-        "target": null,
-        "rewardMultiplier": 2,
-        "riskPerShare": "-0.18",
-        "volumeReliable": true,
-        "details": {
-          "price": 217.94,
-          "vwap": 224.9828683372136,
-          "rsi": "46.3",
-          "macdHist": "-1.325",
-          "volume": 84307573,
-          "volSMA": 99383797,
-          "hvn": "181.91",
-          "atrPct": 28
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.04079930281240696,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.04794397688798047,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 243.37,
-        "price": 217.94,
-        "pctFromHigh": -0.10449110408020712,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 0.2287126183137883,
-        "positive": true,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "ORCL",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 3,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "-0.493"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "27,675,286"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$123.75 (early)"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "4pct"
+            "detail": "36pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 4,
-          "compressed": true,
+          "percentile": 36,
+          "compressed": false,
           "expanded": false
         },
         "higherLow": {
-          "price": 123.75,
-          "prevPrice": 122.76,
+          "price": 138.16,
+          "prevPrice": 135.58,
           "confirmed": false
         },
-        "stop": "120.56",
-        "target": "150.47",
+        "stop": "135.15",
+        "target": "180.09",
         "rewardMultiplier": 2,
-        "riskPerShare": "9.97",
+        "riskPerShare": "14.98",
         "volumeReliable": true,
         "details": {
-          "price": 130.53,
-          "vwap": 134.63662380198596,
-          "rsi": "44.6",
-          "macdHist": "-0.493",
-          "volume": 25904273,
-          "volSMA": 27675286,
-          "hvn": "143.40",
-          "atrPct": 4
+          "price": 150.13,
+          "vwap": 146.54145275982393,
+          "rsi": "56.5",
+          "macdHist": "0.782",
+          "volume": 28212824,
+          "volSMA": 14877325,
+          "hvn": "101.10",
+          "atrPct": 36
         }
       },
       "weekly": {
         "score": 1,
-        "trend": "Bearish, improving",
-        "bullish": false
+        "trend": "Cautiously bullish",
+        "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": -0.052688805623688544,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.05983347969926206,
-        "outperforming": false,
+        "tickerReturn": 0.12028957661064593,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.10759665868189942,
+        "outperforming": true,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 287,
-        "price": 130.53,
-        "pctFromHigh": -0.545191637630662,
+        "high52w": 192.966,
+        "price": 150.13,
+        "pctFromHigh": -0.22198729309826606,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.5319944422403008,
+        "return12m1": -0.3134240032125459,
         "positive": false,
         "insufficient": false
       },
       "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": true,
         "sma200Rising": false,
         "passes": false,
         "insufficient": false
@@ -3006,12 +2664,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "0.488"
+            "detail": "0.201"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "12,125,726"
+            "detail": "10,890,422"
           },
           {
             "name": "Higher Low",
@@ -3021,13 +2679,13 @@
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "92pct"
+            "detail": "90pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 92,
+          "percentile": 90,
           "compressed": false,
           "expanded": true
         },
@@ -3036,20 +2694,20 @@
           "prevPrice": 143.39999,
           "confirmed": true
         },
-        "stop": "155.28",
-        "target": "167.13",
+        "stop": "155.31",
+        "target": "164.16",
         "rewardMultiplier": 2,
-        "riskPerShare": "3.95",
+        "riskPerShare": "2.95",
         "volumeReliable": true,
         "details": {
-          "price": 159.23,
-          "vwap": 155.08637817507156,
-          "rsi": "59.9",
-          "macdHist": "0.488",
-          "volume": 7514437,
-          "volSMA": 12125726,
+          "price": 158.25999,
+          "vwap": 155.54268810715905,
+          "rsi": "57.8",
+          "macdHist": "0.201",
+          "volume": 5203300,
+          "volSMA": 10890422,
           "hvn": "144.29",
-          "atrPct": 92
+          "atrPct": 90
         }
       },
       "weekly": {
@@ -3058,21 +2716,124 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.07355710129739065,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.06641242722181713,
+        "tickerReturn": 0.08934464482378845,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.07665172689504195,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 167.25,
-        "price": 159.23,
-        "pctFromHigh": -0.04795216741405088,
+        "price": 158.25999,
+        "pctFromHigh": -0.05375192825112115,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.022690083107739376,
+        "return12m1": -0.02253855130232307,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": false,
+        "sma200Rising": true,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "QCOM",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": true,
+            "detail": "Above"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "0.657"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": false,
+            "detail": "10,055,249"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$171.48 (early)"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "16pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 16,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 171.48,
+          "prevPrice": 171.13,
+          "confirmed": false
+        },
+        "stop": "168.28",
+        "target": "212.35",
+        "rewardMultiplier": 2,
+        "riskPerShare": "14.69",
+        "volumeReliable": true,
+        "details": {
+          "price": 182.97,
+          "vwap": 177.6558895393899,
+          "rsi": "54.8",
+          "macdHist": "0.657",
+          "volume": 9035045,
+          "volSMA": 10055249,
+          "hvn": "173.71",
+          "atrPct": 16
+        }
+      },
+      "weekly": {
+        "score": 2,
+        "trend": "Bullish",
+        "bullish": true
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.005813915674295917,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.018506833603042425,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 259.92001,
+        "price": 182.97,
+        "pctFromHigh": -0.2960526586621784,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.019074915764861273,
         "positive": false,
         "insufficient": false
       },
@@ -3109,12 +2870,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-0.223"
+            "detail": "-0.055"
           },
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "17,488,227"
+            "detail": "17,588,425"
           },
           {
             "name": "Higher Low",
@@ -3124,13 +2885,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "0pct"
+            "detail": "6pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 0,
+          "percentile": 6,
           "compressed": true,
           "expanded": false
         },
@@ -3141,38 +2902,38 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 13.56,
-          "vwap": 15.993504227252094,
-          "rsi": "32.6",
-          "macdHist": "-0.223",
-          "volume": 20637046,
-          "volSMA": 17488227,
+          "price": 14.45,
+          "vwap": 15.68404876303698,
+          "rsi": "38.9",
+          "macdHist": "-0.055",
+          "volume": 24186124,
+          "volSMA": 17588425,
           "hvn": "13.60",
-          "atrPct": 0
+          "atrPct": 6
         }
       },
       "weekly": {
-        "score": 0,
-        "trend": "Bearish",
+        "score": 1,
+        "trend": "Bearish, improving",
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.36605890603085556,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.37320358010642907,
+        "tickerReturn": -0.28287841191067,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.2955713298394165,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 30.32,
-        "price": 13.56,
-        "pctFromHigh": -0.5527704485488126,
+        "price": 14.45,
+        "pctFromHigh": -0.5234168865435357,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.00933706816059754,
-        "positive": true,
+        "return12m1": -0.06999999999999998,
+        "positive": false,
         "insufficient": false
       },
       "trend": {
@@ -3208,12 +2969,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-0.117"
+            "detail": "-0.092"
           },
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "24,257,931"
+            "detail": "24,680,284"
           },
           {
             "name": "Higher Low",
@@ -3223,13 +2984,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "4pct"
+            "detail": "0pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 4,
+          "percentile": 0,
           "compressed": true,
           "expanded": false
         },
@@ -3240,14 +3001,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 11.82,
-          "vwap": 13.380755535448886,
-          "rsi": "27.0",
-          "macdHist": "-0.117",
-          "volume": 34999578,
-          "volSMA": 24257931,
+          "price": 11.67,
+          "vwap": 13.222898151819441,
+          "rsi": "25.9",
+          "macdHist": "-0.092",
+          "volume": 27508555,
+          "volSMA": 24680284,
           "hvn": "15.08",
-          "atrPct": 4
+          "atrPct": 0
         }
       },
       "weekly": {
@@ -3256,21 +3017,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.21042084168336675,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.21756551575894026,
+        "tickerReturn": -0.2188755020080321,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.23156841993677862,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 22.69,
-        "price": 11.82,
-        "pctFromHigh": -0.47906566769501985,
+        "price": 11.67,
+        "pctFromHigh": -0.4856765094755399,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.1394453004622495,
+        "return12m1": 0.11633109619686804,
         "positive": true,
         "insufficient": false
       },
@@ -3280,6 +3041,208 @@
         "above200": false,
         "stacked": false,
         "sma200Rising": false,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "RKLB",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Oversold bounce"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-0.008"
+          },
+          {
+            "name": "Volume > 1×SMA",
+            "on": false,
+            "detail": "16,921,559"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$49.52 (early)"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "16pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 16,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 49.522,
+          "prevPrice": 49.25,
+          "confirmed": false
+        },
+        "stop": "45.62",
+        "target": "91.05",
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "12.98",
+        "volumeReliable": true,
+        "details": {
+          "price": 58.6,
+          "vwap": 61.681569276305176,
+          "rsi": "45.7",
+          "macdHist": "-0.008",
+          "volume": 12234830,
+          "volSMA": 16921559,
+          "hvn": "68.76",
+          "atrPct": 16
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Bearish, improving",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.15901262916188297,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.17170554709062946,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 151,
+        "price": 58.6,
+        "pctFromHigh": -0.6119205298013245,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": 0.06217616580310878,
+        "positive": true,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": false,
+        "stacked": false,
+        "sma200Rising": false,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "SNDK",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Divergence"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-10.654"
+          },
+          {
+            "name": "Volume > 1×SMA",
+            "on": true,
+            "detail": "8,018,441"
+          },
+          {
+            "name": "Higher Low",
+            "on": false,
+            "detail": "None"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "2pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": true,
+        "atr": {
+          "percentile": 2,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2.5,
+        "riskPerShare": null,
+        "volumeReliable": true,
+        "details": {
+          "price": 1404.77002,
+          "vwap": 1467.6205058861194,
+          "rsi": "45.4",
+          "macdHist": "-10.654",
+          "volume": 9017771,
+          "volSMA": 8018441,
+          "hvn": "216.54",
+          "atrPct": 2
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Bearish, improving",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.19260987078142952,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.20530278871017604,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 2354.38989,
+        "price": 1404.77002,
+        "pctFromHigh": -0.4033401069353046,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": 8.800894736194984,
+        "positive": true,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": true,
+        "stacked": true,
+        "sma200Rising": true,
         "passes": false,
         "insufficient": false
       }
@@ -3301,18 +3264,18 @@
           },
           {
             "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
+            "on": false,
+            "detail": "Weak"
           },
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "0.148"
+            "detail": "0.133"
           },
           {
             "name": "Volume > 1×SMA",
-            "on": false,
-            "detail": "13,950,395"
+            "on": true,
+            "detail": "12,597,277"
           },
           {
             "name": "Higher Low",
@@ -3322,13 +3285,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "10pct"
+            "detail": "4pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 10,
+          "percentile": 4,
           "compressed": true,
           "expanded": false
         },
@@ -3338,19 +3301,19 @@
           "confirmed": true
         },
         "stop": "11.20",
-        "target": "16.45",
+        "target": "16.66",
         "rewardMultiplier": 2.5,
-        "riskPerShare": "1.50",
+        "riskPerShare": "1.56",
         "volumeReliable": true,
         "details": {
-          "price": 12.7,
-          "vwap": 12.323158798119593,
-          "rsi": "48.6",
-          "macdHist": "0.148",
-          "volume": 9267651,
-          "volSMA": 13950395,
+          "price": 12.76,
+          "vwap": 12.349262037185895,
+          "rsi": "49.5",
+          "macdHist": "0.133",
+          "volume": 13664697,
+          "volSMA": 12597277,
           "hvn": "12.74",
-          "atrPct": 10
+          "atrPct": 4
         }
       },
       "weekly": {
@@ -3359,21 +3322,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": 0.053941908713692824,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.04679723463811931,
+        "tickerReturn": 0.04847986852917008,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.03578695060042357,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 54.044998,
-        "price": 12.7,
-        "pctFromHigh": -0.7650106305860166,
+        "high52w": 53.94,
+        "price": 12.76,
+        "pctFromHigh": -0.7634408602150538,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.7626923076923077,
+        "return12m1": -0.7752285021451222,
         "positive": false,
         "insufficient": false
       },
@@ -3410,12 +3373,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "2.897"
+            "detail": "1.849"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "5,743,515"
+            "detail": "5,048,164"
           },
           {
             "name": "Higher Low",
@@ -3440,18 +3403,18 @@
           "prevPrice": 372.79999,
           "confirmed": false
         },
-        "stop": "390.00",
-        "target": "451.17",
+        "stop": "389.99",
+        "target": "441.32",
         "rewardMultiplier": 2,
-        "riskPerShare": "20.39",
+        "riskPerShare": "17.11",
         "volumeReliable": true,
         "details": {
-          "price": 410.39001,
-          "vwap": 392.4253964139383,
-          "rsi": "59.7",
-          "macdHist": "2.897",
-          "volume": 3743538,
-          "volSMA": 5743515,
+          "price": 407.10001,
+          "vwap": 393.8979318477684,
+          "rsi": "57.1",
+          "macdHist": "1.849",
+          "volume": 3897676,
+          "volSMA": 5048164,
           "hvn": "343.37",
           "atrPct": 80
         }
@@ -3462,21 +3425,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.09454848775804134,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.08740381368246782,
+        "tickerReturn": 0.10902262290861413,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.09632970497986762,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 461.62,
-        "price": 410.39001,
-        "pctFromHigh": -0.11097870542870757,
+        "price": 407.10001,
+        "pctFromHigh": -0.11810577964559596,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.04228962758620692,
+        "return12m1": 0.024482184149893883,
         "positive": true,
         "insufficient": false
       },
@@ -3513,12 +3476,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "1.118"
+            "detail": "0.358"
           },
           {
             "name": "Volume > 1.1×SMA",
-            "on": true,
-            "detail": "6,546,761"
+            "on": false,
+            "detail": "6,381,703"
           },
           {
             "name": "Higher Low",
@@ -3527,36 +3490,36 @@
           },
           {
             "name": "ATR Expanded",
-            "on": false,
-            "detail": "68pct"
+            "on": true,
+            "detail": "86pct"
           }
         ],
         "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
         "divergence": false,
         "atr": {
-          "percentile": 68,
+          "percentile": 86,
           "compressed": false,
-          "expanded": false
+          "expanded": true
         },
         "higherLow": {
           "price": 398.01001,
           "prevPrice": 389.56,
           "confirmed": false
         },
-        "stop": "394.67",
-        "target": "416.24",
+        "stop": "394.53",
+        "target": "412.74",
         "rewardMultiplier": 2,
-        "riskPerShare": "7.19",
+        "riskPerShare": "6.07",
         "volumeReliable": true,
         "details": {
-          "price": 401.85999,
-          "vwap": 390.092663395919,
-          "rsi": "62.5",
-          "macdHist": "1.118",
-          "volume": 8146153,
-          "volSMA": 6546761,
+          "price": 400.60001,
+          "vwap": 392.44980077256145,
+          "rsi": "60.9",
+          "macdHist": "0.358",
+          "volume": 6977024,
+          "volSMA": 6381703,
           "hvn": "327.09",
-          "atrPct": 68
+          "atrPct": 86
         }
       },
       "weekly": {
@@ -3565,21 +3528,331 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.09833822564775332,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.0911935515721798,
+        "tickerReturn": 0.11485270127327804,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.10215978334453153,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 414.60001,
-        "price": 401.85999,
-        "pctFromHigh": -0.030728460426231095,
+        "price": 400.60001,
+        "pctFromHigh": -0.03376748591974226,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.05861013875295061,
+        "return12m1": 0.05192337841632507,
+        "positive": true,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": true,
+        "sma200Rising": true,
+        "passes": true,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "XOM",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": true,
+            "detail": "Above"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": false,
+            "detail": "0.558"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": false,
+            "detail": "12,210,931"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$174.63"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": true,
+            "detail": "94pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 94,
+          "compressed": false,
+          "expanded": true
+        },
+        "higherLow": {
+          "price": 174.63,
+          "prevPrice": 159.27,
+          "confirmed": true
+        },
+        "stop": "172.68",
+        "target": "200.70",
+        "rewardMultiplier": 2,
+        "riskPerShare": "9.34",
+        "volumeReliable": true,
+        "details": {
+          "price": 182.020004,
+          "vwap": 173.95249606644995,
+          "rsi": "67.2",
+          "macdHist": "0.558",
+          "volume": 12699980,
+          "volSMA": 12210931,
+          "hvn": "113.47",
+          "atrPct": 94
+        }
+      },
+      "weekly": {
+        "score": 2,
+        "trend": "Bullish",
+        "bullish": true
+      },
+      "relativeStrength": {
+        "tickerReturn": 0.11840248233486943,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.10570956440612292,
+        "outperforming": true,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 184.88,
+        "price": 182.020004,
+        "pctFromHigh": -0.015469472090004302,
+        "nearHigh": true,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": 0.3916681904433328,
+        "positive": true,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": true,
+        "sma200Rising": true,
+        "passes": true,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "BTC/USD",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 2,
+        "maxScore": 5,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-179.499"
+          },
+          {
+            "name": "Volume (unavailable)",
+            "on": false,
+            "excluded": true,
+            "detail": "Feed has no reliable volume for this symbol"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$79368.67 (early)"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "0pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 0,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 79368.67,
+          "prevPrice": 79220.74,
+          "confirmed": false
+        },
+        "stop": "77523.74",
+        "target": "90047.05",
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "3578.09",
+        "volumeReliable": false,
+        "details": {
+          "price": 81101.83,
+          "vwap": 81191.96,
+          "rsi": "46.5",
+          "macdHist": "-179.499",
+          "volume": 0,
+          "volSMA": "-",
+          "hvn": "58803.30",
+          "atrPct": 0
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Cautiously bullish",
+        "bullish": true
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.018560050728772315,
+        "spyReturn": -0.008040394466260111,
+        "excessReturn": -0.010519656262512203,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 87395.67,
+        "price": 81101.83,
+        "pctFromHigh": -0.07201546712783365,
+        "nearHigh": true,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": 0.2201477440136542,
+        "positive": true,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": true,
+        "above200": true,
+        "stacked": false,
+        "sma200Rising": true,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "AAPL",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 2,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": true,
+            "detail": "Above"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": false,
+            "detail": "-0.146"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": false,
+            "detail": "41,061,856"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$338.70"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "0pct"
+          }
+        ],
+        "action": "Weak signal. One layer alone is not enough.",
+        "divergence": false,
+        "atr": {
+          "percentile": 0,
+          "compressed": true,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 338.70001,
+          "prevPrice": 325.81,
+          "confirmed": true
+        },
+        "stop": "335.62",
+        "target": "360.25",
+        "rewardMultiplier": 2,
+        "riskPerShare": "8.21",
+        "volumeReliable": true,
+        "details": {
+          "price": 343.82999,
+          "vwap": 340.97397456269044,
+          "rsi": "56.1",
+          "macdHist": "-0.146",
+          "volume": 34405006,
+          "volSMA": 41061856,
+          "hvn": "271.76",
+          "atrPct": 0
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Cautiously bullish",
+        "bullish": true
+      },
+      "relativeStrength": {
+        "tickerReturn": 0.03246051695713677,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.01976759902839026,
+        "outperforming": true,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 351.73001,
+        "price": 343.82999,
+        "pctFromHigh": -0.02246046619678538,
+        "nearHigh": true,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": 0.2254008035415349,
         "positive": true,
         "insufficient": false
       },
@@ -3616,12 +3889,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "2.104"
+            "detail": "1.359"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "4,342,545"
+            "detail": "3,973,207"
           },
           {
             "name": "Higher Low",
@@ -3631,13 +3904,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "38pct"
+            "detail": "26pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 38,
+          "percentile": 26,
           "compressed": false,
           "expanded": false
         },
@@ -3646,20 +3919,20 @@
           "prevPrice": 224.67,
           "confirmed": true
         },
-        "stop": "222.36",
-        "target": "300.36",
+        "stop": "222.47",
+        "target": "304.34",
         "rewardMultiplier": 2,
-        "riskPerShare": "26.00",
+        "riskPerShare": "27.29",
         "volumeReliable": true,
         "details": {
-          "price": 248.36,
-          "vwap": 246.04897958275075,
-          "rsi": "48.9",
-          "macdHist": "2.104",
-          "volume": 4706802,
-          "volSMA": 4342545,
+          "price": 249.75999,
+          "vwap": 246.58716585989924,
+          "rsi": "49.8",
+          "macdHist": "1.359",
+          "volume": 3285866,
+          "volSMA": 3973207,
           "hvn": "248.86",
-          "atrPct": 38
+          "atrPct": 26
         }
       },
       "weekly": {
@@ -3668,21 +3941,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": 0.06514560192134505,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.05800092784577154,
+        "tickerReturn": 0.040926856714178506,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.028233938785431997,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 363.70001,
-        "price": 248.36,
-        "pctFromHigh": -0.31712952111274345,
+        "price": 249.75999,
+        "pctFromHigh": -0.31328022234588343,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.3465433326698159,
+        "return12m1": -0.348323067309197,
         "positive": false,
         "insufficient": false
       },
@@ -3719,12 +3992,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-8.952"
+            "detail": "-5.618"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "8,120,892"
+            "detail": "7,549,965"
           },
           {
             "name": "Higher Low",
@@ -3734,13 +4007,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "12pct"
+            "detail": "22pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 12,
+          "percentile": 22,
           "compressed": true,
           "expanded": false
         },
@@ -3751,37 +4024,37 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 395.92999,
-          "vwap": 449.96160783348006,
-          "rsi": "34.1",
-          "macdHist": "-8.952",
-          "volume": 6371530,
-          "volSMA": 8120892,
+          "price": 416,
+          "vwap": 445.34280039044074,
+          "rsi": "41.7",
+          "macdHist": "-5.618",
+          "volume": 7017387,
+          "volSMA": 7549965,
           "hvn": "227.62",
-          "atrPct": 12
+          "atrPct": 22
         }
       },
       "weekly": {
-        "score": 0,
-        "trend": "Bearish",
+        "score": 1,
+        "trend": "Bearish, improving",
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.22671435661970749,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.233859030695281,
+        "tickerReturn": -0.18651492041143572,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.19920783834018224,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 739.66998,
-        "price": 395.92999,
-        "pctFromHigh": -0.4647207528957712,
+        "price": 416,
+        "pctFromHigh": -0.4375870168477028,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 1.127912612021858,
+        "return12m1": 1.213331647430078,
         "positive": true,
         "insufficient": false
       },
@@ -3796,7 +4069,7 @@
       }
     },
     {
-      "ticker": "CAT",
+      "ticker": "ASML",
       "cfg": {
         "name": "Stable"
       },
@@ -3818,12 +4091,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-6.992"
+            "detail": "-7.718"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "2,855,268"
+            "detail": "1,420,192"
           },
           {
             "name": "Higher Low",
@@ -3833,13 +4106,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "44pct"
+            "detail": "30pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 44,
+          "percentile": 30,
           "compressed": false,
           "expanded": false
         },
@@ -3850,14 +4123,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 713.31,
-          "vwap": 764.2307054554592,
-          "rsi": "36.3",
-          "macdHist": "-6.992",
-          "volume": 2472211,
-          "volSMA": 2855268,
-          "hvn": "891.15",
-          "atrPct": 44
+          "price": 1662.84998,
+          "vwap": 1705.693149628141,
+          "rsi": "47.4",
+          "macdHist": "-7.718",
+          "volume": 1067031,
+          "volSMA": 1420192,
+          "hvn": "1775.30",
+          "atrPct": 30
         }
       },
       "weekly": {
@@ -3866,29 +4139,29 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.13709717486333625,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.14424184893890976,
+        "tickerReturn": -0.08214523434962805,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.09483815227837455,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 1073.45996,
-        "price": 713.31,
-        "pctFromHigh": -0.3355038598738233,
+        "high52w": 1999.95996,
+        "price": 1662.84998,
+        "pctFromHigh": -0.16855836453845804,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.5685918951884108,
+        "return12m1": 0.7305892984884488,
         "positive": true,
         "insufficient": false
       },
       "trend": {
         "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
+        "above150": true,
+        "above200": true,
+        "stacked": true,
         "sma200Rising": true,
         "passes": false,
         "insufficient": false
@@ -3917,12 +4190,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-2.226"
+            "detail": "-2.001"
           },
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "7,093,752"
+            "detail": "6,761,926"
           },
           {
             "name": "Higher Low",
@@ -3932,13 +4205,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "6pct"
+            "detail": "4pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 6,
+          "percentile": 4,
           "compressed": true,
           "expanded": false
         },
@@ -3947,20 +4220,20 @@
           "prevPrice": 161.17999,
           "confirmed": true
         },
-        "stop": "155.85",
-        "target": "174.19",
+        "stop": "156.14",
+        "target": "177.77",
         "rewardMultiplier": 2.5,
-        "riskPerShare": "5.24",
+        "riskPerShare": "6.18",
         "volumeReliable": true,
         "details": {
-          "price": 161.089996,
-          "vwap": 177.55989075925496,
-          "rsi": "40.2",
-          "macdHist": "-2.226",
-          "volume": 5679070,
-          "volSMA": 7093752,
+          "price": 162.32001,
+          "vwap": 176.232358514145,
+          "rsi": "41.2",
+          "macdHist": "-2.001",
+          "volume": 5722131,
+          "volSMA": 6761926,
           "hvn": "185.14",
-          "atrPct": 6
+          "atrPct": 4
         }
       },
       "weekly": {
@@ -3969,21 +4242,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.15224717077681982,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.15939184485239333,
+        "tickerReturn": -0.1292312107719543,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.1419241287007008,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 373.25,
-        "price": 161.089996,
-        "pctFromHigh": -0.5684126028131279,
+        "high52w": 368.13,
+        "price": 162.32001,
+        "pctFromHigh": -0.5590687800505256,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.45892344577451466,
+        "return12m1": -0.4742550168567915,
         "positive": false,
         "insufficient": false
       },
@@ -4020,12 +4293,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "3.088"
+            "detail": "0.950"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "2,308,957"
+            "detail": "2,163,480"
           },
           {
             "name": "Higher Low",
@@ -4035,13 +4308,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "56pct"
+            "detail": "46pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 56.00000000000001,
+          "percentile": 46,
           "compressed": false,
           "expanded": false
         },
@@ -4050,20 +4323,20 @@
           "prevPrice": 883.099976,
           "confirmed": true
         },
-        "stop": "895.70",
-        "target": "1184.99",
+        "stop": "895.86",
+        "target": "1156.47",
         "rewardMultiplier": 2,
-        "riskPerShare": "96.43",
+        "riskPerShare": "86.87",
         "volumeReliable": true,
         "details": {
-          "price": 992.13,
-          "vwap": 967.9939366803083,
-          "rsi": "62.2",
-          "macdHist": "3.088",
-          "volume": 2227116,
-          "volSMA": 2308957,
+          "price": 982.72998,
+          "vwap": 971.4144979598813,
+          "rsi": "57.4",
+          "macdHist": "0.950",
+          "volume": 1675523,
+          "volSMA": 2163480,
           "hvn": "951.35",
-          "atrPct": 56
+          "atrPct": 46
         }
       },
       "weekly": {
@@ -4072,21 +4345,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.07304855969515488,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.06590388561958135,
+        "tickerReturn": 0.07951968233232587,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.06682676440357936,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 1096.5,
-        "price": 992.13,
-        "pctFromHigh": -0.09518467852257183,
-        "nearHigh": true,
+        "price": 982.72998,
+        "pctFromHigh": -0.1037574281805746,
+        "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.009891250135266646,
+        "return12m1": -0.005656772719401472,
         "positive": false,
         "insufficient": false
       },
@@ -4123,12 +4396,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "0.198"
+            "detail": "-0.014"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "7,499,438"
+            "detail": "7,115,906"
           },
           {
             "name": "Higher Low",
@@ -4153,18 +4426,18 @@
           "prevPrice": 108.99,
           "confirmed": false
         },
-        "stop": "109.14",
-        "target": "112.41",
+        "stop": "109.16",
+        "target": null,
         "rewardMultiplier": 2,
-        "riskPerShare": "1.09",
+        "riskPerShare": "-0.12",
         "volumeReliable": true,
         "details": {
-          "price": 110.23,
-          "vwap": 107.91414284053003,
-          "rsi": "56.7",
-          "macdHist": "0.198",
-          "volume": 6463546,
-          "volSMA": 7499438,
+          "price": 109.040001,
+          "vwap": 108.15501013866547,
+          "rsi": "52.1",
+          "macdHist": "-0.014",
+          "volume": 6229853,
+          "volSMA": 7115906,
           "hvn": "103.92",
           "atrPct": 0
         }
@@ -4175,21 +4448,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.045726211934351654,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.03858153785877814,
+        "tickerReturn": 0.039466167778836964,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.026773249850090455,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 117.089996,
-        "price": 110.23,
-        "pctFromHigh": -0.05858737923263739,
+        "price": 109.040001,
+        "pctFromHigh": -0.0687504934238788,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.05453080229226364,
+        "return12m1": -0.061687733665657885,
         "positive": false,
         "insufficient": false
       },
@@ -4199,105 +4472,6 @@
         "above200": true,
         "stacked": false,
         "sma200Rising": false,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "GOOGL",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 2,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": false,
-            "detail": "-3.411"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": true,
-            "detail": "23,889,475"
-          },
-          {
-            "name": "Higher Low",
-            "on": false,
-            "detail": "None"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "20pct"
-          }
-        ],
-        "action": "Weak signal. One layer alone is not enough.",
-        "divergence": false,
-        "atr": {
-          "percentile": 20,
-          "compressed": true,
-          "expanded": false
-        },
-        "higherLow": null,
-        "stop": null,
-        "target": null,
-        "rewardMultiplier": 2,
-        "riskPerShare": null,
-        "volumeReliable": true,
-        "details": {
-          "price": 320.57999,
-          "vwap": 341.2130688456968,
-          "rsi": "34.0",
-          "macdHist": "-3.411",
-          "volume": 28434977,
-          "volSMA": 23889475,
-          "hvn": "318.51",
-          "atrPct": 20
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.059662147727849654,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.06680682180342318,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 408.60999,
-        "price": 320.57999,
-        "pctFromHigh": -0.21543770870604503,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 0.31867492618209736,
-        "positive": true,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
-        "sma200Rising": true,
         "passes": false,
         "insufficient": false
       }
@@ -4325,12 +4499,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-1.377"
+            "detail": "-0.738"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "102,879,002"
+            "detail": "95,668,610"
           },
           {
             "name": "Higher Low",
@@ -4340,13 +4514,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "20pct"
+            "detail": "6pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 20,
+          "percentile": 6,
           "compressed": true,
           "expanded": false
         },
@@ -4357,37 +4531,37 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 93.74,
-          "vwap": 101.53006636122657,
-          "rsi": "42.7",
-          "macdHist": "-1.377",
-          "volume": 89550016,
-          "volSMA": 102879002,
+          "price": 95.53,
+          "vwap": 100.38758770214484,
+          "rsi": "45.0",
+          "macdHist": "-0.738",
+          "volume": 81290887,
+          "volSMA": 95668610,
           "hvn": "37.73",
-          "atrPct": 20
+          "atrPct": 6
         }
       },
       "weekly": {
-        "score": 0,
-        "trend": "Bearish",
+        "score": 1,
+        "trend": "Bearish, improving",
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.19140860864314682,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.19855328271872033,
+        "tickerReturn": -0.20543957414954672,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.21813249207829322,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 142.35001,
-        "price": 93.74,
-        "pctFromHigh": -0.34148230829067033,
+        "price": 95.53,
+        "pctFromHigh": -0.3289076692021307,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 2.0310867032392896,
+        "return12m1": 1.9319676277187663,
         "positive": true,
         "insufficient": false
       },
@@ -4419,17 +4593,17 @@
           {
             "name": "RSI Momentum",
             "on": true,
-            "detail": "Oversold bounce"
+            "detail": "Divergence"
           },
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-0.358"
+            "detail": "-0.186"
           },
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "23,457,307"
+            "detail": "19,807,585"
           },
           {
             "name": "Higher Low",
@@ -4439,13 +4613,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "2pct"
+            "detail": "0pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
-        "divergence": false,
+        "divergence": true,
         "atr": {
-          "percentile": 2,
+          "percentile": 0,
           "compressed": true,
           "expanded": false
         },
@@ -4456,14 +4630,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 32.95,
-          "vwap": 35.97934137314819,
-          "rsi": "41.2",
-          "macdHist": "-0.358",
-          "volume": 21943263,
-          "volSMA": 23457307,
+          "price": 32.43,
+          "vwap": 35.3444382993156,
+          "rsi": "40.0",
+          "macdHist": "-0.186",
+          "volume": 15164566,
+          "volSMA": 19807585,
           "hvn": "44.98",
-          "atrPct": 2
+          "atrPct": 0
         }
       },
       "weekly": {
@@ -4472,21 +4646,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.24960145752675916,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.2567461316023327,
+        "tickerReturn": -0.2606019151846785,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.273294833113425,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 73.65,
-        "price": 32.95,
-        "pctFromHigh": -0.5526137135098439,
+        "price": 32.43,
+        "pctFromHigh": -0.5596741344195519,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.2606965174129353,
+        "return12m1": -0.30079617834394906,
         "positive": false,
         "insufficient": false
       },
@@ -4523,12 +4697,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "0.145"
+            "detail": "0.022"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "18,334,462"
+            "detail": "17,614,052"
           },
           {
             "name": "Higher Low",
@@ -4538,13 +4712,13 @@
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "84pct"
+            "detail": "90pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 84,
+          "percentile": 90,
           "compressed": false,
           "expanded": true
         },
@@ -4555,14 +4729,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 91.18,
-          "vwap": 90.18159326199452,
-          "rsi": "53.0",
-          "macdHist": "0.145",
-          "volume": 17631460,
-          "volSMA": 18334462,
+          "price": 91.73,
+          "vwap": 90.40518273613941,
+          "rsi": "55.0",
+          "macdHist": "0.022",
+          "volume": 13153371,
+          "volSMA": 17614052,
           "hvn": "70.60",
-          "atrPct": 84
+          "atrPct": 90
         }
       },
       "weekly": {
@@ -4571,21 +4745,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.04997696913864582,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.042832295063072304,
+        "tickerReturn": 0.06563659234115737,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.052943674412410865,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 95.37,
-        "price": 91.18,
-        "pctFromHigh": -0.04393415120058716,
+        "price": 91.73,
+        "pctFromHigh": -0.038167138513159275,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.25060966862716993,
+        "return12m1": 0.23950902767653537,
         "positive": true,
         "insufficient": false
       },
@@ -4622,50 +4796,50 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "7.783"
+            "detail": "6.563"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "2,427,670"
+            "detail": "2,239,222"
           },
           {
             "name": "Higher Low",
             "on": true,
-            "detail": "$1257.62 (early)"
+            "detail": "$1257.62"
           },
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "62pct"
+            "detail": "66pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 62,
+          "percentile": 66,
           "compressed": false,
           "expanded": false
         },
         "higherLow": {
           "price": 1257.62,
-          "prevPrice": 1239.099976,
-          "confirmed": false
+          "prevPrice": 1131.20996,
+          "confirmed": true
         },
-        "stop": "1239.44",
-        "target": "1366.85",
+        "stop": "1239.34",
+        "target": "1386.22",
         "rewardMultiplier": 2,
-        "riskPerShare": "42.47",
+        "riskPerShare": "48.96",
         "volumeReliable": true,
         "details": {
-          "price": 1281.91003,
-          "vwap": 1218.2489018894044,
-          "rsi": "63.5",
-          "macdHist": "7.783",
-          "volume": 1846530,
-          "volSMA": 2427670,
+          "price": 1288.30005,
+          "vwap": 1224.370793664169,
+          "rsi": "64.4",
+          "macdHist": "6.563",
+          "volume": 2053898,
+          "volSMA": 2239222,
           "hvn": "1050.88",
-          "atrPct": 62
+          "atrPct": 66
         }
       },
       "weekly": {
@@ -4674,21 +4848,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.08211849269392121,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.07497381861834769,
+        "tickerReturn": 0.11340624588608811,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.1007133279573416,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 1321.20996,
-        "price": 1281.91003,
-        "pctFromHigh": -0.02974540851932414,
+        "price": 1288.30005,
+        "pctFromHigh": -0.024908917580366906,
         "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.43531409006827665,
+        "return12m1": 0.4334652811606327,
         "positive": true,
         "insufficient": false
       },
@@ -4725,12 +4899,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-7.188"
+            "detail": "-5.092"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "12,918,655"
+            "detail": "12,628,101"
           },
           {
             "name": "Higher Low",
@@ -4740,14 +4914,14 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "24pct"
+            "detail": "28pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 24,
-          "compressed": true,
+          "percentile": 28.000000000000004,
+          "compressed": false,
           "expanded": false
         },
         "higherLow": null,
@@ -4757,14 +4931,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 240.85001,
-          "vwap": 281.2980759095516,
-          "rsi": "31.1",
-          "macdHist": "-7.188",
-          "volume": 9843496,
-          "volSMA": 12918655,
+          "price": 253.82001,
+          "vwap": 277.98648275076533,
+          "rsi": "38.3",
+          "macdHist": "-5.092",
+          "volume": 10772312,
+          "volSMA": 12628101,
           "hvn": "223.26",
-          "atrPct": 24
+          "atrPct": 28
         }
       },
       "weekly": {
@@ -4773,21 +4947,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.25631440302335584,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.26345907709892935,
+        "tickerReturn": -0.22735989079906582,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.24005280872781232,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 438.5,
-        "price": 240.85001,
-        "pctFromHigh": -0.4507411402508552,
+        "price": 253.82001,
+        "pctFromHigh": -0.4211630330672748,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 1.0732464447024292,
+        "return12m1": 1.0641173399692376,
         "positive": true,
         "insufficient": false
       },
@@ -4802,106 +4976,7 @@
       }
     },
     {
-      "ticker": "MU",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 2,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Divergence"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "-8.056"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "26,195,943"
-          },
-          {
-            "name": "Higher Low",
-            "on": false,
-            "detail": "None"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "10pct"
-          }
-        ],
-        "action": "Weak signal. One layer alone is not enough.",
-        "divergence": true,
-        "atr": {
-          "percentile": 10,
-          "compressed": true,
-          "expanded": false
-        },
-        "higherLow": null,
-        "stop": null,
-        "target": null,
-        "rewardMultiplier": 2,
-        "riskPerShare": null,
-        "volumeReliable": true,
-        "details": {
-          "price": 928.76001,
-          "vwap": 974.9424334233491,
-          "rsi": "46.1",
-          "macdHist": "-8.056",
-          "volume": 22799290,
-          "volSMA": 26195943,
-          "hvn": "427.38",
-          "atrPct": 10
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.1279903402857767,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.1351350143613502,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 1255,
-        "price": 928.76001,
-        "pctFromHigh": -0.2599521832669323,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": 3.812254409419151,
-        "positive": true,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "NOW",
+      "ticker": "MA",
       "cfg": {
         "name": "Stable"
       },
@@ -4923,50 +4998,46 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "1.415"
+            "detail": "0.220"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "13,698,578"
+            "detail": "3,179,647"
           },
           {
             "name": "Higher Low",
-            "on": true,
-            "detail": "$138.16 (early)"
+            "on": false,
+            "detail": "None"
           },
           {
             "name": "ATR Expanded",
-            "on": false,
-            "detail": "22pct"
+            "on": true,
+            "detail": "74pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 22,
-          "compressed": true,
-          "expanded": false
+          "percentile": 74,
+          "compressed": false,
+          "expanded": true
         },
-        "higherLow": {
-          "price": 138.16,
-          "prevPrice": 135.58,
-          "confirmed": false
-        },
-        "stop": "135.19",
-        "target": "193.96",
+        "higherLow": null,
+        "stop": null,
+        "target": null,
         "rewardMultiplier": 2,
-        "riskPerShare": "19.59",
+        "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 154.78,
-          "vwap": 145.431152039087,
-          "rsi": "63.2",
-          "macdHist": "1.415",
-          "volume": 13456200,
-          "volSMA": 13698578,
-          "hvn": "101.10",
-          "atrPct": 22
+          "price": 610.31,
+          "vwap": 599.6854262399956,
+          "rsi": "59.1",
+          "macdHist": "0.220",
+          "volume": 3491625,
+          "volSMA": 3179647,
+          "hvn": "494.05",
+          "atrPct": 74
         }
       },
       "weekly": {
@@ -4975,21 +5046,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.19116515314760663,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.18402047907203312,
+        "tickerReturn": 0.1066967073474553,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.0940037894187088,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 192.966,
-        "price": 154.78,
-        "pctFromHigh": -0.197889783692464,
-        "nearHigh": false,
+        "high52w": 633.28998,
+        "price": 610.31,
+        "pctFromHigh": -0.03628666286493285,
+        "nearHigh": true,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.2934087203426587,
+        "return12m1": -0.015339943660282837,
         "positive": false,
         "insufficient": false
       },
@@ -4997,6 +5068,109 @@
         "above50": true,
         "above150": true,
         "above200": true,
+        "stacked": true,
+        "sma200Rising": true,
+        "passes": true,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "MELI",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 2,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Oversold bounce"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": false,
+            "detail": "-19.295"
+          },
+          {
+            "name": "Volume > 1×SMA",
+            "on": false,
+            "detail": "683,347"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$1810.32"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "64pct"
+          }
+        ],
+        "action": "Weak signal. One layer alone is not enough.",
+        "divergence": false,
+        "atr": {
+          "percentile": 64,
+          "compressed": false,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 1810.31995,
+          "prevPrice": 1668.43994,
+          "confirmed": true
+        },
+        "stop": "1746.28",
+        "target": null,
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "-73.19",
+        "volumeReliable": true,
+        "details": {
+          "price": 1673.089966,
+          "vwap": 1771.4883644868175,
+          "rsi": "33.7",
+          "macdHist": "-19.295",
+          "volume": 537625,
+          "volSMA": 683347,
+          "hvn": "1837.39",
+          "atrPct": 64
+        }
+      },
+      "weekly": {
+        "score": 0,
+        "trend": "Bearish",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.03207353244536914,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.04476645037411565,
+        "outperforming": false,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 2428,
+        "price": 1673.089966,
+        "pctFromHigh": -0.3109184654036244,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.24423395181377874,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": false,
         "stacked": false,
         "sma200Rising": false,
         "passes": false,
@@ -5004,9 +5178,9 @@
       }
     },
     {
-      "ticker": "SNDK",
+      "ticker": "NVDA",
       "cfg": {
-        "name": "Speculative"
+        "name": "Stable"
       },
       "autoClassified": false,
       "daily": {
@@ -5026,12 +5200,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-23.794"
+            "detail": "-1.120"
           },
           {
-            "name": "Volume > 1×SMA",
+            "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "8,478,015"
+            "detail": "95,502,598"
           },
           {
             "name": "Higher Low",
@@ -5041,31 +5215,31 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "0pct"
+            "detail": "20pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": true,
         "atr": {
-          "percentile": 0,
+          "percentile": 20,
           "compressed": true,
           "expanded": false
         },
         "higherLow": null,
         "stop": null,
         "target": null,
-        "rewardMultiplier": 2.5,
+        "rewardMultiplier": 2,
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 1304.83997,
-          "vwap": 1482.4882237676943,
-          "rsi": "36.9",
-          "macdHist": "-23.794",
-          "volume": 6936035,
-          "volSMA": 8478015,
-          "hvn": "216.54",
-          "atrPct": 0
+          "price": 215.38,
+          "vwap": 224.3165862897885,
+          "rsi": "43.9",
+          "macdHist": "-1.120",
+          "volume": 91664984,
+          "volSMA": 95502598,
+          "hvn": "181.91",
+          "atrPct": 20
         }
       },
       "weekly": {
@@ -5074,27 +5248,27 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.2456525977843597,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.2527972718599332,
+        "tickerReturn": -0.056922672738418424,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.06961559066716494,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 2354.38989,
-        "price": 1304.83997,
-        "pctFromHigh": -0.44578424519143683,
+        "high52w": 243.37,
+        "price": 215.38,
+        "pctFromHigh": -0.1150100669762091,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 8.201171089385475,
+        "return12m1": 0.18653714624590598,
         "positive": true,
         "insufficient": false
       },
       "trend": {
         "above50": false,
-        "above150": false,
+        "above150": true,
         "above200": true,
         "stacked": true,
         "sma200Rising": true,
@@ -5125,12 +5299,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "0.597"
+            "detail": "0.378"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "20,834,933"
+            "detail": "18,860,458"
           },
           {
             "name": "Higher Low",
@@ -5140,13 +5314,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "58pct"
+            "detail": "50pct"
           }
         ],
         "action": "Weak signal. One layer alone is not enough.",
         "divergence": false,
         "atr": {
-          "percentile": 57.99999999999999,
+          "percentile": 50,
           "compressed": false,
           "expanded": false
         },
@@ -5155,20 +5329,20 @@
           "prevPrice": 103.39,
           "confirmed": true
         },
-        "stop": "115.43",
-        "target": "127.10",
+        "stop": "115.47",
+        "target": "125.37",
         "rewardMultiplier": 2,
-        "riskPerShare": "3.89",
+        "riskPerShare": "3.30",
         "volumeReliable": true,
         "details": {
-          "price": 119.32,
-          "vwap": 113.27559585243682,
-          "rsi": "66.3",
-          "macdHist": "0.597",
-          "volume": 15694994,
-          "volSMA": 20834933,
+          "price": 118.77,
+          "vwap": 114.05808971973066,
+          "rsi": "64.2",
+          "macdHist": "0.378",
+          "volume": 14268126,
+          "volSMA": 18860458,
           "hvn": "118.27",
-          "atrPct": 58
+          "atrPct": 50
         }
       },
       "weekly": {
@@ -5177,21 +5351,21 @@
         "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": 0.11722846441947563,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.1100837903439021,
+        "tickerReturn": 0.14289838337182442,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.13020546544307793,
         "outperforming": true,
         "insufficient": false
       },
       "high52w": {
         "high52w": 135.16,
-        "price": 119.32,
-        "pctFromHigh": -0.11719443622373486,
+        "price": 118.77,
+        "pctFromHigh": -0.12126368748150342,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.024112272770085732,
+        "return12m1": 0.02230305350818415,
         "positive": true,
         "insufficient": false
       },
@@ -5200,106 +5374,7 @@
         "above150": true,
         "above200": true,
         "stacked": false,
-        "sma200Rising": false,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "BABA",
-      "cfg": {
-        "name": "Speculative"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 1,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": false,
-            "detail": "-0.863"
-          },
-          {
-            "name": "Volume > 1×SMA",
-            "on": false,
-            "detail": "8,243,490"
-          },
-          {
-            "name": "Higher Low",
-            "on": false,
-            "detail": "None"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "6pct"
-          }
-        ],
-        "action": "No setup. Wait for momentum and liquidity to align.",
-        "divergence": false,
-        "atr": {
-          "percentile": 6,
-          "compressed": true,
-          "expanded": false
-        },
-        "higherLow": null,
-        "stop": null,
-        "target": null,
-        "rewardMultiplier": 2.5,
-        "riskPerShare": null,
-        "volumeReliable": true,
-        "details": {
-          "price": 100.24,
-          "vwap": 106.94789934667601,
-          "rsi": "31.8",
-          "macdHist": "-0.863",
-          "volume": 5943414,
-          "volSMA": 8243490,
-          "hvn": "164.98",
-          "atrPct": 6
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.06961202895860405,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.07675670303417757,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 182.5,
-        "price": 100.24,
-        "pctFromHigh": -0.4507397260273973,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": -0.37744705208929585,
-        "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
-        "sma200Rising": false,
+        "sma200Rising": true,
         "passes": false,
         "insufficient": false
       }
@@ -5321,56 +5396,52 @@
           },
           {
             "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
+            "on": true,
+            "detail": "Rising 45-70"
           },
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-0.127"
+            "detail": "-0.203"
           },
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "10,466,290"
+            "detail": "9,433,399"
           },
           {
             "name": "Higher Low",
-            "on": true,
-            "detail": "$84.59 (early)"
+            "on": false,
+            "detail": "None"
           },
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "14pct"
+            "detail": "8pct"
           }
         ],
         "action": "No setup. Wait for momentum and liquidity to align.",
         "divergence": false,
         "atr": {
-          "percentile": 14.000000000000002,
+          "percentile": 8,
           "compressed": true,
           "expanded": false
         },
-        "higherLow": {
-          "price": 84.586,
-          "prevPrice": 79.98,
-          "confirmed": false
-        },
-        "stop": "78.99",
-        "target": "88.06",
+        "higherLow": null,
+        "stop": null,
+        "target": null,
         "rewardMultiplier": 2.5,
-        "riskPerShare": "2.59",
+        "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 81.58,
-          "vwap": 83.51423790256473,
-          "rsi": "46.3",
-          "macdHist": "-0.127",
-          "volume": 7268109,
-          "volSMA": 10466290,
+          "price": 81.71,
+          "vwap": 83.41831760122537,
+          "rsi": "46.5",
+          "macdHist": "-0.203",
+          "volume": 6732594,
+          "volSMA": 9433399,
           "hvn": "85.51",
-          "atrPct": 14
+          "atrPct": 8
         }
       },
       "weekly": {
@@ -5379,21 +5450,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.02532855436081248,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.032473228436386,
+        "tickerReturn": -0.005598150176463527,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.018291068105210036,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
-        "high52w": 147.44,
-        "price": 81.58,
-        "pctFromHigh": -0.44669017905588715,
+        "high52w": 143.38,
+        "price": 81.71,
+        "pctFromHigh": -0.43011577625889247,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.3959873411618302,
+        "return12m1": -0.4158698733945057,
         "positive": false,
         "insufficient": false
       },
@@ -5404,208 +5475,6 @@
         "stacked": true,
         "sma200Rising": true,
         "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "HIMS",
-      "cfg": {
-        "name": "Speculative"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 1,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": false,
-            "detail": "-0.149"
-          },
-          {
-            "name": "Volume > 1×SMA",
-            "on": false,
-            "detail": "9,211,535"
-          },
-          {
-            "name": "Higher Low",
-            "on": true,
-            "detail": "$27.22 (early)"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "12pct"
-          }
-        ],
-        "action": "No setup. Wait for momentum and liquidity to align.",
-        "divergence": false,
-        "atr": {
-          "percentile": 12,
-          "compressed": true,
-          "expanded": false
-        },
-        "higherLow": {
-          "price": 27.22,
-          "prevPrice": 26.33,
-          "confirmed": false
-        },
-        "stop": "25.53",
-        "target": "33.90",
-        "rewardMultiplier": 2.5,
-        "riskPerShare": "2.39",
-        "volumeReliable": true,
-        "details": {
-          "price": 27.92,
-          "vwap": 29.058564390358473,
-          "rsi": "45.5",
-          "macdHist": "-0.149",
-          "volume": 7484514,
-          "volSMA": 9211535,
-          "hvn": "30.50",
-          "atrPct": 12
-        }
-      },
-      "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.027177700348431973,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.03432237442400549,
-        "outperforming": false,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 50.19,
-        "price": 27.92,
-        "pctFromHigh": -0.4437138872285315,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": -0.4100041000410004,
-        "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": false,
-        "passes": false,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "MA",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 1,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": true,
-            "detail": "Above"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": false,
-            "detail": "Weak"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": false,
-            "detail": "1.285"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "3,263,047"
-          },
-          {
-            "name": "Higher Low",
-            "on": false,
-            "detail": "None"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "62pct"
-          }
-        ],
-        "action": "No setup. Wait for momentum and liquidity to align.",
-        "divergence": false,
-        "atr": {
-          "percentile": 62,
-          "compressed": false,
-          "expanded": false
-        },
-        "higherLow": null,
-        "stop": null,
-        "target": null,
-        "rewardMultiplier": 2,
-        "riskPerShare": null,
-        "volumeReliable": true,
-        "details": {
-          "price": 609.84998,
-          "vwap": 595.4659713637149,
-          "rsi": "58.9",
-          "macdHist": "1.285",
-          "volume": 3456827,
-          "volSMA": 3263047,
-          "hvn": "494.05",
-          "atrPct": 62
-        }
-      },
-      "weekly": {
-        "score": 1,
-        "trend": "Cautiously bullish",
-        "bullish": true
-      },
-      "relativeStrength": {
-        "tickerReturn": 0.08210007161006164,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": 0.07495539753448811,
-        "outperforming": true,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 633.28998,
-        "price": 609.84998,
-        "pctFromHigh": -0.03701305995714641,
-        "nearHigh": true,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": -0.009430456863020867,
-        "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": true,
-        "above150": true,
-        "above200": true,
-        "stacked": true,
-        "sma200Rising": true,
-        "passes": true,
         "insufficient": false
       }
     },
@@ -5632,12 +5501,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-16.245"
+            "detail": "-16.373"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "26,331,653"
+            "detail": "28,361,448"
           },
           {
             "name": "Higher Low",
@@ -5647,13 +5516,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "68pct"
+            "detail": "54pct"
           }
         ],
         "action": "No setup. Wait for momentum and liquidity to align.",
         "divergence": false,
         "atr": {
-          "percentile": 68,
+          "percentile": 54,
           "compressed": false,
           "expanded": false
         },
@@ -5664,14 +5533,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 620.19,
-          "vwap": 696.5673855906214,
-          "rsi": "31.9",
-          "macdHist": "-16.245",
-          "volume": 50659475,
-          "volSMA": 26331653,
+          "price": 612.48999,
+          "vwap": 688.5314951388273,
+          "rsi": "30.7",
+          "macdHist": "-16.373",
+          "volume": 34485035,
+          "volSMA": 28361448,
           "hvn": "662.29",
-          "atrPct": 68
+          "atrPct": 54
         }
       },
       "weekly": {
@@ -5680,21 +5549,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.16053274030597972,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.16767741438155323,
+        "tickerReturn": -0.15539590385002203,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.16808882177876855,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 779.82001,
-        "price": 620.19,
-        "pctFromHigh": -0.2047010950642315,
+        "price": 612.48999,
+        "pctFromHigh": -0.21457518126522554,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.03079797159648376,
+        "return12m1": -0.0160225218291665,
         "positive": false,
         "insufficient": false
       },
@@ -5731,12 +5600,12 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "0.004"
+            "detail": "0.007"
           },
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "26,105,831"
+            "detail": "24,350,432"
           },
           {
             "name": "Higher Low",
@@ -5746,13 +5615,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "20pct"
+            "detail": "18pct"
           }
         ],
         "action": "No setup. Wait for momentum and liquidity to align.",
         "divergence": false,
         "atr": {
-          "percentile": 20,
+          "percentile": 18,
           "compressed": true,
           "expanded": false
         },
@@ -5763,14 +5632,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 3.29,
-          "vwap": 3.4288056306717065,
-          "rsi": "37.5",
-          "macdHist": "0.004",
-          "volume": 18254476,
-          "volSMA": 26105831,
+          "price": 3.32,
+          "vwap": 3.423516880828274,
+          "rsi": "39.7",
+          "macdHist": "0.007",
+          "volume": 20951984,
+          "volSMA": 24350432,
           "hvn": "5.02",
-          "atrPct": 20
+          "atrPct": 18
         }
       },
       "weekly": {
@@ -5779,21 +5648,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.03235294117647055,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.039497615252044066,
+        "tickerReturn": -0.03206997084548114,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.04476288877422765,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 7.54,
-        "price": 3.29,
-        "pctFromHigh": -0.5636604774535809,
+        "price": 3.32,
+        "pctFromHigh": -0.5596816976127322,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.4797101449275363,
+        "return12m1": -0.5170454545454546,
         "positive": false,
         "insufficient": false
       },
@@ -5804,6 +5673,109 @@
         "stacked": false,
         "sma200Rising": false,
         "passes": false,
+        "insufficient": false
+      }
+    },
+    {
+      "ticker": "PLTR",
+      "cfg": {
+        "name": "Speculative"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 1,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": false,
+            "detail": "Weak"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": false,
+            "detail": "-1.026"
+          },
+          {
+            "name": "Volume > 1×SMA",
+            "on": false,
+            "detail": "21,227,584"
+          },
+          {
+            "name": "Higher Low",
+            "on": true,
+            "detail": "$190.57 (early)"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "56pct"
+          }
+        ],
+        "action": "No setup. Wait for momentum and liquidity to align.",
+        "divergence": false,
+        "atr": {
+          "percentile": 56.00000000000001,
+          "compressed": false,
+          "expanded": false
+        },
+        "higherLow": {
+          "price": 190.57001,
+          "prevPrice": 184.45,
+          "confirmed": false
+        },
+        "stop": "182.89",
+        "target": "231.61",
+        "rewardMultiplier": 2.5,
+        "riskPerShare": "13.92",
+        "volumeReliable": true,
+        "details": {
+          "price": 196.81,
+          "vwap": 197.61603130850673,
+          "rsi": "53.9",
+          "macdHist": "-1.026",
+          "volume": 20375259,
+          "volSMA": 21227584,
+          "hvn": "178.30",
+          "atrPct": 56
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Cautiously bullish",
+        "bullish": true
+      },
+      "relativeStrength": {
+        "tickerReturn": 0.05217854500649219,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": 0.03948562707774568,
+        "outperforming": true,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 212.94,
+        "price": 196.81,
+        "pctFromHigh": -0.07574903728749881,
+        "nearHigh": true,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.011681943740455874,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": true,
+        "above150": true,
+        "above200": true,
+        "stacked": true,
+        "sma200Rising": true,
+        "passes": true,
         "insufficient": false
       }
     },
@@ -5830,12 +5802,12 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-0.512"
+            "detail": "-0.599"
           },
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "54,058,741"
+            "detail": "54,204,838"
           },
           {
             "name": "Higher Low",
@@ -5845,13 +5817,13 @@
           {
             "name": "ATR Expanded",
             "on": false,
-            "detail": "38pct"
+            "detail": "28pct"
           }
         ],
         "action": "No setup. Wait for momentum and liquidity to align.",
         "divergence": false,
         "atr": {
-          "percentile": 38,
+          "percentile": 28.000000000000004,
           "compressed": false,
           "expanded": false
         },
@@ -5862,14 +5834,14 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 62.52,
-          "vwap": 68.12088978575872,
-          "rsi": "31.1",
-          "macdHist": "-0.512",
-          "volume": 48552166,
-          "volSMA": 54058741,
-          "hvn": "92.99",
-          "atrPct": 38
+          "price": 61.99,
+          "vwap": 67.76325199543645,
+          "rsi": "30.3",
+          "macdHist": "-0.599",
+          "volume": 41450440,
+          "volSMA": 54204838,
+          "hvn": "72.92",
+          "atrPct": 28
         }
       },
       "weekly": {
@@ -5878,21 +5850,21 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.11066856330014217,
-        "spyReturn": 0.007144674075573518,
-        "excessReturn": -0.1178132373757157,
+        "tickerReturn": -0.10908306984765732,
+        "spyReturn": 0.012692917928746508,
+        "excessReturn": -0.12177598777640383,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 116.733,
-        "price": 62.52,
-        "pctFromHigh": -0.4644188018812161,
+        "price": 61.99,
+        "pctFromHigh": -0.4689590775530484,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": -0.3675835167947089,
+        "return12m1": -0.3577327876041515,
         "positive": false,
         "insufficient": false
       },
