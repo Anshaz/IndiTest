@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T03:45:22.065Z",
+  "generatedAt": "2026-11-27T03:48:21.040Z",
   "tickerCount": 58,
   "successCount": 58,
   "errors": [],
@@ -39,7 +39,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "48,626,189"
+            "detail": "48,631,211"
           },
           {
             "name": "Higher Low",
@@ -71,11 +71,11 @@
         "volumeReliable": true,
         "details": {
           "price": 355.57999,
-          "vwap": 347.70062559502435,
+          "vwap": 347.7008354437185,
           "rsi": "57.9",
           "macdHist": "-0.140",
-          "volume": 54240100,
-          "volSMA": 48626189,
+          "volume": 54285300,
+          "volSMA": 48631211,
           "hvn": "270.80",
           "atrPct": 88
         }
@@ -127,7 +127,7 @@
           {
             "name": "VWAP Bias",
             "on": true,
-            "detail": "Near & rising"
+            "detail": "Above"
           },
           {
             "name": "RSI Momentum",
@@ -137,7 +137,7 @@
           {
             "name": "MACD Momentum",
             "on": true,
-            "detail": "-76.871"
+            "detail": "128.008"
           },
           {
             "name": "Volume (unavailable)",
@@ -153,13 +153,13 @@
           {
             "name": "ATR Expanded",
             "on": true,
-            "detail": "88pct"
+            "detail": "86pct"
           }
         ],
         "action": "Max confluence — execute. All layers aligned. Stop below higher low.",
         "divergence": false,
         "atr": {
-          "percentile": 88,
+          "percentile": 86,
           "compressed": false,
           "expanded": true
         },
@@ -168,43 +168,43 @@
           "prevPrice": 55130,
           "confirmed": false
         },
-        "stop": "54365.56",
-        "target": "76520.84",
+        "stop": "54443.88",
+        "target": "79245.69",
         "rewardMultiplier": 2.5,
-        "riskPerShare": "6330.08",
+        "riskPerShare": "7086.23",
         "volumeReliable": false,
         "details": {
-          "price": 60695.64,
-          "vwap": 60898.46333333334,
-          "rsi": "28.2",
-          "macdHist": "-76.871",
+          "price": 61530.11,
+          "vwap": 61294.380000000005,
+          "rsi": "31.9",
+          "macdHist": "128.008",
           "volume": 0,
           "volSMA": "-",
           "hvn": "55936.64",
-          "atrPct": 88
+          "atrPct": 86
         }
       },
       "weekly": {
-        "score": 0,
-        "trend": "Bearish",
-        "bullish": false
+        "score": 1,
+        "trend": "Cautiously bullish",
+        "bullish": true
       },
       "relativeStrength": {
-        "tickerReturn": -0.19973049944623175,
+        "tickerReturn": -0.1889803010745431,
         "spyReturn": -0.025282501469692263,
-        "excessReturn": -0.17444799797653948,
+        "excessReturn": -0.16369779960485084,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 87395.67,
-        "price": 60695.64,
-        "pctFromHigh": -0.30550746964924,
+        "price": 61530.11,
+        "pctFromHigh": -0.2959592849394026,
         "nearHigh": false,
         "insufficient": false
       },
       "momentum": {
-        "return12m1": 0.08805963105963098,
+        "return12m1": 0.07563770790630028,
         "positive": true,
         "insufficient": false
       },
@@ -246,7 +246,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "13,710,033"
+            "detail": "13,711,233"
           },
           {
             "name": "Higher Low",
@@ -278,11 +278,11 @@
         "volumeReliable": true,
         "details": {
           "price": 125.6,
-          "vwap": 118.59538421325655,
+          "vwap": 118.59566969660663,
           "rsi": "68.9",
           "macdHist": "0.275",
-          "volume": 16344400,
-          "volSMA": 13710033,
+          "volume": 16355200,
+          "volSMA": 13711233,
           "hvn": "103.27",
           "atrPct": 98
         }
@@ -349,7 +349,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "22,058,833"
+            "detail": "22,061,122"
           },
           {
             "name": "Higher Low",
@@ -381,11 +381,11 @@
         "volumeReliable": true,
         "details": {
           "price": 97.59,
-          "vwap": 96.50750655239057,
+          "vwap": 96.50757905852024,
           "rsi": "58.8",
           "macdHist": "-0.277",
-          "volume": 24884900,
-          "volSMA": 22058833,
+          "volume": 24905500,
+          "volSMA": 22061122,
           "hvn": "78.55",
           "atrPct": 96
         }
@@ -452,7 +452,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "15,673,667"
+            "detail": "15,681,311"
           },
           {
             "name": "Higher Low",
@@ -480,11 +480,11 @@
         "volumeReliable": true,
         "details": {
           "price": 609.89001,
-          "vwap": 615.4519255008441,
+          "vwap": 615.4483125131683,
           "rsi": "45.7",
           "macdHist": "-0.267",
-          "volume": 18599400,
-          "volSMA": 15673667,
+          "volume": 18668200,
+          "volSMA": 15681311,
           "hvn": "608.19",
           "atrPct": 72
         }
@@ -551,7 +551,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "14,010,556"
+            "detail": "14,013,333"
           },
           {
             "name": "Higher Low",
@@ -583,11 +583,11 @@
         "volumeReliable": true,
         "details": {
           "price": 168.66,
-          "vwap": 165.5223853057388,
+          "vwap": 165.52228993972477,
           "rsi": "49.6",
           "macdHist": "-0.050",
-          "volume": 14029400,
-          "volSMA": 14010556,
+          "volume": 14054400,
+          "volSMA": 14013333,
           "hvn": "173.71",
           "atrPct": 98
         }
@@ -654,7 +654,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "51,682,433"
+            "detail": "51,707,189"
           },
           {
             "name": "Higher Low",
@@ -686,11 +686,11 @@
         "volumeReliable": true,
         "details": {
           "price": 13.07,
-          "vwap": 15.363770325149172,
+          "vwap": 15.363216450525696,
           "rsi": "34.9",
           "macdHist": "-0.316",
-          "volume": 55078200,
-          "volSMA": 51682433,
+          "volume": 55301000,
+          "volSMA": 51707189,
           "hvn": "16.63",
           "atrPct": 92
         }
@@ -757,7 +757,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "32,808,989"
+            "detail": "32,822,978"
           },
           {
             "name": "Higher Low",
@@ -789,11 +789,11 @@
         "volumeReliable": true,
         "details": {
           "price": 380.14001,
-          "vwap": 379.81144576931104,
+          "vwap": 379.8103883891341,
           "rsi": "50.3",
           "macdHist": "-0.860",
-          "volume": 34789900,
-          "volSMA": 32808989,
+          "volume": 34915800,
+          "volSMA": 32822978,
           "hvn": "433.36",
           "atrPct": 98
         }
@@ -860,7 +860,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "18,786,978"
+            "detail": "18,793,611"
           },
           {
             "name": "Higher Low",
@@ -892,11 +892,11 @@
         "volumeReliable": true,
         "details": {
           "price": 1.59,
-          "vwap": 2.162772910655981,
+          "vwap": 2.1626859044504467,
           "rsi": "30.8",
           "macdHist": "-0.050",
-          "volume": 17958800,
-          "volSMA": 18786978,
+          "volume": 18018500,
+          "volSMA": 18793611,
           "hvn": "6.01",
           "atrPct": 82
         }
@@ -1264,7 +1264,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "60,212,089"
+            "detail": "60,236,356"
           },
           {
             "name": "Higher Low",
@@ -1296,11 +1296,11 @@
         "volumeReliable": true,
         "details": {
           "price": 2.69,
-          "vwap": 2.9414713995297763,
+          "vwap": 2.9414016345685097,
           "rsi": "36.4",
           "macdHist": "-0.033",
-          "volume": 49525500,
-          "volSMA": 60212089,
+          "volume": 49743900,
+          "volSMA": 60236356,
           "hvn": "4.81",
           "atrPct": 94
         }
@@ -1367,7 +1367,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "68,594,133"
+            "detail": "68,638,178"
           },
           {
             "name": "Higher Low",
@@ -1395,11 +1395,11 @@
         "volumeReliable": true,
         "details": {
           "price": 633.92999,
-          "vwap": 662.2318131272816,
+          "vwap": 662.2203821575885,
           "rsi": "38.6",
           "macdHist": "-2.500",
-          "volume": 81600300,
-          "volSMA": 68594133,
+          "volume": 81996700,
+          "volSMA": 68638178,
           "hvn": "602.23",
           "atrPct": 98
         }
@@ -1466,7 +1466,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "24,034,428"
+            "detail": "24,044,922"
           },
           {
             "name": "Higher Low",
@@ -1498,11 +1498,11 @@
         "volumeReliable": true,
         "details": {
           "price": 16.65,
-          "vwap": 16.11909055637793,
+          "vwap": 16.119166493913635,
           "rsi": "50.2",
           "macdHist": "0.074",
-          "volume": 24296856,
-          "volSMA": 24034428,
+          "volume": 24391300,
+          "volSMA": 24044922,
           "hvn": "17.62",
           "atrPct": 98
         }
@@ -1771,7 +1771,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "25,503,156"
+            "detail": "25,504,989"
           },
           {
             "name": "Higher Low",
@@ -1803,11 +1803,11 @@
         "volumeReliable": true,
         "details": {
           "price": 131.94,
-          "vwap": 127.09418191572725,
+          "vwap": 127.09434756535975,
           "rsi": "70.2",
           "macdHist": "0.015",
-          "volume": 23603400,
-          "volSMA": 25503156,
+          "volume": 23619900,
+          "volSMA": 25504989,
           "hvn": "119.74",
           "atrPct": 86
         }
@@ -1874,7 +1874,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "9,410,522"
+            "detail": "9,412,589"
           },
           {
             "name": "Higher Low",
@@ -1902,11 +1902,11 @@
         "volumeReliable": true,
         "details": {
           "price": 311.17999,
-          "vwap": 354.35962203038457,
+          "vwap": 354.3545238456455,
           "rsi": "37.2",
           "macdHist": "-1.455",
-          "volume": 11700800,
-          "volSMA": 9410522,
+          "volume": 11719400,
+          "volSMA": 9412589,
           "hvn": "225.52",
           "atrPct": 98
         }
@@ -1973,7 +1973,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "15,636,800"
+            "detail": "15,647,278"
           },
           {
             "name": "Higher Low",
@@ -2001,11 +2001,11 @@
         "volumeReliable": true,
         "details": {
           "price": 86.26,
-          "vwap": 94.10005495959537,
+          "vwap": 94.09675159830674,
           "rsi": "34.9",
           "macdHist": "-0.937",
-          "volume": 13005200,
-          "volSMA": 15636800,
+          "volume": 13099500,
+          "volSMA": 15647278,
           "hvn": "161.95",
           "atrPct": 98
         }
@@ -2171,7 +2171,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "9,814,944"
+            "detail": "9,822,678"
           },
           {
             "name": "Higher Low",
@@ -2199,11 +2199,11 @@
         "volumeReliable": true,
         "details": {
           "price": 103.72,
-          "vwap": 127.90646763302793,
+          "vwap": 127.89682043723481,
           "rsi": "28.7",
           "macdHist": "-1.461",
-          "volume": 9898800,
-          "volSMA": 9814944,
+          "volume": 9968400,
+          "volSMA": 9822678,
           "hvn": "164.02",
           "atrPct": 2
         }
@@ -2373,7 +2373,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "10,671,844"
+            "detail": "10,684,778"
           },
           {
             "name": "Higher Low",
@@ -2401,11 +2401,11 @@
         "volumeReliable": true,
         "details": {
           "price": 48.27,
-          "vwap": 62.564902578261446,
+          "vwap": 62.556052471001195,
           "rsi": "27.3",
           "macdHist": "-1.211",
-          "volume": 13080500,
-          "volSMA": 10671844,
+          "volume": 13196900,
+          "volSMA": 10684778,
           "hvn": "80.93",
           "atrPct": 10
         }
@@ -2575,7 +2575,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "39,181,878"
+            "detail": "39,195,122"
           },
           {
             "name": "Higher Low",
@@ -2607,11 +2607,11 @@
         "volumeReliable": true,
         "details": {
           "price": 273.10001,
-          "vwap": 283.5441717795501,
+          "vwap": 283.54237269930536,
           "rsi": "36.9",
           "macdHist": "0.611",
-          "volume": 41164500,
-          "volSMA": 39181878,
+          "volume": 41283700,
+          "volSMA": 39195122,
           "hvn": "343.82",
           "atrPct": 96
         }
@@ -2777,7 +2777,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "11,905,456"
+            "detail": "11,913,633"
           },
           {
             "name": "Higher Low",
@@ -2805,11 +2805,11 @@
         "volumeReliable": true,
         "details": {
           "price": 14.65,
-          "vwap": 20.978485370887903,
+          "vwap": 20.97701820382437,
           "rsi": "26.2",
           "macdHist": "-0.518",
-          "volume": 12021900,
-          "volSMA": 11905456,
+          "volume": 12095500,
+          "volSMA": 11913633,
           "hvn": "27.72",
           "atrPct": 30
         }
@@ -2876,7 +2876,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "24,607,256"
+            "detail": "24,624,822"
           },
           {
             "name": "Higher Low",
@@ -2904,11 +2904,11 @@
         "volumeReliable": true,
         "details": {
           "price": 23.54,
-          "vwap": 27.910980431057176,
+          "vwap": 27.90923053894275,
           "rsi": "38.3",
           "macdHist": "-0.446",
-          "volume": 22958800,
-          "volSMA": 24607256,
+          "volume": 23116900,
+          "volSMA": 24624822,
           "hvn": "44.41",
           "atrPct": 86
         }
@@ -3177,7 +3177,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "14,639,856"
+            "detail": "14,643,533"
           },
           {
             "name": "Higher Low",
@@ -3205,11 +3205,11 @@
         "volumeReliable": true,
         "details": {
           "price": 185.0099945,
-          "vwap": 212.1155924878171,
+          "vwap": 212.1120434086341,
           "rsi": "35.9",
           "macdHist": "-0.303",
-          "volume": 21472400,
-          "volSMA": 14639856,
+          "volume": 21505500,
+          "volSMA": 14643533,
           "hvn": "226.89",
           "atrPct": 98
         }
@@ -3276,7 +3276,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "29,249,311"
+            "detail": "29,252,189"
           },
           {
             "name": "Higher Low",
@@ -3304,11 +3304,11 @@
         "volumeReliable": true,
         "details": {
           "price": 489.92999,
-          "vwap": 519.5807207967531,
+          "vwap": 519.5793414704741,
           "rsi": "38.7",
           "macdHist": "-4.318",
-          "volume": 26733600,
-          "volSMA": 29249311,
+          "volume": 26759500,
+          "volSMA": 29252189,
           "hvn": "396.44",
           "atrPct": 96
         }
@@ -3375,7 +3375,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "39,163,978"
+            "detail": "39,221,578"
           },
           {
             "name": "Higher Low",
@@ -3403,11 +3403,11 @@
         "volumeReliable": true,
         "details": {
           "price": 601.25,
-          "vwap": 726.4479179398287,
+          "vwap": 726.3488129127701,
           "rsi": "35.7",
           "macdHist": "-7.767",
-          "volume": 52470000,
-          "volSMA": 39163978,
+          "volume": 52988400,
+          "volSMA": 39221578,
           "hvn": "402.23",
           "atrPct": 98
         }
@@ -3447,6 +3447,105 @@
       }
     },
     {
+      "ticker": "NFLX",
+      "cfg": {
+        "name": "Stable"
+      },
+      "autoClassified": false,
+      "daily": {
+        "score": 3,
+        "maxScore": 6,
+        "conditions": [
+          {
+            "name": "VWAP Bias",
+            "on": false,
+            "detail": "Below"
+          },
+          {
+            "name": "RSI Momentum",
+            "on": true,
+            "detail": "Oversold bounce"
+          },
+          {
+            "name": "MACD Momentum",
+            "on": true,
+            "detail": "-0.081"
+          },
+          {
+            "name": "Volume > 1.1×SMA",
+            "on": true,
+            "detail": "41,575,656"
+          },
+          {
+            "name": "Higher Low",
+            "on": false,
+            "detail": "None"
+          },
+          {
+            "name": "ATR Expanded",
+            "on": false,
+            "detail": "60pct"
+          }
+        ],
+        "action": "Building — watchlist. Divergence or structure forming. Set alerts.",
+        "divergence": false,
+        "atr": {
+          "percentile": 60,
+          "compressed": false,
+          "expanded": false
+        },
+        "higherLow": null,
+        "stop": null,
+        "target": null,
+        "rewardMultiplier": 2,
+        "riskPerShare": null,
+        "volumeReliable": true,
+        "details": {
+          "price": 59.41,
+          "vwap": 61.59932919366637,
+          "rsi": "38.8",
+          "macdHist": "-0.081",
+          "volume": 45756500,
+          "volSMA": 41575656,
+          "hvn": "95.83",
+          "atrPct": 60
+        }
+      },
+      "weekly": {
+        "score": 1,
+        "trend": "Bearish, improving",
+        "bullish": false
+      },
+      "relativeStrength": {
+        "tickerReturn": -0.041619616067107686,
+        "spyReturn": -0.07200475197783264,
+        "excessReturn": 0.030385135910724954,
+        "outperforming": true,
+        "insufficient": false
+      },
+      "high52w": {
+        "high52w": 109.73,
+        "price": 59.41,
+        "pctFromHigh": -0.4585801512804156,
+        "nearHigh": false,
+        "insufficient": false
+      },
+      "momentum": {
+        "return12m1": -0.41553706646723376,
+        "positive": false,
+        "insufficient": false
+      },
+      "trend": {
+        "above50": false,
+        "above150": false,
+        "above200": false,
+        "stacked": false,
+        "sma200Rising": false,
+        "passes": false,
+        "insufficient": false
+      }
+    },
+    {
       "ticker": "NVDA",
       "cfg": {
         "name": "Stable"
@@ -3474,7 +3573,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "438,327,544"
+            "detail": "438,682,500"
           },
           {
             "name": "Higher Low",
@@ -3502,11 +3601,11 @@
         "volumeReliable": true,
         "details": {
           "price": 149.3,
-          "vwap": 164.25508754385362,
+          "vwap": 164.2472105317383,
           "rsi": "37.5",
           "macdHist": "-0.674",
-          "volume": 363377300,
-          "volSMA": 438327544,
+          "volume": 366571900,
+          "volSMA": 438682500,
           "hvn": "186.91",
           "atrPct": 98
         }
@@ -3573,7 +3672,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "28,840,211"
+            "detail": "28,858,756"
           },
           {
             "name": "Higher Low",
@@ -3601,11 +3700,11 @@
         "volumeReliable": true,
         "details": {
           "price": 103.88,
-          "vwap": 120.24738574690821,
+          "vwap": 120.24382634286003,
           "rsi": "37.7",
           "macdHist": "-1.054",
-          "volume": 38324600,
-          "volSMA": 28840211,
+          "volume": 38491500,
+          "volSMA": 28858756,
           "hvn": "139.62",
           "atrPct": 96
         }
@@ -3775,7 +3874,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "21,963,311"
+            "detail": "21,972,089"
           },
           {
             "name": "Higher Low",
@@ -3803,11 +3902,11 @@
         "volumeReliable": true,
         "details": {
           "price": 163.59,
-          "vwap": 166.42196360250463,
+          "vwap": 166.42097386163147,
           "rsi": "45.1",
           "macdHist": "0.036",
-          "volume": 21407000,
-          "volSMA": 21963311,
+          "volume": 21486000,
+          "volSMA": 21972089,
           "hvn": "178.30",
           "atrPct": 92
         }
@@ -3874,7 +3973,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "30,549,011"
+            "detail": "30,569,100"
           },
           {
             "name": "Higher Low",
@@ -3902,11 +4001,11 @@
         "volumeReliable": true,
         "details": {
           "price": 11.71,
-          "vwap": 12.424025516408875,
+          "vwap": 12.423761824984133,
           "rsi": "43.4",
           "macdHist": "-0.093",
-          "volume": 29290300,
-          "volSMA": 30549011,
+          "volume": 29471100,
+          "volSMA": 30569100,
           "hvn": "14.94",
           "atrPct": 90
         }
@@ -3973,7 +4072,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": true,
-            "detail": "16,350,105"
+            "detail": "16,377,200"
           },
           {
             "name": "Higher Low",
@@ -4005,11 +4104,11 @@
         "volumeReliable": true,
         "details": {
           "price": 47.02,
-          "vwap": 54.37333941784204,
+          "vwap": 54.368434756777404,
           "rsi": "39.8",
           "macdHist": "-0.952",
-          "volume": 19770843,
-          "volSMA": 16350105,
+          "volume": 20014700,
+          "volSMA": 16377200,
           "hvn": "68.76",
           "atrPct": 98
         }
@@ -4076,7 +4175,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "76,114,500"
+            "detail": "76,136,011"
           },
           {
             "name": "Higher Low",
@@ -4104,11 +4203,11 @@
         "volumeReliable": true,
         "details": {
           "price": 716.70001,
-          "vwap": 736.1210475053987,
+          "vwap": 736.1171907373571,
           "rsi": "39.8",
           "macdHist": "-2.915",
-          "volume": 72919200,
-          "volSMA": 76114500,
+          "volume": 73112800,
+          "volSMA": 76136011,
           "hvn": "686.41",
           "atrPct": 98
         }
@@ -4175,7 +4274,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "17,957,318"
+            "detail": "17,957,533"
           },
           {
             "name": "Higher Low",
@@ -4207,11 +4306,11 @@
         "volumeReliable": true,
         "details": {
           "price": 14.09,
-          "vwap": 14.469861630438702,
+          "vwap": 14.469859975286196,
           "rsi": "51.0",
           "macdHist": "-0.122",
-          "volume": 13859458,
-          "volSMA": 17957318,
+          "volume": 13861400,
+          "volSMA": 17957533,
           "hvn": "12.74",
           "atrPct": 98
         }
@@ -4476,7 +4575,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": true,
-            "detail": "48,459,156"
+            "detail": "48,481,722"
           },
           {
             "name": "Higher Low",
@@ -4504,11 +4603,11 @@
         "volumeReliable": true,
         "details": {
           "price": 244.42999,
-          "vwap": 256.1684458829503,
+          "vwap": 256.16590481822465,
           "rsi": "42.0",
           "macdHist": "-1.887",
-          "volume": 62276400,
-          "volSMA": 48459156,
+          "volume": 62479500,
+          "volSMA": 48481722,
           "hvn": "230.20",
           "atrPct": 98
         }
@@ -4674,7 +4773,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "33,754,933"
+            "detail": "33,765,222"
           },
           {
             "name": "Higher Low",
@@ -4706,11 +4805,11 @@
         "volumeReliable": true,
         "details": {
           "price": 300.85999,
-          "vwap": 325.5863492973918,
+          "vwap": 325.5817447194109,
           "rsi": "40.7",
           "macdHist": "-3.085",
-          "volume": 34256900,
-          "volSMA": 33754933,
+          "volume": 34349500,
+          "volSMA": 33765222,
           "hvn": "337.68",
           "atrPct": 94
         }
@@ -4777,7 +4876,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "14,662,078"
+            "detail": "14,668,144"
           },
           {
             "name": "Higher Low",
@@ -4809,11 +4908,11 @@
         "volumeReliable": true,
         "details": {
           "price": 209.3,
-          "vwap": 226.71882176067376,
+          "vwap": 226.71373462499434,
           "rsi": "38.3",
           "macdHist": "-1.868",
-          "volume": 14517100,
-          "volSMA": 14662078,
+          "volume": 14571700,
+          "volSMA": 14668144,
           "hvn": "120.91",
           "atrPct": 96
         }
@@ -4880,7 +4979,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "129,302,178"
+            "detail": "129,376,933"
           },
           {
             "name": "Higher Low",
@@ -4908,11 +5007,11 @@
         "volumeReliable": true,
         "details": {
           "price": 54.47,
-          "vwap": 59.88586568408745,
+          "vwap": 59.884405683439475,
           "rsi": "35.9",
           "macdHist": "1.149",
-          "volume": 128605100,
-          "volSMA": 129302178,
+          "volume": 129277900,
+          "volSMA": 129376933,
           "hvn": "37.25",
           "atrPct": 18
         }
@@ -4979,7 +5078,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "12,507,167"
+            "detail": "12,510,978"
           },
           {
             "name": "Higher Low",
@@ -5007,11 +5106,11 @@
         "volumeReliable": true,
         "details": {
           "price": 2.56,
-          "vwap": 3.143366064834191,
+          "vwap": 3.1432960403359513,
           "rsi": "36.7",
           "macdHist": "-0.039",
-          "volume": 9733700,
-          "volSMA": 12507167,
+          "volume": 9768000,
+          "volSMA": 12510978,
           "hvn": "6.37",
           "atrPct": 56
         }
@@ -5181,7 +5280,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "8,075,422"
+            "detail": "8,077,344"
           },
           {
             "name": "Higher Low",
@@ -5213,11 +5312,11 @@
         "volumeReliable": true,
         "details": {
           "price": 220.84,
-          "vwap": 231.14467767199613,
+          "vwap": 231.14373485353013,
           "rsi": "51.1",
           "macdHist": "-3.042",
-          "volume": 6795600,
-          "volSMA": 8075422,
+          "volume": 6812900,
+          "volSMA": 8077344,
           "hvn": "28.74",
           "atrPct": 50
         }
@@ -5253,105 +5352,6 @@
         "stacked": true,
         "sma200Rising": true,
         "passes": true,
-        "insufficient": false
-      }
-    },
-    {
-      "ticker": "NFLX",
-      "cfg": {
-        "name": "Stable"
-      },
-      "autoClassified": false,
-      "daily": {
-        "score": 2,
-        "maxScore": 6,
-        "conditions": [
-          {
-            "name": "VWAP Bias",
-            "on": false,
-            "detail": "Below"
-          },
-          {
-            "name": "RSI Momentum",
-            "on": true,
-            "detail": "Oversold bounce"
-          },
-          {
-            "name": "MACD Momentum",
-            "on": true,
-            "detail": "-0.081"
-          },
-          {
-            "name": "Volume > 1.1×SMA",
-            "on": false,
-            "detail": "41,568,667"
-          },
-          {
-            "name": "Higher Low",
-            "on": false,
-            "detail": "None"
-          },
-          {
-            "name": "ATR Expanded",
-            "on": false,
-            "detail": "60pct"
-          }
-        ],
-        "action": "Weak signal. One layer alone is not enough.",
-        "divergence": false,
-        "atr": {
-          "percentile": 60,
-          "compressed": false,
-          "expanded": false
-        },
-        "higherLow": null,
-        "stop": null,
-        "target": null,
-        "rewardMultiplier": 2,
-        "riskPerShare": null,
-        "volumeReliable": true,
-        "details": {
-          "price": 59.41,
-          "vwap": 61.5995570164587,
-          "rsi": "38.8",
-          "macdHist": "-0.081",
-          "volume": 45693600,
-          "volSMA": 41568667,
-          "hvn": "95.83",
-          "atrPct": 60
-        }
-      },
-      "weekly": {
-        "score": 1,
-        "trend": "Bearish, improving",
-        "bullish": false
-      },
-      "relativeStrength": {
-        "tickerReturn": -0.041619616067107686,
-        "spyReturn": -0.07200475197783264,
-        "excessReturn": 0.030385135910724954,
-        "outperforming": true,
-        "insufficient": false
-      },
-      "high52w": {
-        "high52w": 109.73,
-        "price": 59.41,
-        "pctFromHigh": -0.4585801512804156,
-        "nearHigh": false,
-        "insufficient": false
-      },
-      "momentum": {
-        "return12m1": -0.41553706646723376,
-        "positive": false,
-        "insufficient": false
-      },
-      "trend": {
-        "above50": false,
-        "above150": false,
-        "above200": false,
-        "stacked": false,
-        "sma200Rising": false,
-        "passes": false,
         "insufficient": false
       }
     },
@@ -5477,7 +5477,7 @@
           {
             "name": "MACD Momentum",
             "on": false,
-            "detail": "-1.326"
+            "detail": "-1.333"
           },
           {
             "name": "Volume > 1×SMA",
@@ -5509,10 +5509,10 @@
         "riskPerShare": null,
         "volumeReliable": true,
         "details": {
-          "price": 73.61,
-          "vwap": 109.15778794480914,
+          "price": 73.51,
+          "vwap": 109.15602694658878,
           "rsi": "27.2",
-          "macdHist": "-1.326",
+          "macdHist": "-1.333",
           "volume": 121828915,
           "volSMA": 111742626,
           "hvn": "75.28",
@@ -5525,16 +5525,16 @@
         "bullish": false
       },
       "relativeStrength": {
-        "tickerReturn": -0.5807997038661133,
+        "tickerReturn": -0.5813691921097404,
         "spyReturn": -0.07200475197783264,
-        "excessReturn": -0.5087949518882807,
+        "excessReturn": -0.5093644401319077,
         "outperforming": false,
         "insufficient": false
       },
       "high52w": {
         "high52w": 294.29874,
-        "price": 73.61,
-        "pctFromHigh": -0.7498800028841441,
+        "price": 73.51,
+        "pctFromHigh": -0.750219793669521,
         "nearHigh": false,
         "insufficient": false
       },
@@ -5581,7 +5581,7 @@
           {
             "name": "Volume > 1.1×SMA",
             "on": false,
-            "detail": "50,037,767"
+            "detail": "50,070,122"
           },
           {
             "name": "Higher Low",
@@ -5609,11 +5609,11 @@
         "volumeReliable": true,
         "details": {
           "price": 406.029999,
-          "vwap": 485.4251797904029,
+          "vwap": 485.3971527237056,
           "rsi": "38.0",
           "macdHist": "-9.660",
-          "volume": 51340800,
-          "volSMA": 50037767,
+          "volume": 51632000,
+          "volSMA": 50070122,
           "hvn": "213.43",
           "atrPct": 96
         }
@@ -5779,7 +5779,7 @@
           {
             "name": "Volume > 1×SMA",
             "on": false,
-            "detail": "38,996,226"
+            "detail": "39,016,989"
           },
           {
             "name": "Higher Low",
@@ -5807,11 +5807,11 @@
         "volumeReliable": true,
         "details": {
           "price": 5.42,
-          "vwap": 6.529181864530998,
+          "vwap": 6.528905186430739,
           "rsi": "34.9",
           "macdHist": "-0.030",
-          "volume": 35842534,
-          "volSMA": 38996226,
+          "volume": 36029400,
+          "volSMA": 39016989,
           "hvn": "11.87",
           "atrPct": 42
         }
